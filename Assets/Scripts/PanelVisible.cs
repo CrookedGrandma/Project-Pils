@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PanelVisible : MonoBehaviour {
 
     public Image panel;
-    bool IsVisible = false;
+    public bool IsVisible = false;
 
     // Use this for initialization
     void Start () {
@@ -14,20 +14,22 @@ public class PanelVisible : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-    }
-    public void VisibleSwitch()
-    {
-        if (IsVisible)
+        if (Input.GetKeyDown(KeyCode.Escape)&& IsVisible)
         {
             panel.gameObject.SetActive(false);
             IsVisible = false;
         }
-        if (!IsVisible)
-        {
-            panel.gameObject.SetActive(true);
-            IsVisible = true;
+    }
 
-        }
+    public void SetVisible()
+    {
+        panel.gameObject.SetActive(true);
+        IsVisible = true;
+    }
+    public void SetInvisible()
+    {
+        print("WE SWITCHEN HOOR");
+        panel.gameObject.SetActive(false);
+        IsVisible = false;
     }
 }

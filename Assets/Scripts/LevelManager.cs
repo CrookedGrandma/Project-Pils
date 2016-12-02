@@ -12,4 +12,9 @@ public class LevelManager : MonoBehaviour {
     {
         Application.Quit();
     }
+
+    public void UnPause()
+    {
+        Time.timeScale = 1;
+    }
 }

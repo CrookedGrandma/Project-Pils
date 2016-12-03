@@ -63,10 +63,12 @@ Temporary Items
 
 # Windows image file caches
 Thumbs.db
+Thumbs.db.meta
 ehthumbs.db
 
 # Folder config file
 Desktop.ini
+Desktop.ini.meta
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/

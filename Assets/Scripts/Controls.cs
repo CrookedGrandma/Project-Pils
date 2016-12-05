@@ -5,7 +5,7 @@ public class Controls : MonoBehaviour
 {
 
     public float Vel = 0.2f;
-    public float velMultiplier = 100.0f;
+    public float VelMultiplier = 100f;
     public float JumpSpeed = 2f;
     private bool IsPaused = false;
     public Canvas canvas;
@@ -21,23 +21,21 @@ public class Controls : MonoBehaviour
 	public void Update ()
     {
         if (!IsPaused)
-        { 
-            float moveLeftRight = Input.GetAxis("Horizontal") * Vel * velMultiplier;
-            float moveForwardBackward = Input.GetAxis("Vertical") * Vel * velMultiplier;
-            moveLeftRight *= Time.deltaTime;
-            moveForwardBackward *= Time.deltaTime;
+        {
+            // Walking
+            float moveLeftRight = Input.GetAxis("Horizontal") * Vel * VelMultiplier * Time.deltaTime;
+            float moveForwardBackward = Input.GetAxis("Vertical") * Vel * VelMultiplier * Time.deltaTime;
             transform.position += new Vector3(moveLeftRight, 0, moveForwardBackward);
 
-            //DEBUG
-            if (moveLeftRight != 0)
-            {
-                Debug.Log("moveleftright");
-            }
-            if (moveForwardBackward != 0)
-            {
-                Debug.Log("moveforwardbackward");
-            }
-            //END DEBUG
+            // Jumping
+            /*
+             * This doesn't work as it is supposed to work. You can keep jumping endlessly by holding space.
+             * I've searched for a solution, but haven't found anything that works. 
+             * Possible solutions are using the "AddForce" method on the rigidbody, but then there is no movement, so it didn't work.
+             * It is still possible to just use the GetKey or GetKeyDown methods, but then you don't use the InputManager at all.
+            */
+            float jump = Input.GetAxis("Jump") * JumpSpeed * Time.deltaTime;
+            transform.position += new Vector3(0, jump, 0);
 
             // Normal walking
             /*if (Input.GetKey(KeyCode.A))
@@ -58,10 +56,10 @@ public class Controls : MonoBehaviour
             }*/
 
             // Jumping
-            if (Input.GetKeyDown(KeyCode.Space))
+            /*if (Input.GetKeyDown(KeyCode.Space))
             {
-                transform.position += new Vector3(0, JumpSpeed, 0);
-            }
+                transform.position += new Vector3(0, JumpSpeed * Time.deltaTime, 0);
+            }*/
 
             // Sprinting
             if (Input.GetKey(KeyCode.LeftShift))

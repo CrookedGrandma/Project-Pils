@@ -2,17 +2,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace Common.FSM
+namespace Core.FSM
 {
 	public class FSMState
 	{
 		private readonly string name;
 		private readonly FSM owner;
 		private readonly Dictionary<string, FSMState> transitionMap;
-		private List<FSMAction> actions;
+		private List<IdleAction> actions;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Common.FSM.FSMState"/> class.
+		/// Initializes a new instance of the <see cref="Core.FSM.FSMState"/> class.
 		/// </summary>
 		/// <param name="name">Name.</param>
 		/// <param name="owner">Owner.</param>
@@ -21,7 +21,7 @@ namespace Common.FSM
 			this.name = name;
 			this.owner = owner;
 			this.transitionMap = new Dictionary<string, FSMState> ();
-			this.actions = new List<FSMAction> ();
+			this.actions = new List<IdleAction> ();
 		}
 
 		/// <summary>
@@ -52,7 +52,7 @@ namespace Common.FSM
 		/// <summary>
 		/// Adds the action.
 		/// </summary>
-		public void AddAction (FSMAction action)
+		public void AddAction (IdleAction action)
 		{
 			if (actions.Contains (action)) {
 				Debug.LogWarning ("This state already contains " + action);
@@ -70,7 +70,7 @@ namespace Common.FSM
 		/// This gets the actions of this state
 		/// </summary>
 		/// <returns>The actions.</returns>
-		public IEnumerable<FSMAction> GetActions ()
+		public IEnumerable<IdleAction> GetActions ()
 		{
 			return actions;
 		}

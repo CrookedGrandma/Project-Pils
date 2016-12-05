@@ -7,6 +7,7 @@ public class Controls : MonoBehaviour
     public float Vel = 0.2f;
     public float velMultiplier = 100.0f;
     public float JumpSpeed = 2f;
+<<<<<<< HEAD
     private bool IsPaused = false;
     public Canvas canvas;
 
@@ -20,6 +21,13 @@ public class Controls : MonoBehaviour
 	public void Update ()
     {
         if (!IsPaused)
+=======
+	
+	// Update is called once per frame
+	public void Update () {
+
+        if (GameManager.instance.IsPaused)
+>>>>>>> origin/master
         {
             float moveLeftRight = Input.GetAxis("Horizontal") * Vel * velMultiplier;
             float moveForwardBackward = Input.GetAxis("Vertical") * Vel * velMultiplier;
@@ -73,6 +81,7 @@ public class Controls : MonoBehaviour
             }
         }
 
+<<<<<<< HEAD
         // Pause menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -89,5 +98,8 @@ public class Controls : MonoBehaviour
                 canvas.enabled = true;
             }
         }
+=======
+
+>>>>>>> origin/master
     }
 }

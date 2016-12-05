@@ -1,57 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Common.FSM;
+using Core.FSM;
 
-public class MoveAction : FSMAction
+public class MoveAction : Core.FSM.IdleAction
 {
 	private Transform transform;
-	private Vector3 positionFrom;
-	private Vector3 positionTo;
-	private float duration;
-	private float cachedDuration;
-	private string finishEvent;
-	private float journeyLength;
-	private float polledTime;
-
+    private float magnitude;
+    private string finishEvent;
 
 	public MoveAction (FSMState owner) : base (owner)
 	{
 	}
 
-	public void Init (Transform transform, Vector3 from, Vector3 to, float duration, string finishEvent = null)
+	public void Init (Transform transform, float mag, string finishEvent = null)
 	{
 		this.transform = transform;
-		this.positionFrom = from;
-		this.positionTo = to;
-		this.duration = duration;
-		this.cachedDuration = duration;
-		this.finishEvent = finishEvent;
-		this.journeyLength = Vector3.Distance (this.positionFrom, this.positionTo);
-		this.polledTime = 0;
+        this.magnitude = mag;
+        this.finishEvent = finishEvent;
 	}
 
-	public override void OnEnter ()
-	{
+    public override void OnUpdate()
+    {
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            float val = Input.GetAxis("Horizontal");
+            transform.position += new Vector3(val, 0, 0) * magnitude;
 
-		if (duration <= 0) {
-			Finish ();
-			return;
-		}
-
-		SetPosition (this.positionFrom);
-	}
-
-	public override void OnUpdate ()
-	{
-		polledTime += Time.deltaTime;
-		duration -= Time.deltaTime;
-
-		if (duration <= 0) {
-			Finish ();
-			return;
-		}
-
-		SetPosition (Vector3.Lerp (this.positionFrom, this.positionTo, Mathf.Clamp (polledTime / cachedDuration, 0, 1)));
+        } else if(Input.GetAxis("Vertical") != 0)
+        {
+            float val = Input.GetAxis("Vertical");
+            transform.position += new Vector3(0, 0, val) * magnitude;
+        } else
+        {
+            Finish();
+        }
 	}
 
 	private void Finish ()
@@ -59,15 +41,6 @@ public class MoveAction : FSMAction
 		if (!string.IsNullOrEmpty (finishEvent)) {
 			GetOwner ().SendEvent (finishEvent);
 		}
-
-		SetPosition (this.positionTo);
-		this.polledTime = 0;
-		duration = cachedDuration;
-		this.journeyLength = Vector3.Distance (this.positionFrom, this.positionTo);
 	}
 
-	private void SetPosition (Vector3 position)
-	{
-		this.transform.position = position;
-	}
 }

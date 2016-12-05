@@ -9,7 +9,7 @@ namespace Core.FSM
 		private readonly string name;
 		private readonly FSM owner;
 		private readonly Dictionary<string, FSMState> transitionMap;
-		private List<IdleAction> actions;
+		private List<FSMAction> actions;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Core.FSM.FSMState"/> class.
@@ -21,7 +21,7 @@ namespace Core.FSM
 			this.name = name;
 			this.owner = owner;
 			this.transitionMap = new Dictionary<string, FSMState> ();
-			this.actions = new List<IdleAction> ();
+			this.actions = new List<FSMAction> ();
 		}
 
 		/// <summary>
@@ -52,7 +52,7 @@ namespace Core.FSM
 		/// <summary>
 		/// Adds the action.
 		/// </summary>
-		public void AddAction (IdleAction action)
+		public void AddAction (FSMAction action)
 		{
 			if (actions.Contains (action)) {
 				Debug.LogWarning ("This state already contains " + action);
@@ -70,7 +70,7 @@ namespace Core.FSM
 		/// This gets the actions of this state
 		/// </summary>
 		/// <returns>The actions.</returns>
-		public IEnumerable<IdleAction> GetActions ()
+		public IEnumerable<FSMAction> GetActions ()
 		{
 			return actions;
 		}

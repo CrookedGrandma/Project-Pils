@@ -2,7 +2,7 @@
 using System.Collections;
 using Core.FSM;
 
-public class MoveAction : Core.FSM.IdleAction
+public class MoveAction : Core.FSM.FSMAction
 {
 	private Transform transform;
     private float magnitude;

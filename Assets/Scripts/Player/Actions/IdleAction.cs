@@ -2,7 +2,7 @@
 using System.Collections;
 using Core.FSM;
 
-public class IdleAction : Core.FSM.IdleAction
+public class IdleAction : Core.FSM.FSMAction
 {
     public IdleAction(FSMState owner) : base(owner)
     {

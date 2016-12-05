@@ -3,11 +3,11 @@ using System.Collections;
 
 namespace Core.FSM
 {
-	public class IdleAction
+	public class FSMAction
 	{
 		private readonly FSMState owner;
 
-		public IdleAction (FSMState owner)
+		public FSMAction (FSMState owner)
 		{
 			this.owner = owner;
 		}

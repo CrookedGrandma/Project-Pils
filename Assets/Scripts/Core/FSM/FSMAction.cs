@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Common.FSM
+namespace Core.FSM
 {
-	public class FSMAction
+	public class IdleAction
 	{
 		private readonly FSMState owner;
 
-		public FSMAction (FSMState owner)
+		public IdleAction (FSMState owner)
 		{
 			this.owner = owner;
 		}

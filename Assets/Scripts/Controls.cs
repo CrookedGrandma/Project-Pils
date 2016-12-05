@@ -6,18 +6,11 @@ public class Controls : MonoBehaviour {
 
     public float Vel = 0.2f;
     public float JumpSpeed = 2f;
-    private bool IsPaused = false;
-    public Canvas canvas;
-
-    // Use this for initialization
-    void Start () {
-        canvas.enabled = false;
-    }
 	
 	// Update is called once per frame
 	public void Update () {
 
-        if (!IsPaused)
+        if (GameManager.instance.IsPaused)
         {
             if (Input.GetKey(KeyCode.A))
             {
@@ -49,25 +42,6 @@ public class Controls : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (IsPaused)
-            {    
-                Time.timeScale = 1;
-                IsPaused = false;
-                canvas.enabled = false;  
-                
-            }
-            else
-            {
-                Time.timeScale = 0;
-                IsPaused = true;
-                canvas.enabled = true;
 
-               
-            }
-            
-
-        }
     }
 }

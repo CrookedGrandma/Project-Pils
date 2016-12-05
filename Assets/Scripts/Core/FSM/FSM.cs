@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Common.FSM
+namespace Core.FSM
 {
 	///<summary>
 	/// This is the main engine of our FSM, without this, you won't be
@@ -20,7 +20,7 @@ namespace Common.FSM
 			}
 		}
 
-		private delegate void StateActionProcessor (FSMAction action);
+		private delegate void StateActionProcessor (IdleAction action);
 
 		/// <summary>
 		/// This gets all the actions that is inside the state and loop them.
@@ -30,9 +30,9 @@ namespace Common.FSM
 		private void ProcessStateAction (FSMState state, StateActionProcessor actionProcessor)
 		{
 			FSMState currentStateOnInvoke = this.currentState;
-			IEnumerable<FSMAction> actions = state.GetActions ();
+			IEnumerable<IdleAction> actions = state.GetActions ();
 
-			foreach (FSMAction action in actions) {
+			foreach (IdleAction action in actions) {
 				if (this.currentState != currentStateOnInvoke) {
 					break;
 				}
@@ -98,7 +98,7 @@ namespace Common.FSM
 		///</summary>
 		public void EnterState (FSMState state)
 		{
-			ProcessStateAction (state, delegate(FSMAction action) {
+			ProcessStateAction (state, delegate(IdleAction action) {
 				action.OnEnter ();	
 			});
 		}
@@ -107,7 +107,7 @@ namespace Common.FSM
 		{
 			FSMState currentStateOnInvoke = this.currentState;
 
-			ProcessStateAction (state, delegate(FSMAction action) {
+			ProcessStateAction (state, delegate(IdleAction action) {
 
 				if (this.currentState != currentStateOnInvoke)
 					Debug.LogError ("State cannont be changed on exit of the specified state");
@@ -124,7 +124,7 @@ namespace Common.FSM
 			if (this.currentState == null)
 				return;
 
-			ProcessStateAction (this.currentState, delegate(FSMAction action) {
+			ProcessStateAction (this.currentState, delegate(IdleAction action) {
 				action.OnUpdate ();	
 			});
 		}

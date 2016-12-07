@@ -39,8 +39,8 @@ public class Controls : MonoBehaviour
             }
 
             // Walking or Sprinting
-            float moveLeftRight = Input.GetAxis("Move Horizontally") * usedVelocity * Time.deltaTime;
-            float moveForwardBackward = Input.GetAxis("Move Vertically") * usedVelocity * Time.deltaTime;
+            float moveLeftRight = Input.GetAxis("Horizontal") * usedVelocity * Time.deltaTime;
+            float moveForwardBackward = Input.GetAxis("Vertical") * usedVelocity * Time.deltaTime;
             if (!ableToMoveLeft && moveLeftRight < 0)
             {
                 moveLeftRight = 0;

@@ -39,8 +39,8 @@ public class Controls : MonoBehaviour
             }
 
             // Walking or Sprinting
-            float moveLeftRight = Input.GetAxis("Horizontal") * usedVelocity * Time.deltaTime;
-            float moveForwardBackward = Input.GetAxis("Vertical") * usedVelocity * Time.deltaTime;
+            float moveLeftRight = Input.GetAxis("Move Horizontally") * usedVelocity * Time.deltaTime;
+            float moveForwardBackward = Input.GetAxis("Move Vertically") * usedVelocity * Time.deltaTime;
             if (!ableToMoveLeft && moveLeftRight < 0)
             {
                 moveLeftRight = 0;
@@ -85,7 +85,7 @@ public class Controls : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         // Determine if we can jump
         var normal = collision.contacts[0].normal;
@@ -98,7 +98,8 @@ public class Controls : MonoBehaviour
         if (collision.collider.tag != "Terrain") 
         {
             /* 
-             * Terrain does not have mass, so there was a NullReferenceException. The collision with the terrain is already handled just before this.
+             * Terrain does not have mass, so there was a NullReferenceException. 
+             * The collision with the terrain is already handled just before this.
              */
             if (PlayerRB.mass <= collision.rigidbody.mass)
             {
@@ -134,5 +135,6 @@ public class Controls : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         ableToMoveBackward = ableToMoveForward = ableToMoveLeft = ableToMoveRight = true;
+        ableToJump = false;
     }
 }

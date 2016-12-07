@@ -13,8 +13,6 @@ public class Controls : MonoBehaviour
     public Canvas canvas;
     public Rigidbody PlayerRB;
 
-    private enum CollisionSides { Front, Back, Left, Right, Bottom, Top };
-
     // Use this for initialization
     void Start()
     {
@@ -28,7 +26,7 @@ public class Controls : MonoBehaviour
     {
         if (!isPaused)
         {
-            // Determining wether we are walking or sprinting
+            // Determine wether we are walking or sprinting
             if (Input.GetAxis("Sprint") <= 0)
             {
                 // Walking
@@ -67,10 +65,6 @@ public class Controls : MonoBehaviour
                 PlayerRB.AddForce(Vector3.up * jumpSpeed);
                 ableToJump = false;
             }
-
-            //DEBUG
-            //Debug.Log("MovementSpeedLeftRight: " + moveLeftRight + "\nMovementSpeedForwardBackward: " + moveForwardBackward);
-            //END DEBUG
         }
 
         // Pause menu
@@ -93,45 +87,52 @@ public class Controls : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Determining if we can jump
-        //onGround = true;
-        ableToMoveBackward = ableToMoveForward = ableToMoveLeft = ableToMoveRight = true;
-
+        // Determine if we can jump
         var normal = collision.contacts[0].normal;
         if (normal.y > 0)
         {
             //Hit Bottom
-            Debug.Log("Hit bottom");
             ableToJump = true;
+            ableToMoveBackward = ableToMoveForward = ableToMoveLeft = ableToMoveRight = true;
         }
-        /*else if (normal.y < 0)
+        if (collision.collider.tag != "Terrain") 
         {
-            //Hit Floor
-            Debug.Log("Hit roof");
+            /* 
+             * Terrain does not have mass, so there was a NullReferenceException. The collision with the terrain is already handled just before this.
+             */
+            if (PlayerRB.mass <= collision.rigidbody.mass)
+            {
+                if (normal.y < 0)
+                {
+                    //Hit Roof
+                    // Maybe needed in houses or dungeons
+                }
+                else if (normal.x > 0)
+                {
+                    //Hit Left
+                    ableToMoveLeft = false;
+                }
+                else if (normal.x < 0)
+                {
+                    //Hit Right
+                    ableToMoveRight = false;
+                }
+                else if (normal.z < 0)
+                {
+                    //Hit Front
+                    ableToMoveForward = false;
+                }
+                else if (normal.z > 0)
+                {
+                    //Hit Back
+                    ableToMoveBackward = false;
+                }
+            }
         }
-        else if (normal.x > 0)
-        {
-            //Hit Left
-            Debug.Log("Hit Left");
-            ableToMoveLeft = false;
-        }
-        else if (normal.x < 0)
-        {
-            //Hit Right
-            Debug.Log("Hit Right");
-            ableToMoveRight = false;
-        }
-        else if (normal.z < 0)
-        {
-            //Hit Front
-            Debug.Log("Hit Front");
-            ableToMoveForward = false;
-        }
-        else if (normal.z > 0)
-        {
-            //Hit Back
-            Debug.Log("Hit Back");
-            ableToMoveBackward = false;
-        }*/
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        ableToMoveBackward = ableToMoveForward = ableToMoveLeft = ableToMoveRight = true;
     }
 }

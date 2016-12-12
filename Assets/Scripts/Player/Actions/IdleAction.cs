@@ -14,7 +14,7 @@ public class IdleAction : Core.FSM.FSMAction
 
     public override void OnUpdate()
     {
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 || Input.GetButtonDown("Jump"))
         {
             GetOwner().SendEvent("ToMove");
         }

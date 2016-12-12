@@ -1,0 +1,184 @@
+[
+  {
+    "id": 0,
+    "title": "Phone",
+    "value": 6,
+    "type": "miscellaneous",
+    "description": "Communicate with friends, view the objectives and map",
+    "stackable": false,
+    "quest-related":  true,
+    "rarity": 1,
+    "slug": "phone"
+  },
+
+  {
+    "id": 1,
+    "title": "Alcoholvrij bier",
+    "value": 6,
+    "type": "consumable",
+    "subtype": "healing",
+    "heal": 1,
+    "description": "Kind of humiliating to drink among friends",
+    "stackable": true,
+    "quest-related":  false,
+    "rarity": 1,
+    "slug": "alcoholvrij_bier"
+  },
+  {
+    "id": 2,
+    "title": "Killer Meemstars Cap",
+    "value": 6,
+    "type": "equipment",
+    "subtype": "headwear",
+    "stats": {
+      "attack": 0,
+      "defence": 50,
+      "health": 100
+    },
+    "description": "Attractiveness -50",
+    "stackable": false,
+    "quest-related":  false,
+    "rarity": 1,
+    "slug": "fedora"
+  },
+  {
+    "id": 3,
+    "title": "Apple Juice",
+    "value": 10,
+    "type": "consumable",
+    "subtype": "healing",
+    "heal": 10,
+    "description": "It's not apple cider, but it'll have to do",
+    "stackable": true,
+    "quest-related":  false,
+    "rarity": 1,
+    "slug": "apple_juice"
+  },
+    {
+    "id": 4,
+    "title": "Unprepared Microwave Meal",
+    "value": 20,
+    "type": "consumable",
+    "subtype": "healing",
+    "heal": 20,
+    "description": "Tastes worse than it looks",
+    "stackable": true,
+    "quest-related": false,
+    "rarity": 1,
+    "slug": "unprepared_microwave_meal"
+  },
+    {
+    "id": 5,
+    "title": "Radler",
+    "value": 25,
+    "type": "consumable",
+    "subtype": "healing",
+    "heal": 25,
+    "description": "Beer mixed with the fresh flavour of lemon",
+    "stackable": true,
+    "quest-related": false,
+    "rarity": 1,
+    "slug": "radler"
+  },
+    {
+    "id": 6,
+    "title": "Pils",
+    "value": 40,
+    "type": "consumable",
+    "subtype": "healing",
+    "heal": 50,
+    "description": "Beer mixed with the fresh flavour of lemon",
+    "stackable": true,
+    "quest-related":  false,
+    "rarity": 1,
+    "slug": "pils"
+  },
+  {
+    "id": 7,
+    "title": "Noni's Pils",
+    "value": 1,
+    "type": "consumable",
+    "subtype": "healing",
+    "heal": 69,
+    "description": "Glass is almost full. Didn't take much to affect Noni",
+    "stackable": false,
+    "quest-related": false,
+    "rarity": 100,
+    "slug": "noni_pils"
+  }
+  ,
+  {
+    "id": 8,
+    "title": "Mega Pils",
+    "value": 1,
+    "type": "consumable",
+    "subtype": "healing",
+    "heal": 75,
+    "description": "A good and heathy way to start the day",
+    "stackable": false,
+    "quest-related": true,
+    "rarity": 100,
+    "slug": "mega_pils"
+  }
+  ,
+  {
+    "id": 9,
+    "title": "Empty Beer Can",
+    "value": 1,
+    "type": "weapon",
+    "subtype": "projectile",
+    "damage": 20,
+    "description": "Not refillable",
+    "stackable": true,
+    "quest-related": false,
+    "rarity": 100,
+    "slug": "empty_beer_can"
+  }
+    ,
+  {
+    "id": 10,
+    "title": "Pen",
+    "value": 1,
+    "type": "weapon",
+    "subtype": "projectile",
+    "damage": 25,
+    "description": "I have a pen, I have an Enemy, Uh...",
+    "stackable": true,
+    "quest-related": false,
+    "rarity": 100,
+    "slug": "pen"
+  }
+      ,
+  {
+    "id": 11,
+    "title": "Broken Beer Bottle",
+    "value": 1,
+    "type": "weapon",
+    "subtype": "melee",
+    "damage": 25,
+    "description": "Fits perfectly in a broken beer crate",
+    "stackable": false,
+    "quest-related": false,
+    "rarity": 100,
+    "slug": "broken_beer_bottle"
+  },
+  {
+    "id": 12,
+    "title": "Hard Disc",
+    "value": 6,
+    "type": "miscellaneous",
+    "description": "Hard Disc with your photo's. Destroy ASAP",
+    "stackable": false,
+    "quest-related": true,
+    "rarity": 1,
+    "slug": "hard_disc"
+  },
+      {
+    "id": 999,
+    "title": "nullitem",
+    "type": "nullitem",
+    "slug": "nullitem"
+  }
+
+
+]

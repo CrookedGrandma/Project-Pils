@@ -54,6 +54,18 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        inv.RemoveItem(item);
-    }
+        if(item.Type == "equipment")
+        {
+            if(item.Subtype == "headwear")
+            {
+                offset = eventData.position - new Vector2(this.transform.position.x, this.transform.position.y);
+                this.transform.SetParent(this.transform.parent.parent);
+                this.transform.position = eventData.position - offset;
+                GetComponent<CanvasGroup>().blocksRaycasts = false;
+                this.transform.SetParent(inv.slots[inv.slotCount + 2].transform);
+                this.transform.position = inv.slots[inv.slotCount + 2].transform.position;
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+            }
+        }
+    } 
 }

@@ -10,20 +10,6 @@
     "rarity": 1,
     "slug": "phone"
   },
-
-  {
-    "id": 1,
-    "title": "Alcoholvrij bier",
-    "value": 6,
-    "type": "consumable",
-    "subtype": "healing",
-    "heal": 1,
-    "description": "You really don't want to be seen drinking this",
-    "stackable": true,
-    "quest-related":  false,
-    "rarity": 1,
-    "slug": "alcoholvrij_bier"
-  },
   {
     "id": 2,
     "title": "Killer Meemstars Cap",
@@ -39,7 +25,7 @@
     "stackable": false,
     "quest-related":  false,
     "rarity": 1,
-    "slug": "fedora"
+    "slug": "killer_meemstar_hat"
   },
   {
     "id": 3,
@@ -132,7 +118,7 @@
     "stackable": true,
     "quest-related": false,
     "rarity": 100,
-    "slug": "empty_beer_can"
+    "slug": "beer_can"
   }
     ,
   {
@@ -172,6 +158,23 @@
     "quest-related": true,
     "rarity": 1,
     "slug": "hard_disc"
+  },
+   {
+    "id": 13,
+    "title": "Torn T-Shirt",
+    "value": 6,
+    "type": "equipment",
+    "subtype": "headwear",
+    "stats": {
+      "attack": 0,
+      "defence": 50,
+      "health": 100
+    },
+    "description": "Let's get riiiiight into the pils",
+    "stackable": false,
+    "quest-related":  false,
+    "rarity": 1,
+    "slug": "killer_meemstar_hat"
   },
       {
     "id": 999,

@@ -6,20 +6,32 @@ using System.Collections.Generic;
 public class Inventory : MonoBehaviour {
     GameObject inventoryPanel;
     GameObject slotPanel;
+    GameObject equipmentPanel;
+    public GameObject weaponslot;
+    public GameObject ammoslot;
+    public GameObject headslot;
+    public GameObject bodyslot;
+    public GameObject lowerslot;
+    public GameObject shoeslot;
     ItemDatabase database;
     public GameObject inventorySlot;
     public  GameObject inventoryItem;
-    private int slotCount;
+    public int slotCount;
+    private int equipmentCount;
+    private GameObject[] equipmentList;
 
     public List<Item> items = new List<Item>();
     public List<GameObject> slots = new List<GameObject>();
 
     private void Start()
     {
+        equipmentList = new GameObject[] { weaponslot, ammoslot, headslot, bodyslot, lowerslot, shoeslot };
         database = GetComponent<ItemDatabase>();
         slotCount = 36;
+        equipmentCount = 6;
         inventoryPanel = GameObject.Find("InventoryPanel");
         slotPanel = inventoryPanel.transform.FindChild("SlotPanel").gameObject;
+        equipmentPanel = inventoryPanel.transform.FindChild("EquipmentPanel").gameObject;
         for (int i = 0; i < slotCount; i++)
         {
             items.Add(new Item());
@@ -27,10 +39,14 @@ public class Inventory : MonoBehaviour {
             slots[i].GetComponent<InventorySlot>().slotID = i;
             slots[i].transform.SetParent(slotPanel.transform);
         }
+        for (int i = slotCount; i < equipmentCount + slotCount; i++)
+        {
+            items.Add(new Item());
+            slots.Add(equipmentList[i - slotCount]);
+            slots[i].GetComponent<InventorySlot>().slotID = i;
+            slots[i].transform.SetParent(equipmentPanel.transform);
+        }
         AddItem(0);
-        AddItem(1);
-        AddItem(1);
-        AddItem(1);
         AddItem(2);
         AddItem(3);
         AddItem(4);
@@ -38,6 +54,9 @@ public class Inventory : MonoBehaviour {
         AddItem(6);
         AddItem(7);
         AddItem(8);
+        AddItem(9);
+        AddItem(9);
+        AddItem(9);
         AddItem(10);
         AddItem(11);
         AddItem(12);

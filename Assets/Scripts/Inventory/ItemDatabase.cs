@@ -90,7 +90,7 @@ public class Item
         this.Questrelated = questrelated;
         this.Rarity = rarity;
         this.Slug = slug;
-        this.Sprite = Resources.Load<Sprite>("Inventory/Sprites/" + slug);
+        this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }
     //Constructor voor Consumables/Weapons
     public Item(int id, string title, int value, string type, string subtype, int healdamage, string description, bool stackable, bool questrelated, int rarity, string slug)
@@ -107,7 +107,7 @@ public class Item
         this.Questrelated = questrelated;
         this.Rarity = rarity;
         this.Slug = slug;
-        this.Sprite = Resources.Load<Sprite>("Inventory/Sprites/" + slug);
+        this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }
 
     //Constructor voor Miscellaneous
@@ -122,7 +122,7 @@ public class Item
         this.Questrelated = questrelated;
         this.Rarity = rarity;
         this.Slug = slug;
-        this.Sprite = Resources.Load<Sprite>("Inventory/Sprites/" + slug);
+        this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }
     //Constructor voor nullitem
     public Item(int id, string title, string type)

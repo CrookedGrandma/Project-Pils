@@ -95,12 +95,8 @@ public class Controls : MonoBehaviour
             ableToJump = true;
             ableToMoveBackward = ableToMoveForward = ableToMoveLeft = ableToMoveRight = true;
         }
-        if (collision.collider.tag != "Terrain") 
+        if (collision.rigidbody)
         {
-            /* 
-             * Terrain does not have mass, so there was a NullReferenceException. 
-             * The collision with the terrain is already handled just before this.
-             */
             if (PlayerRB.mass <= collision.rigidbody.mass)
             {
                 if (normal.y < 0)

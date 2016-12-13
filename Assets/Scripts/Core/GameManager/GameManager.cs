@@ -5,17 +5,18 @@ using UnityEngine.UI;
 public class GameManager : Entity {
 
     public static GameManager instance = null;
-    public static MessageQueue messageQueue = new MessageQueue();
+    public MessageQueue messageQueue = new MessageQueue();
+    public DialogueManager dialogueManager;
 
     public bool IsPaused = false;
     public Canvas canvas;
-    public Text dialogueText;
 
     public Entity player;
 
     void Start()
     {
         canvas.enabled = false;
+        dialogueManager = GetComponent<DialogueManager>();
     }
 
     void Awake()
@@ -54,11 +55,6 @@ public class GameManager : Entity {
 
         messageQueue.Dispatch();
 
-    }
-
-    public void AddLineToDialogue(string s)
-    {
-        dialogueText.text = s + "\r\n" + dialogueText.text;
     }
 
     void InitGame()

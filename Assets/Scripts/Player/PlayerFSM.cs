@@ -4,8 +4,7 @@ using Core.FSM;
 
 public class PlayerFSM : Entity {
 
-    private Rigidbody PlayerRB;
-
+    public Rigidbody PlayerRB;
     public float velocity = 20f;
     public float sprintVelocity = 30f;
     public float jumpSpeed = 3000f;
@@ -27,7 +26,9 @@ public class PlayerFSM : Entity {
         moveState.AddAction(moveAction);
         idleState.AddAction(idleAction);
 
-        moveAction.Init(gameObject.transform, gameObject.GetComponent<Rigidbody>(), velocity, sprintVelocity, jumpSpeed, "ToIdle");
+        PlayerRB = gameObject.GetComponent<Rigidbody>();
+
+        moveAction.Init(gameObject.transform, PlayerRB, velocity, sprintVelocity, jumpSpeed, "ToIdle");
         idleAction.Init();
 
         idleState.AddTransition("ToMove", moveState);
@@ -49,7 +50,7 @@ public class PlayerFSM : Entity {
         switch (m.type)
         {
             case MsgType.Dialogue:
-                GameManager.instance.AddLineToDialogue("[" + m.from.name + "] " + m.data.ToString());
+                GameManager.instance.dialogueManager.AddLine(m.from.name, m.data.ToString(), "red");
                 break;
         }
     }

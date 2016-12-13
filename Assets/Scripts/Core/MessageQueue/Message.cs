@@ -3,12 +3,8 @@ using System.Collections;
 
 public enum MsgType
 {
-    Damage,
-    Heal,
-    Shield,
-    Effect,
-    Open,
-    Dialogue
+    Dialogue,
+    DialogueResponse
 }
 
 public class Message {

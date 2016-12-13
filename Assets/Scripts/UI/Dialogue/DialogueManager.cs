@@ -48,6 +48,11 @@ public class DialogueManager : Entity {
         textBox.AddLine(name, text, color);
     }
 
+    public void AddDialogueOption(string identifier, DialogueOption dialogueOption)
+    {
+        dialogueOptions.Add(identifier, dialogueOption);
+    }
+
     public override void onMessage(Message m)
     {
         base.onMessage(m);

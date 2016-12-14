@@ -29,9 +29,13 @@ public class WaypointMoveAction : Core.FSM.FSMAction
         if(waypoints.Count != 0)
         {
             Vector3 target = waypoints[0];
-            transform.position += (target - transform.position).normalized * magnitude * Time.deltaTime;
+            transform.position += (target - transform.position).normalized  * magnitude * Time.deltaTime;
+            Vector3 movementVector = (target - transform.position).normalized;
+            movementVector.Scale(new Vector3(1, 0, 1));
 
-            if(transform.position == target)
+            transform.position += movementVector * magnitude * Time.deltaTime;
+
+            if(transform.position.x == target.x && transform.position.z == target.z)
             {
                 waypoints.Remove(target);
                 waypoints.Add(target);

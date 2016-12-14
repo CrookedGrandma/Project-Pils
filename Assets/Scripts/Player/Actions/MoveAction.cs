@@ -5,36 +5,74 @@ using Core.FSM;
 public class MoveAction : Core.FSM.FSMAction
 {
 	private Transform transform;
-    private float magnitude;
-    private string finishEvent;
+    private Rigidbody PlayerRB;
 
-	public MoveAction (FSMState owner) : base (owner)
+    public float velocity = 20f;
+    public float sprintVelocity = 30f;
+    public float jumpSpeed = 3000f;
+    private float usedVelocity;
+
+    private string finishEvent;
+    public bool ableToJump, ableToMoveLeft, ableToMoveRight, ableToMoveForward, ableToMoveBackward;
+
+    public MoveAction (FSMState owner) : base (owner)
 	{
 	}
 
-	public void Init (Transform transform, float mag, string finishEvent = null)
+    public void Init(Transform transform, Rigidbody rb, float vel, float sprintVel, float jumpSpeed, string finishEvent = null)
 	{
 		this.transform = transform;
-        this.magnitude = mag;
+        this.PlayerRB = rb;
+        this.velocity = vel;
+        this.sprintVelocity = sprintVel;
+        this.jumpSpeed = jumpSpeed;
         this.finishEvent = finishEvent;
 	}
 
     public override void OnUpdate()
     {
-        if (Input.GetAxis("Horizontal") != 0)
+        // Determine wether we are walking or sprinting
+        if (Input.GetAxis("Sprint") <= 0)
         {
-            float val = Input.GetAxis("Horizontal");
-            transform.position += new Vector3(val, 0, 0) * magnitude;
-
-        } else if(Input.GetAxis("Vertical") != 0)
-        {
-            float val = Input.GetAxis("Vertical");
-            transform.position += new Vector3(0, 0, val) * magnitude;
-        } else
-        {
-            Finish();
+            // Walking
+            usedVelocity = velocity;
         }
-	}
+        else
+        {
+            // Sprinting
+            usedVelocity = sprintVelocity;
+        }
+
+        // Walking or Sprinting
+        float moveLeftRight = Input.GetAxis("Horizontal") * usedVelocity * Time.deltaTime;
+        float moveForwardBackward = Input.GetAxis("Vertical") * usedVelocity * Time.deltaTime;
+        if (!ableToMoveLeft && moveLeftRight < 0)
+        {
+            moveLeftRight = 0;
+        }
+        if (!ableToMoveRight && moveLeftRight > 0)
+        {
+            moveLeftRight = 0;
+        }
+        if (!ableToMoveForward && moveForwardBackward > 0)
+        {
+            moveForwardBackward = 0;
+        }
+        if (!ableToMoveBackward && moveForwardBackward < 0)
+        {
+            moveForwardBackward = 0;
+        }
+        transform.position += new Vector3(moveLeftRight, 0, moveForwardBackward);
+
+        // Jump
+        if (Input.GetButtonDown("Jump") && ableToJump)
+        {
+            PlayerRB.AddForce(Vector3.up * jumpSpeed);
+            ableToJump = false;
+        }
+
+        Finish();
+    }
 
 	private void Finish ()
 	{
@@ -42,5 +80,6 @@ public class MoveAction : Core.FSM.FSMAction
 			GetOwner ().SendEvent (finishEvent);
 		}
 	}
+
 
 }

@@ -1,17 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : Entity {
 
     public static GameManager instance = null;
-    public static MessageQueue messageQueue = new MessageQueue();
+    public MessageQueue messageQueue = new MessageQueue();
+    public DialogueManager dialogueManager;
 
     public bool IsPaused = false;
     public Canvas canvas;
 
+    public Entity player;
+
     void Start()
     {
         canvas.enabled = false;
+        dialogueManager = GetComponent<DialogueManager>();
     }
 
     void Awake()
@@ -22,6 +27,9 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        Message m = new Message(this, player, MsgType.Dialogue, "Welcome to the game!");
+        messageQueue.Add(m);
     }
 
     void Update()
@@ -44,6 +52,9 @@ public class GameManager : MonoBehaviour {
 
             }
         }
+
+        messageQueue.Dispatch();
+
     }
 
     void InitGame()

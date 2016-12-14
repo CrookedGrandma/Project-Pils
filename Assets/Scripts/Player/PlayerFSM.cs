@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using Core.FSM;
 
-public class PlayerFSM : MonoBehaviour {
+public class PlayerFSM : Entity {
 
-
-    public float movementSpeed = 0.6f;
+    public Rigidbody PlayerRB;
+    public float velocity = 20f;
+    public float sprintVelocity = 30f;
+    public float jumpSpeed = 3000f;
 
     private FSM fsm;
     private FSMState moveState;
@@ -24,7 +27,9 @@ public class PlayerFSM : MonoBehaviour {
         moveState.AddAction(moveAction);
         idleState.AddAction(idleAction);
 
-        moveAction.Init(gameObject.transform, movementSpeed, "ToIdle");
+        PlayerRB = gameObject.GetComponent<Rigidbody>();
+
+        moveAction.Init(gameObject.transform, PlayerRB, velocity, sprintVelocity, jumpSpeed, "ToIdle");
         idleAction.Init();
 
         idleState.AddTransition("ToMove", moveState);
@@ -35,6 +40,83 @@ public class PlayerFSM : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        fsm.Update();
-	}
+        if(!GameManager.instance.IsPaused)
+            fsm.Update();
+        if (Input.GetButtonDown("Reset"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    public override void onMessage(Message m)
+    {
+        base.onMessage(m);
+
+        switch (m.type)
+        {
+            case MsgType.Dialogue:
+                GameManager.instance.dialogueManager.AddLine(m.from.name, m.data.ToString(), "red");
+                break;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        // Determine if we can jump
+        var normal = collision.contacts[0].normal;
+        if (normal.y > 0)
+        {
+            //Hit Bottom
+            moveAction.ableToJump = true;
+            moveAction.ableToMoveBackward = moveAction.ableToMoveForward = moveAction.ableToMoveLeft = moveAction.ableToMoveRight = true;
+        }
+        if (collision.collider.tag != "Terrain")
+        {
+            /* 
+             * Terrain does not have mass, so there was a NullReferenceException. 
+             * The collision with the terrain is already handled just before this.
+             */
+            if (collision.rigidbody)
+            {
+                if (PlayerRB.mass <= collision.rigidbody.mass)
+                {
+                    if (normal.y < 0)
+                    {
+                        //Hit Roof  
+                        // Maybe needed in houses or dungeons
+                    }
+                    else if (normal.x > 0)
+                    {
+                        //Hit Left
+                        moveAction.ableToMoveLeft = false;
+                    }
+                    else if (normal.x < 0)
+                    {
+                        //Hit Right
+                        moveAction.ableToMoveRight = false;
+                    }
+                    else if (normal.z < 0)
+                    {
+                        //Hit Front
+                        moveAction.ableToMoveForward = false;
+                    }
+                    else if (normal.z > 0)
+                    {
+                        //Hit Back
+                        moveAction.ableToMoveBackward = false;
+                    }
+                }
+            }
+
+        }
+    }
+
+    //Add Collision parameter if needed, remove if not to prevent any unnecessary calculations
+    private void OnCollisionExit()
+    {
+        moveAction.ableToMoveBackward = moveAction.ableToMoveForward = moveAction.ableToMoveLeft = moveAction.ableToMoveRight = true;
+        moveAction.ableToJump = false;
+    }
+
+
 }

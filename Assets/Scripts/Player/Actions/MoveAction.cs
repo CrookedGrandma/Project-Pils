@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using Core.FSM;
 
@@ -32,10 +31,6 @@ public class MoveAction : Core.FSM.FSMAction
 
     public override void OnUpdate()
     {
-        if (Input.GetButtonDown("Reset"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
         // Determine wether we are walking or sprinting
         if (Input.GetAxis("Sprint") <= 0)
         {

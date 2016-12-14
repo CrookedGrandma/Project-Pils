@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using Core.FSM;
 
@@ -41,7 +42,11 @@ public class PlayerFSM : Entity {
 	void Update () {
         if(!GameManager.instance.IsPaused)
             fsm.Update();
-	}
+        if (Input.GetButtonDown("Reset"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
 
     public override void onMessage(Message m)
     {

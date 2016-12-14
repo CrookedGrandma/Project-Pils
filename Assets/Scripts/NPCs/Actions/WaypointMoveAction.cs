@@ -5,23 +5,23 @@ using System.Collections.Generic;
 
 public class WaypointMoveAction : Core.FSM.FSMAction
 {
+    private Rigidbody rigidbody;
     private Transform transform;
     private float magnitude;
     private string finishEvent;
     private List<Vector3> waypoints;
-    private List<Vector3> waypointsCopy;
 
     public WaypointMoveAction(FSMState owner) : base(owner)
     {
     }
 
-    public void Init(Transform transform, float mag, List<Vector3> waypoints, string finishEvent = null)
+    public void Init(Rigidbody rb, Transform transform, float mag, List<Vector3> wps, string finishEvent = null)
     {
         this.transform = transform;
         this.magnitude = mag;
+        this.waypoints = wps;
+        this.rigidbody = rb;
         this.finishEvent = finishEvent;
-        this.waypoints = waypoints;
-        this.waypointsCopy = waypoints;
     }
 
     public override void OnUpdate()
@@ -29,14 +29,13 @@ public class WaypointMoveAction : Core.FSM.FSMAction
         if(waypoints.Count != 0)
         {
             Vector3 target = waypoints[0];
-            transform.position += (target - transform.position).normalized  * magnitude * Time.deltaTime;
             Vector3 movementVector = (target - transform.position).normalized;
-            movementVector.Scale(new Vector3(1, 0, 1));
 
-            transform.position += movementVector * magnitude * Time.deltaTime;
+            rigidbody.velocity = new Vector3(movementVector.x * magnitude, 0, movementVector.z * magnitude);
 
-            if(transform.position.x == target.x && transform.position.z == target.z)
+            if(Mathf.Abs(transform.position.x - target.x) <= 0.01 && Mathf.Abs(transform.position.z - target.z) <= 0.01)
             {
+                rigidbody.velocity = Vector3.zero;
                 waypoints.Remove(target);
                 waypoints.Add(target);
                 GetOwner().SendEvent("ToIdle");

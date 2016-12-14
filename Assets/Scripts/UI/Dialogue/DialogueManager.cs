@@ -36,6 +36,7 @@ public class DialogueManager : Entity {
             }
 
             DialogueOption dialogueOption = new DialogueOption(i.ToString(), "This leads to option " + leadsTo, "You chose option" + i.ToString(), responses);
+            dialogueOption.entityName = "DialogueManager";
             dialogueOptions.Add(i.ToString(), dialogueOption);
         }
 
@@ -63,7 +64,7 @@ public class DialogueManager : Entity {
         switch (m.type)
         {
             case MsgType.Dialogue:
-                AddLine(m.from.name, m.data.ToString(), "white");
+                AddLine(m.from.entityName, m.data.ToString(), "white");
                 break;
             case MsgType.DialogueResponse:
 
@@ -87,6 +88,8 @@ public class DialogueManager : Entity {
                         newOption.identifier = data.identifier;
                         newOption.optionText = data.optionText;
                         newOption.response = data.response;
+                        newOption.entityName = data.entityName;
+                        newOption.name = data.entityName;
 
                         newOption.AssignButton(button);
                         newOption.SetOption();

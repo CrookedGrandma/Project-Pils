@@ -15,7 +15,7 @@ public class NPCDialogueAction : Core.FSM.FSMAction {
     public void Init(Entity npc, string finishEvent = null)
     {
         DialogueOption startingDialogue = new DialogueOption("-1", "Hello?", "Hey, I'm a stalker and I just found you!", new string[] { "0" });
-
+        startingDialogue.entityName = "Stalker";
         GameManager.instance.dialogueManager.AddDialogueOption("-1", startingDialogue);
         npcEntity = npc;
     }

@@ -26,7 +26,7 @@ public class PatrolNPCFSM : MonoBehaviour {
         moveState.AddAction(moveAction);
         idleState.AddAction(idleAction);
 
-        moveAction.Init(gameObject.transform, movementSpeed,waypoints, "ToIdle");
+        moveAction.Init(GetComponent<Rigidbody>(), gameObject.transform, movementSpeed,waypoints, "ToIdle");
         idleAction.Init();
 
         idleState.AddTransition("ToNextWaypoint", moveState);

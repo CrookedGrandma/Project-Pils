@@ -31,6 +31,8 @@ public class MoveAction : Core.FSM.FSMAction
 
     public override void OnUpdate()
     {
+        PlayerRB.velocity = new Vector3(0, 0, 0);
+
         // Determine wether we are walking or sprinting
         if (Input.GetAxis("Sprint") <= 0)
         {
@@ -62,7 +64,8 @@ public class MoveAction : Core.FSM.FSMAction
         {
             moveForwardBackward = 0;
         }
-        transform.position += new Vector3(moveLeftRight, 0, moveForwardBackward);
+         
+        PlayerRB.velocity = new Vector3(moveLeftRight * 15, 0, moveForwardBackward * 15);
 
         // Jump
         if (Input.GetButtonDown("Jump") && ableToJump)

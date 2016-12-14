@@ -33,7 +33,7 @@ public class PatrolDialogueNPCFSM : Entity {
         idleState.AddAction(idleAction);
         dialogueState.AddAction(dialogueAction);
 
-        moveAction.Init(gameObject.transform, movementSpeed, waypoints, "ToIdle");
+        moveAction.Init(GetComponent<Rigidbody>(), gameObject.transform, movementSpeed, waypoints, "ToIdle");
         idleAction.Init(5, gameObject.transform);
         dialogueAction.Init(this);
 
@@ -42,7 +42,7 @@ public class PatrolDialogueNPCFSM : Entity {
         moveState.AddTransition("ToIdle", idleState);
         dialogueState.AddTransition("ToIdle", idleState);
 
-        fsm.Start("IdleState");
+        fsm.Start("MoveState");
     }
 
     // Update is called once per frame

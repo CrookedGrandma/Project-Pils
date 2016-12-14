@@ -14,27 +14,30 @@ public class DialogueManager : Entity {
         //Read and create dialogue options
         for (int i = 0; i < 16; i++)
         {
-            string leadsTo = (i == 15) ? "0" : (i + 1).ToString();
+            string leadsTo = (i + 1).ToString();
             string leadsToSecond = (i == 14) ? "0" : (i + 2).ToString();
 
             int random = Random.Range(0, 100);
 
             string[] responses;
-            if(random > 50)
+            if(i < 15)
             {
-                responses = new string[] { leadsTo, leadsToSecond };
+                if (random > 50)
+                {
+                    responses = new string[] { leadsTo, leadsToSecond };
+                }
+                else
+                {
+                    responses = new string[] { leadsTo };
+                }
             } else
             {
-                responses = new string[] { leadsTo };
+                responses = new string[] { };
             }
 
             DialogueOption dialogueOption = new DialogueOption(i.ToString(), "This leads to option " + leadsTo, "You chose option" + i.ToString(), responses);
             dialogueOptions.Add(i.ToString(), dialogueOption);
         }
-
-
-        Message m = new Message(this, this, MsgType.DialogueResponse, new string[]{ "0" });
-        GameManager.instance.messageQueue.Add(m);
 
     }
 
@@ -65,9 +68,10 @@ public class DialogueManager : Entity {
             case MsgType.DialogueResponse:
 
                 int i = 0;
-                foreach(Button button in buttons)
+                string[] responses = (string[])m.data;
+
+                foreach (Button button in buttons)
                 {
-                    string[] responses = (string[])m.data;
 
                     button.gameObject.GetComponentInChildren<Text>().text = "";
                     Destroy(button.gameObject.GetComponent<DialogueOption>());

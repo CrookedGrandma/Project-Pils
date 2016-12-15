@@ -31,8 +31,6 @@ public class MoveAction : Core.FSM.FSMAction
 
     public override void OnUpdate()
     {
-        PlayerRB.velocity = new Vector3(0, PlayerRB.velocity.y, 0);
-
         // Determine wether we are walking or sprinting
         if (Input.GetAxis("Sprint") <= 0)
         {
@@ -65,14 +63,14 @@ public class MoveAction : Core.FSM.FSMAction
             moveForwardBackward = 0;
         }
          
-        PlayerRB.velocity = new Vector3(moveLeftRight * 15, 0, moveForwardBackward * 15);
-
         // Jump
         if (Input.GetButtonDown("Jump") && ableToJump)
         {
-            PlayerRB.velocity += new Vector3(0, jumpSpeed, 0);
+            PlayerRB.velocity += Vector3.up * jumpSpeed;
             ableToJump = false;
         }
+
+        PlayerRB.velocity = new Vector3(moveLeftRight, PlayerRB.velocity.y, moveForwardBackward);
 
         Finish();
     }
@@ -83,6 +81,4 @@ public class MoveAction : Core.FSM.FSMAction
 			GetOwner ().SendEvent (finishEvent);
 		}
 	}
-
-
 }

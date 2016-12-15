@@ -18,7 +18,5 @@ public class IdleAction : Core.FSM.FSMAction
         {
             GetOwner().SendEvent("ToMove");
         }
-
     }
-
 }

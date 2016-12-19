@@ -55,7 +55,7 @@ public class PlayerFSM : Entity {
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    /*private void OnCollisionStay(Collision collision)
     {
         // Determine if we can jump
         var normal = collision.contacts[0].normal;
@@ -66,12 +66,12 @@ public class PlayerFSM : Entity {
             moveAction.ableToMoveBackward = moveAction.ableToMoveForward = moveAction.ableToMoveLeft = moveAction.ableToMoveRight = true;
         }
         if (collision.collider.tag != "Terrain")
-        {
+        {*/
             /* 
              * Terrain does not have mass, so there was a NullReferenceException. 
              * The collision with the terrain is already handled just before this.
              */
-            if (collision.rigidbody)
+           /* if (collision.rigidbody)
             {
                 if (PlayerRB.mass <= collision.rigidbody.mass)
                 {
@@ -112,6 +112,6 @@ public class PlayerFSM : Entity {
         moveAction.ableToMoveBackward = moveAction.ableToMoveForward = moveAction.ableToMoveLeft = moveAction.ableToMoveRight = true;
         moveAction.ableToJump = false;
     }
-
+    */
 
 }

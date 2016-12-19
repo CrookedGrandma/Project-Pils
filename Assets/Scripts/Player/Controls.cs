@@ -51,15 +51,15 @@ public class Controls : MonoBehaviour
             moveForwardBackward = 0;
         }
 
-        PlayerRB.velocity = new Vector3(moveLeftRight, PlayerRB.velocity.y, moveForwardBackward);
-        //transform.position += new Vector3(moveLeftRight, 0, moveForwardBackward);
-
         // Jump
         if (Input.GetButtonDown("Jump") && ableToJump)
         {
             PlayerRB.AddForce(Vector3.up * jumpSpeed);
             ableToJump = false;
         }
+
+        PlayerRB.velocity = new Vector3(moveLeftRight, PlayerRB.velocity.y, moveForwardBackward);
+        //transform.position += new Vector3(moveLeftRight, 0, moveForwardBackward);
     }
 
     private void OnCollisionStay(Collision collision)

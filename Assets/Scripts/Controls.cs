@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Controls : MonoBehaviour
 {
-    public float velocity = 5f;
-    public float sprintVelocity = 7f;
-    public float jumpSpeed = 50f;
+    public float velocity = 20f;
+    public float sprintVelocity = 30f;
+    public float jumpSpeed = 35000f;
     private float usedVelocity;
     private bool ableToJump, ableToMoveLeft, ableToMoveRight, ableToMoveForward, ableToMoveBackward;
     public Rigidbody PlayerRB;
@@ -18,36 +18,48 @@ public class Controls : MonoBehaviour
 
     // Update is called once per frame
     public void Update()
-    {
+    {        
+        // Determine wether we are walking or sprinting
+        if (Input.GetAxis("Sprint") <= 0)
+        {
+            // Walking
             usedVelocity = velocity;
+        }
+        else
+        {
+            // Sprinting
+            usedVelocity = sprintVelocity;
+        }
             
-            // Walking or Sprinting
-            float moveLeftRight = Input.GetAxis("Horizontal") * usedVelocity * Time.deltaTime;
-            float moveForwardBackward = Input.GetAxis("Vertical") * usedVelocity * Time.deltaTime;
-            if (!ableToMoveLeft && moveLeftRight < 0)
-            {
-                moveLeftRight = 0;
-            }
-            if (!ableToMoveRight && moveLeftRight > 0)
-            {
-                moveLeftRight = 0;
-            }
-            if (!ableToMoveForward && moveForwardBackward > 0)
-            {
-                moveForwardBackward = 0;
-            }
-            if (!ableToMoveBackward && moveForwardBackward < 0)
-            {
-                moveForwardBackward = 0;
-            }
-            transform.position += new Vector3(moveLeftRight, 0, moveForwardBackward);
+        // Walking or Sprinting
+        float moveLeftRight = Input.GetAxis("Horizontal") * usedVelocity * Time.deltaTime;
+        float moveForwardBackward = Input.GetAxis("Vertical") * usedVelocity * Time.deltaTime;
+        if (!ableToMoveLeft && moveLeftRight < 0)
+        {
+            moveLeftRight = 0;
+        }
+        if (!ableToMoveRight && moveLeftRight > 0)
+        {
+            moveLeftRight = 0;
+        }
+        if (!ableToMoveForward && moveForwardBackward > 0)
+        {
+            moveForwardBackward = 0;
+        }
+        if (!ableToMoveBackward && moveForwardBackward < 0)
+        {
+            moveForwardBackward = 0;
+        }
 
-            // Jump
-            if (Input.GetButtonDown("Jump") && ableToJump)
-            {
-                PlayerRB.AddForce(Vector3.up * jumpSpeed);
-                ableToJump = false;
-            }
+        PlayerRB.velocity = new Vector3(moveLeftRight, PlayerRB.velocity.y, moveForwardBackward);
+        //transform.position += new Vector3(moveLeftRight, 0, moveForwardBackward);
+
+        // Jump
+        if (Input.GetButtonDown("Jump") && ableToJump)
+        {
+            PlayerRB.AddForce(Vector3.up * jumpSpeed);
+            ableToJump = false;
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -60,36 +72,30 @@ public class Controls : MonoBehaviour
             ableToJump = true;
             ableToMoveBackward = ableToMoveForward = ableToMoveLeft = ableToMoveRight = true;
         }
-        if (collision.rigidbody)
+        if (normal.y < 0)
         {
-            if (PlayerRB.mass <= collision.rigidbody.mass)
-            {
-                if (normal.y < 0)
-                {
-                    //Hit Roof
-                    // Maybe needed in houses or dungeons
-                }
-                else if (normal.x > 0)
-                {
-                    //Hit Left
-                    ableToMoveLeft = false;
-                }
-                else if (normal.x < 0)
-                {
-                    //Hit Right
-                    ableToMoveRight = false;
-                }
-                else if (normal.z < 0)
-                {
-                    //Hit Front
-                    ableToMoveForward = false;
-                }
-                else if (normal.z > 0)
-                {
-                    //Hit Back
-                    ableToMoveBackward = false;
-                }
-            }
+            //Hit Roof
+            // Maybe needed in houses or dungeons
+        }
+        else if (normal.x > 0)
+        {
+            //Hit Left
+            ableToMoveLeft = false;
+        }
+        else if (normal.x < 0)
+        {
+            //Hit Right
+            ableToMoveRight = false;
+        }
+        else if (normal.z < 0)
+        {
+            //Hit Front
+            ableToMoveForward = false;
+        }
+        else if (normal.z > 0)
+        {
+            //Hit Back
+            ableToMoveBackward = false;
         }
     }
 

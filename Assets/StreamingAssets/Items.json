@@ -290,7 +290,11 @@
     "sellable": true,
     "slug": "sword_cane"
   },
+<<<<<<< HEAD
     {
+=======
+  {
+>>>>>>> 6764cf76c5f38f27c6d8e163e300c3a4c47f6ece
     "id": 212,
     "title": "ちょうど棒",
     "value": 1,
@@ -300,7 +304,11 @@
     "description": "実際にこれを買ってはいけない、ちょうど無意味な棒です",
     "stackable": false,
     "quest-related": false,
+<<<<<<< HEAD
     "sellable": true,
+=======
+    "rarity": 100,
+>>>>>>> 6764cf76c5f38f27c6d8e163e300c3a4c47f6ece
     "slug": "broken_beer_bottle"
   },
   //Projectiles
@@ -1134,7 +1142,7 @@
     "sellable": true,
     "slug": "underwear"
   },
-  //shoes
+  //Shoes
   {
     "id": 900,
     "title": "Medieval boots",
@@ -1314,4 +1322,10 @@
     "quest-related": false,
     "sellable": true,
     "slug": "bowling_shoes"
+<<<<<<< HEAD
   }
+=======
+  }      
+
+]
+>>>>>>> 6764cf76c5f38f27c6d8e163e300c3a4c47f6ece

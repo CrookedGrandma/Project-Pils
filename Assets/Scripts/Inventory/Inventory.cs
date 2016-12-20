@@ -71,7 +71,6 @@ public class Inventory : MonoBehaviour {
         AddItem(12);
         AddItem(13);
         AddItem(14);
->>>>>>> f5004450fde485c9920ca8504e7406cc9b2db07e
     }
 
     public void AddItem(int ID)

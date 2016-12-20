@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class DungeonCreator : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class DungeonCreator : MonoBehaviour
 
     public int columns = 30, rows = 30, minNumRooms = 10, maxNumRooms = 12, minRoomWidth = 4, maxRoomWidth = 8, minRoomHeight = 4, maxRoomHeight = 8, 
                minCorridorLength = 8, maxCorridorLength = 14, minNumberOfEnemies = 2, maxNumberOfEnemies = 6;
-    public GameObject[] floorTiles, wallTiles, outerWallTiles;          // Used so there can be multiple models for a certain type, for diversity
+    public GameObject[] wallTiles, outerWallTiles;                  // Used so there can be multiple models for a certain type, for diversity
     public GameObject player, endPoint, enemy;
 
     private TileType[][] tiles;
@@ -48,6 +47,7 @@ public class DungeonCreator : MonoBehaviour
         }
     }
 
+    // Method that creates the rooms and corridors
     private void CreateRoomsAndCorridors()
     {
         rooms = new Dungeon_Room[Random.Range(minNumRooms, maxNumRooms + 1)];       // Setup a random amount of rooms
@@ -62,7 +62,7 @@ public class DungeonCreator : MonoBehaviour
         // Setup the first corridor
         corridors[0].SetupCorridor(rooms[0], minCorridorLength, maxCorridorLength, rooms[0].roomWidth, rooms[0].roomHeight, columns, rows, true);
 
-        // Instantiate the player in the first room /* TO CHANGE this is option one, you could also put him in a random room */
+        // Instantiate the player in the first room
         Vector3 playerPos = new Vector3(rooms[0].xPos + 0.5f, 0.35f, rooms[0].zPos + 0.5f);
         Instantiate(player, playerPos, Quaternion.identity);
 
@@ -81,7 +81,7 @@ public class DungeonCreator : MonoBehaviour
             // Put the endpoint in the last room
             if (i == rooms.Length - 1)
             {
-                Vector3 endPointPos = new Vector3(rooms[i].xPos + rooms[i].roomWidth - 0.5f, 0.35f, rooms[i].zPos + rooms[i].roomHeight - 0.5f);
+                Vector3 endPointPos = new Vector3(rooms[i].xPos + rooms[i].roomWidth / 2 - 0.5f, 0.35f, rooms[i].zPos + rooms[i].roomHeight / 2 - 0.5f);
                 Instantiate(endPoint, endPointPos, Quaternion.identity);
             }
 
@@ -89,12 +89,12 @@ public class DungeonCreator : MonoBehaviour
             if (currentEnemies < numberOfEnemies)
             {
                 // Try to spawn an enemy
-                float chance = numberOfEnemies / rooms.Length;
-                if (Random.Range(0f, 1f) > chance)
+                float chance = (float)numberOfEnemies / (float)rooms.Length;
+                if (Random.Range(0f, 1f) >= chance)
                 {
                     // Spawn an enemy
-                    Vector3 enemyPos = new Vector3(rooms[i].xPos + Random.Range(0, rooms[i].roomWidth) + 0.5f, 0.35f, rooms[i].zPos + 
-                                       Random.Range(0, rooms[i].roomHeight) + 0.5f);
+                    Vector3 enemyPos = new Vector3(rooms[i].xPos + Random.Range(1, rooms[i].roomWidth - 1) + 0.5f, 0.35f, rooms[i].zPos + 
+                                       Random.Range(1, rooms[i].roomHeight - 1) + 0.5f);
                     GameObject enemyClone = Instantiate(enemy, enemyPos, Quaternion.identity) as GameObject;
                     enemyClone.transform.parent = enemyHolder.transform;
                     currentEnemies++;
@@ -171,13 +171,8 @@ public class DungeonCreator : MonoBehaviour
         {
             for (int j = 0; j < tiles[i].Length; j++)
             {
-                // Instantiate the tiles based on the tiletype
-                if (tiles[i][j] == TileType.Floor)
-                {
-                    // Do nothing
-                }
-
-                else if (tiles[i][j] == TileType.Wall)
+                // If the tiletype is a wall, instantiate a wall here
+                if (tiles[i][j] == TileType.Wall)
                 {
                     InstantiateFromArray(wallTiles, i, j);
                 }
@@ -224,15 +219,7 @@ public class DungeonCreator : MonoBehaviour
         int randomIndex = Random.Range(0, prefabs.Length);
 
         // Get the position for the object
-        Vector3 position;
-        if (prefabs == floorTiles)
-        {
-            position = new Vector3(xCoordinate + 0.5f, 0f, zCoordinate + 0.5f);
-        }
-        else
-        {
-            position = new Vector3(xCoordinate + 0.5f, 0.35f, zCoordinate + 0.5f);
-        }
+        Vector3 position = new Vector3(xCoordinate + 0.5f, 0.35f, zCoordinate + 0.5f);
 
         // Create an instance of the object
         GameObject instance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;

@@ -294,6 +294,19 @@
     "sellable": true,
     "slug": "sword_cane"
   },
+  {
+    "id": 212,
+    "title": "ちょうど棒",
+    "value": 1,
+    "type": "weapon",
+    "subtype": "melee",
+    "damage": 25,
+    "description": "実際にこれを買ってはいけない、ちょうど無意味な棒です",
+    "stackable": false,
+    "quest-related": false,
+    "rarity": 100,
+    "slug": "broken_beer_bottle"
+  },
   //Projectiles
   {
     "id": 300,
@@ -583,7 +596,6 @@
     "slug": "killer_meemstar_hat"
   },
   {
-<<<<<<< HEAD
     "id": 601,
     "title": "Sweatband",
     "value": 5,
@@ -1126,7 +1138,7 @@
     "sellable": true,
     "slug": "underwear"
   },
-  //shoes
+  //Shoes
   {
     "id": 900,
     "title": "Medieval boots",
@@ -1306,27 +1318,6 @@
     "quest-related": false,
     "sellable": true,
     "slug": "bowling_shoes"
-  }
-=======
-    "id": 14,
-    "title": "ちょうど棒",
-    "value": 1,
-    "type": "weapon",
-    "subtype": "melee",
-    "damage": 25,
-    "description": "実際にこれを買ってはいけない、ちょうど無意味な棒です",
-    "stackable": false,
-    "quest-related": false,
-    "rarity": 100,
-    "slug": "broken_beer_bottle"
-  },
-  {
-    "id": 999,
-    "title": "nullitem",
-    "type": "nullitem",
-    "slug": "nullitem"
-  }
-      
+  }      
 
->>>>>>> f5004450fde485c9920ca8504e7406cc9b2db07e
 ]

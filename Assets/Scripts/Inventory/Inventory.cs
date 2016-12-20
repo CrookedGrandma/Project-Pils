@@ -47,7 +47,8 @@ public class Inventory : MonoBehaviour {
         }
         AddItem(1);
         AddItem(201);
-        AddItem(301);
+        AddItem(212);
+        AddItem(213);
         AddItem(302);
         AddItem(303);
         AddItem(304);
@@ -56,7 +57,6 @@ public class Inventory : MonoBehaviour {
         AddItem(307);
         AddItem(602);
         AddItem(701);
-        AddItem(212);
     }
 
     public void AddItem(int ID)

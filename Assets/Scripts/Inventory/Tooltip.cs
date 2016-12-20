@@ -106,18 +106,15 @@ public class Tooltip : MonoBehaviour
         }
         else if (item.Type == "weapon")
         {
-<<<<<<< HEAD
             data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: " + item.Damage + "</color>";
             if (item.Set != "none")
             {
                 data += "\n\n<i><color=#FFF000>This item is part of the <color=#FFFFFF>" + item.Set + "</color> set </color></i>";
-=======
             if (item.ID == 14) {
                 data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
             }
             else {
                 data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: " + item.Damage + "</color>";
->>>>>>> f5004450fde485c9920ca8504e7406cc9b2db07e
             }
         }
         else if (item.Type == "miscellaneous" || item.Type == "ammunition")

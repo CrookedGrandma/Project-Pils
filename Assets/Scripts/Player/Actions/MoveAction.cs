@@ -11,6 +11,8 @@ public class MoveAction : Core.FSM.FSMAction
     public float sprintVelocity = 30f;
     public float jumpSpeed = 3000f;
     private float usedVelocity;
+    private float idleTime;
+    private float totalIdleTime = 0.25f;
 
     private string finishEvent;
     public bool ableToJump, ableToMoveLeft, ableToMoveRight, ableToMoveForward, ableToMoveBackward;
@@ -28,6 +30,12 @@ public class MoveAction : Core.FSM.FSMAction
         this.jumpSpeed = jumpSpeed;
         this.finishEvent = finishEvent;
 	}
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        idleTime = totalIdleTime;
+    }
 
     public override void OnUpdate()
     {
@@ -72,7 +80,18 @@ public class MoveAction : Core.FSM.FSMAction
 
         PlayerRB.velocity = new Vector3(moveLeftRight, PlayerRB.velocity.y, moveForwardBackward);
 
-        Finish();
+        if (PlayerRB.velocity == Vector3.zero)
+        {
+            idleTime -= Time.deltaTime;
+        }
+        else
+        {
+            idleTime = totalIdleTime;
+        }
+        if (idleTime <= 0)
+        {
+            Finish();
+        }
     }
 
 	private void Finish ()

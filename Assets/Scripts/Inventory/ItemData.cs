@@ -99,10 +99,10 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                     this.transform.position = inv.slots[inv.slotCount + 5].transform.position;
                     slot = inv.slotCount + 5;
                 }
-                Transform oldItem = this.transform.GetChild(0);
+                /*Transform oldItem = this.transform.GetChild(0);
                 oldItem.GetComponent<ItemData>().slot = droppedItem.slot;
                 oldItem.transform.SetParent(inv.slots[droppedItem.slot].transform);
-                oldItem.transform.position = inv.slots[droppedItem.slot].transform.position;
+                oldItem.transform.position = inv.slots[droppedItem.slot].transform.position;*/
 
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
             }

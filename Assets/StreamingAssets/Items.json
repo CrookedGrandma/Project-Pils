@@ -1,5 +1,5 @@
 [
-    //Nullitem
+  //Nullitem
   {
     "id": 0,
     "title": "nullitem",
@@ -10,7 +10,7 @@
   {
     "id": 1,
     "title": "Phone",
-    "value":  0,
+    "value": 0,
     "type": "miscellaneous",
     "description": "Communicate with friends, view the objectives and map",
     "stackable": false,
@@ -21,7 +21,7 @@
   {
     "id": 2,
     "title": "Hard Drive",
-    "value":  0,
+    "value": 0,
     "type": "miscellaneous",
     "description": "A Hard Drive filled with all of your 'charming' photographs",
     "stackable": false,
@@ -290,25 +290,18 @@
     "sellable": true,
     "slug": "sword_cane"
   },
-<<<<<<< HEAD
-    {
-=======
   {
->>>>>>> 6764cf76c5f38f27c6d8e163e300c3a4c47f6ece
     "id": 212,
     "title": "ちょうど棒",
     "value": 1,
     "type": "weapon",
     "subtype": "melee",
+    "set":  "none",
     "damage": 25,
     "description": "実際にこれを買ってはいけない、ちょうど無意味な棒です",
     "stackable": false,
     "quest-related": false,
-<<<<<<< HEAD
     "sellable": true,
-=======
-    "rarity": 100,
->>>>>>> 6764cf76c5f38f27c6d8e163e300c3a4c47f6ece
     "slug": "broken_beer_bottle"
   },
   //Projectiles
@@ -323,7 +316,7 @@
     "description": "hmmmm... beer...",
     "stackable": true,
     "quest-related": false,
-    "sellable":  false,
+    "sellable": false,
     "slug": "beer_can"
   },
   {
@@ -1322,10 +1315,5 @@
     "quest-related": false,
     "sellable": true,
     "slug": "bowling_shoes"
-<<<<<<< HEAD
   }
-=======
-  }      
-
 ]
->>>>>>> 6764cf76c5f38f27c6d8e163e300c3a4c47f6ece

@@ -110,7 +110,6 @@ public class Tooltip : MonoBehaviour
             if (item.Set != "none")
             {
                 data += "\n\n<i><color=#FFF000>This item is part of the <color=#FFFFFF>" + item.Set + "</color> set </color></i>";
-<<<<<<< HEAD
             if (item.ID == 14) {
                 data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
             }
@@ -131,7 +130,6 @@ public class Tooltip : MonoBehaviour
             data += "\n\n<i><color=#FFFFFF>Not Sellable</color></i>";
         }
         //Toont informatie over de set
-=======
                 if (item.ID == 14)
                 {
                     data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
@@ -157,7 +155,6 @@ public class Tooltip : MonoBehaviour
                     data += "\n\n<i><color=#FFFFFF>Not Sellable</color></i>";
                 }
                 //Toont informatie over de set
->>>>>>> 6764cf76c5f38f27c6d8e163e300c3a4c47f6ece
 
                 data += "\n\n<color=#FFFFFF>Current Sets: </color>";
                 if (setArray[0] >= 2)
@@ -192,7 +189,6 @@ public class Tooltip : MonoBehaviour
                 tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
             }
         }
-    }
 
     public void UpdateInventoryData()
     {

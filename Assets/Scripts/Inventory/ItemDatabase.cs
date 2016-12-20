@@ -24,7 +24,6 @@ public class ItemDatabase : MonoBehaviour {
             }
         }
         return null;
-
     }
 
     private void ConstructItemDatabase()
@@ -33,19 +32,19 @@ public class ItemDatabase : MonoBehaviour {
         {
             if (ItemData[i]["type"].ToString() == "equipment")
             {
-                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), (int)ItemData[i]["stats"]["attack"], (int)ItemData[i]["stats"]["defence"], (int)ItemData[i]["stats"]["health"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (int)ItemData[i]["rarity"], ItemData[i]["slug"].ToString()));
+                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), ItemData[i]["set"].ToString(), (int)ItemData[i]["stats"]["attack"], (int)ItemData[i]["stats"]["defence"], (int)ItemData[i]["stats"]["health"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
             }
             else if (ItemData[i]["type"].ToString() == "weapon")
             {
-                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), (int)ItemData[i]["damage"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (int)ItemData[i]["rarity"], ItemData[i]["slug"].ToString()));
+                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), ItemData[i]["set"].ToString(), (int)ItemData[i]["damage"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
             }
             else if(ItemData[i]["type"].ToString() == "consumable")
             {
-                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), (int)ItemData[i]["heal"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (int)ItemData[i]["rarity"], ItemData[i]["slug"].ToString()));
+                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), (int)ItemData[i]["heal"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
             }
-            else if (ItemData[i]["type"].ToString() == "miscellaneous")
+            else if (ItemData[i]["type"].ToString() == "miscellaneous" || ItemData[i]["type"].ToString() == "ammunition")
             {
-                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (int)ItemData[i]["rarity"], ItemData[i]["slug"].ToString()));
+                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
             }
             else if (ItemData[i]["type"].ToString() == "nullitem")
             {
@@ -62,6 +61,7 @@ public class Item
     public int Value { get; set; }
     public string Type { get; set; }
     public string Subtype { get; set; }
+    public string Set { get; set; }
     public int Attack { get; set; }
     public int Defence { get; set; }
     public int Health { get; set; }
@@ -70,48 +70,64 @@ public class Item
     public string Description { get; set; }
     public bool Stackable { get; set; }
     public bool Questrelated { get; set; }
-    public int Rarity { get; set; }
+    public bool Sellable { get; set; }
     public string Slug { get; set; }
     public Sprite Sprite { get; set; }
 
     //Constructor voor Equipment
-    public Item(int id, string title, int value, string type, string subtype, int attack, int defence, int health, string description, bool stackable, bool questrelated, int rarity, string slug)
+    public Item(int id, string title, int value, string type, string subtype, string set, int attack, int defence, int health, string description, bool stackable, bool questrelated, bool sellable, string slug)
     {
         this.ID = id;
         this.Title = title;
         this.Value = value;
         this.Type = type;
         this.Subtype = subtype;
+        this.Set = set;
         this.Attack = attack;
         this.Defence = defence;
         this.Health = health;
         this.Description = description;
         this.Stackable = stackable;
         this.Questrelated = questrelated;
-        this.Rarity = rarity;
+        this.Sellable = sellable;
         this.Slug = slug;
         this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }
-    //Constructor voor Consumables/Weapons
-    public Item(int id, string title, int value, string type, string subtype, int healdamage, string description, bool stackable, bool questrelated, int rarity, string slug)
+    //Constructor voor Weapons
+    public Item(int id, string title, int value, string type, string subtype, string set, int damage, string description, bool stackable, bool questrelated, bool sellable, string slug)
     {
         this.ID = id;
         this.Title = title;
         this.Value = value;
         this.Type = type;
         this.Subtype = subtype;
-        if(type == "consumable")this.Heal = healdamage;
-        else if(type == "weapon") this.Damage = healdamage;
+        this.Set = set;
+        this.Damage = damage;
         this.Description = description;
-        this.Stackable = stackable;
+        this.Stackable = stackable; 
         this.Questrelated = questrelated;
-        this.Rarity = rarity;
+        this.Sellable = sellable;
         this.Slug = slug;
         this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }
-
-    //Constructor voor Miscellaneous
-    public Item(int id, string title, int value, string type, string description, bool stackable, bool questrelated, int rarity, string slug)
+    //Constructor voor Consumables
+    public Item(int id, string title, int value, string type, string subtype, int heal, string description, bool stackable, bool questrelated, bool sellable, string slug)
+    {
+        this.ID = id;
+        this.Title = title;
+        this.Value = value;
+        this.Type = type;
+        this.Subtype = subtype; 
+        this.Heal = heal;
+        this.Description = description;
+        this.Stackable = stackable;
+        this.Questrelated = questrelated;
+        this.Sellable = sellable;
+        this.Slug = slug;
+        this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
+    }
+    //Constructor voor Miscellaneous/Ammunition
+    public Item(int id, string title, int value, string type, string description, bool stackable, bool questrelated, bool sellable, string slug)
     {
         this.ID = id;
         this.Title = title;
@@ -120,7 +136,7 @@ public class Item
         this.Description = description;
         this.Stackable = stackable;
         this.Questrelated = questrelated;
-        this.Rarity = rarity;
+        this.Sellable = sellable;
         this.Slug = slug;
         this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }

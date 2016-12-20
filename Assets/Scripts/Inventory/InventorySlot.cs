@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 
-public class InventorySlot : MonoBehaviour , IDropHandler{
+public class InventorySlot : MonoBehaviour , IDropHandler {
     public int slotID;
     private Inventory inv;
 
@@ -27,11 +27,8 @@ public class InventorySlot : MonoBehaviour , IDropHandler{
             item.GetComponent<ItemData>().slot = droppedItem.slot;
             item.transform.SetParent(inv.slots[droppedItem.slot].transform);
             item.transform.position = inv.slots[droppedItem.slot].transform.position;
-
-
             droppedItem.transform.SetParent(this.transform);
             droppedItem.transform.position = this.transform.position;
-
             inv.items[droppedItem.slot] = item.GetComponent<ItemData>().item;
             inv.items[slotID] = droppedItem.item;
 

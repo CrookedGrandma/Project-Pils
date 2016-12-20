@@ -1,34 +1,37 @@
 [
+    //Nullitem
   {
     "id": 0,
+    "title": "nullitem",
+    "type": "nullitem",
+    "slug": "nullitem"
+  },
+  //Quest Related
+  {
+    "id": 1,
     "title": "Phone",
-    "value": 6,
+    "value":  0,
     "type": "miscellaneous",
     "description": "Communicate with friends, view the objectives and map",
     "stackable": false,
-    "quest-related":  true,
-    "rarity": 1,
+    "quest-related": true,
+    "sellable": false,
     "slug": "phone"
   },
   {
     "id": 2,
-    "title": "Killer Meemstars Cap",
-    "value": 6,
-    "type": "equipment",
-    "subtype": "headwear",
-    "stats": {
-      "attack": 0,
-      "defence": 50,
-      "health": 100
-    },
-    "description": "Let's get riiiiight into the pils",
+    "title": "Hard Drive",
+    "value":  0,
+    "type": "miscellaneous",
+    "description": "A Hard Drive filled with all of your 'charming' photographs",
     "stackable": false,
-    "quest-related":  false,
-    "rarity": 1,
-    "slug": "killer_meemstar_hat"
+    "quest-related": true,
+    "sellable": false,
+    "slug": "hard_disc"
   },
+  //Consumables
   {
-    "id": 3,
+    "id": 100,
     "title": "Apple Juice",
     "value": 10,
     "type": "consumable",
@@ -36,12 +39,12 @@
     "heal": 10,
     "description": "It's not apple cider, but it'll have to do",
     "stackable": true,
-    "quest-related":  false,
-    "rarity": 1,
+    "quest-related": false,
+    "sellable": true,
     "slug": "apple_juice"
   },
-    {
-    "id": 4,
+  {
+    "id": 101,
     "title": "Unprepared Microwave Meal",
     "value": 20,
     "type": "consumable",
@@ -50,11 +53,11 @@
     "description": "You really should've prepared this, I mean it takes like 2 whole minutes to prepare this.. But no, you had to be a cool and rebelous kid.. Well, do your thing.. No one is judging you..",
     "stackable": true,
     "quest-related": false,
-    "rarity": 1,
+    "sellable": true,
     "slug": "unprepared_microwave_meal"
   },
-    {
-    "id": 5,
+  {
+    "id": 102,
     "title": "Radler",
     "value": 25,
     "type": "consumable",
@@ -63,108 +66,507 @@
     "description": "Beer mixed with the fresh flavour of lemon",
     "stackable": true,
     "quest-related": false,
-    "rarity": 1,
+    "sellable": true,
     "slug": "radler"
   },
-    {
-    "id": 6,
-    "title": "Pils",
+  {
+    "id": 103,
+    "title": "Canned Pils",
+    "value": 25,
+    "type": "consumable",
+    "subtype": "healing",
+    "heal": 25,
+    "description": "Only sixpack you will ever get in your life",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "beer_can"
+  },
+  {
+    "id": 104,
+    "title": "Bottled Pils",
     "value": 40,
     "type": "consumable",
     "subtype": "healing",
     "heal": 50,
     "description": "A pils (or 3) a day, keeps the good grades away",
     "stackable": true,
-    "quest-related":  false,
-    "rarity": 1,
+    "quest-related": false,
+    "sellable": true,
     "slug": "pils"
   },
   {
-    "id": 7,
+    "id": 105,
     "title": "Noni's Pils",
-    "value": 1,
+    "value": 0,
     "type": "consumable",
     "subtype": "healing",
     "heal": 69,
     "description": "The cup is still almost completely full, looks like it didn't take much for Noni to get affected",
     "stackable": false,
     "quest-related": false,
-    "rarity": 100,
+    "sellable": false,
     "slug": "noni_pils"
-  }
-  ,
+  },
   {
-    "id": 8,
+    "id": 106,
     "title": "Mega Pils",
-    "value": 1,
+    "value": 0,
     "type": "consumable",
     "subtype": "healing",
     "heal": 75,
     "description": "A good and healthy way to start the day",
     "stackable": false,
     "quest-related": true,
-    "rarity": 100,
+    "sellable": false,
     "slug": "mega_pils"
-  }
-  ,
+  },
+  //Melee weapons
   {
-    "id": 9,
-    "title": "Empty Beer Can",
-    "value": 1,
-    "type": "weapon",
-    "subtype": "projectile",
-    "damage": 20,
-    "description": "Not refillable",
-    "stackable": true,
-    "quest-related": false,
-    "rarity": 100,
-    "slug": "beer_can"
-  }
-    ,
-  {
-    "id": 10,
-    "title": "Pen",
-    "value": 1,
-    "type": "weapon",
-    "subtype": "projectile",
-    "damage": 25,
-    "description": "I have a pen, I have an Enemy, Uh...",
-    "stackable": true,
-    "quest-related": false,
-    "rarity": 100,
-    "slug": "pen"
-  }
-      ,
-  {
-    "id": 11,
+    "id": 200,
     "title": "Broken Beer Bottle",
     "value": 1,
     "type": "weapon",
     "subtype": "melee",
-    "damage": 25,
+    "set": "none",
+    "damage": 10,
     "description": "Be careful not to cut yourself",
     "stackable": false,
     "quest-related": false,
-    "rarity": 100,
+    "sellable": true,
     "slug": "broken_beer_bottle"
   },
   {
-    "id": 12,
-    "title": "Hard Drive",
-    "value": 6,
-    "type": "miscellaneous",
-    "description": "A Hard Drive filled with all of your 'charming' photographs",
+    "id": 201,
+    "title": "Baseball Bat",
+    "value": 40,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "sports",
+    "damage": 30,
+    "description": "Just pretend the enemy's head is the ball",
     "stackable": false,
-    "quest-related": true,
-    "rarity": 1,
-    "slug": "hard_disc"
+    "quest-related": false,
+    "sellable": true,
+    "slug": "baseball_bat"
   },
-   {
-    "id": 13,
-    "title": "Torn T-Shirt",
-    "value": 6,
+  {
+    "id": 202,
+    "title": "Clawhammer",
+    "value": 50,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "none",
+    "damage": 40,
+    "description": "Just pretend the enemy's head is the nail",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "clawhammer"
+  },
+  {
+    "id": 203,
+    "title": "Cleaver",
+    "value": 60,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "none",
+    "damage": 50,
+    "description": "Almost scary how clean it cuts",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "cleaver"
+  },
+  {
+    "id": 204,
+    "title": "Knuckle-duster",
+    "value": 15,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "none",
+    "damage": 20,
+    "description": "Ain't no barfight without them",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "knuckle_duster"
+  },
+  {
+    "id": 205,
+    "title": "Wok",
+    "value": 55,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "none",
+    "damage": 45,
+    "description": "Named after the sounds it makes when you hit someone with it",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "wok"
+  },
+  {
+    "id": 206,
+    "title": "Plunger",
+    "value": 10,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "none",
+    "damage": 15,
+    "description": "Useful in any situation",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "plunger"
+  },
+  {
+    "id": 207,
+    "title": "Sword of Deception",
+    "value": 200,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "none",
+    "damage": 150,
+    "description": "Only known from legends and tales, this sword is known to appear in any form and strength",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "sword_of_deception"
+  },
+  {
+    "id": 208,
+    "title": "Sword of Deception (true form)",
+    "value": 0,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "none",
+    "damage": 1,
+    "description": "Well you just got pranked",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": false,
+    "slug": "sword_of_deception"
+  },
+  {
+    "id": 209,
+    "title": "Two-Handed Sword",
+    "value": 80,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "medieval",
+    "damage": 80,
+    "description": "It is heavy, but you can cut a table in half with it",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "two_handed_sword"
+  },
+  {
+    "id": 210,
+    "title": "Nunchaku",
+    "value": 40,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "medieval",
+    "damage": 60,
+    "description": "In the right hands, a powerful and swift weapon. In the wrong hands, well...",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "nunchaku"
+  },
+  {
+    "id": 211,
+    "title": "Sword Cane",
+    "value": 50,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "gentleman",
+    "damage": 55,
+    "description": "Duel like a gentleman",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "sword_cane"
+  },
+  //Projectiles
+  {
+    "id": 300,
+    "title": "Empty Beer Can",
+    "value": 1,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "none",
+    "damage": 10,
+    "description": "hmmmm... beer...",
+    "stackable": true,
+    "quest-related": false,
+    "sellable":  false,
+    "slug": "beer_can"
+  },
+  {
+    "id": 301,
+    "title": "Pen",
+    "value": 5,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "none",
+    "damage": 15,
+    "description": "I have a pen, I have an Enemy, Uh...",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "pen"
+  },
+  {
+    "id": 302,
+    "title": "Hatchet",
+    "value": 10,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "none",
+    "damage": 25,
+    "description": "description needed",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "hatchet"
+  },
+  {
+    "id": 303,
+    "title": "Plastic fork",
+    "value": 2,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "none",
+    "damage": 10,
+    "description": "Try to hit them with the pointy end",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "plastic_fork"
+  },
+  {
+    "id": 304,
+    "title": "Discus",
+    "value": 10,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "sports",
+    "damage": 30,
+    "description": "Sporty",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "discus"
+  },
+  {
+    "id": 305,
+    "title": "Ben's Laptop",
+    "value": 0,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "none",
+    "damage": 60,
+    "description": "Still useful as a building brick",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": false,
+    "slug": "bens_laptop"
+  },
+  {
+    "id": 306,
+    "title": "Galactic© Not 7",
+    "value": 40,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "none",
+    "damage": 70,
+    "description": "Highly explosive",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "galactic_not_7"
+  },
+  {
+    "id": 307,
+    "title": "Boomerang",
+    "value": 10,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "none",
+    "damage": 20,
+    "description": "Careful not to hit your friends",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "boomerang"
+  },
+  {
+    "id": 308,
+    "title": "Shuriken",
+    "value": 25,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "chinese",
+    "damage": 50,
+    "description": "Go full Ninja-mode",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "shuriken"
+  },
+  {
+    "id": 309,
+    "title": "Burrito",
+    "value": 2,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "mexican",
+    "damage": 10,
+    "description": "You would eat them yourself, but unfortunately it doesn't have any meat",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "burrito"
+  },
+
+  //Ranged Weapons
+  {
+    "id": 400,
+    "title": "Catapult",
+    "value": 30,
+    "type": "weapon",
+    "subtype": "ranged",
+    "set": "none",
+    "damage": 20,
+    "description": "A powerful combination of a stick and a rubber band. Requires Pebbles",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "catapult"
+  },
+  {
+    "id": 401,
+    "title": "Paintball Gun",
+    "value": 100,
+    "type": "weapon",
+    "subtype": "ranged",
+    "set": "none",
+    "damage": 50,
+    "description": "Turns your enemy's into a Picasso painting. Requires Paintballs",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "paintball_gun"
+  },
+  {
+    "id": 402,
+    "title": "Staple Gun",
+    "value": 120,
+    "type": "weapon",
+    "subtype": "ranged",
+    "set": "none",
+    "damage": 60,
+    "description": "Shoots nails with incredible speed in between walls (or in your case, at enemy's). Requires Nails",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "staple_gun"
+  },
+  {
+    "id": 403,
+    "title": "Rubber Band Gun",
+    "value": 50,
+    "type": "weapon",
+    "subtype": "ranged",
+    "set": "none",
+    "damage": 30,
+    "description": "Bury your enemy's in a single barrage of 10 rubber bands. Requires Rubber Bands",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "rubber_band_gun"
+  },
+  {
+    "id": 404,
+    "title": "Compostie Bow",
+    "value": 150,
+    "type": "weapon",
+    "subtype": "ranged",
+    "set": "arabic",
+    "damage": 60,
+    "description": "Once used by a mighty empire, now to be used by a drunk idiot. Requires Arrows",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "composite_bow"
+  },
+  //Ammunition
+  {
+    "id": 500,
+    "title": "Pebble",
+    "value": 1,
+    "type": "ammunition",
+    "description": "Can be found almost anywhere. Used by Catapult",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "pebble"
+  },
+  {
+    "id": 501,
+    "title": "Paint ball",
+    "value": 5,
+    "type": "ammunition",
+    "description": "Comes in any colour. Used by Paintball Gun",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "paintball"
+  },
+  {
+    "id": 502,
+    "title": "Nail",
+    "value": 1,
+    "type": "ammunition",
+    "description": "description required. Used by Staple gun",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "nail"
+  },
+  {
+    "id": 503,
+    "title": "Rubber band",
+    "value": 1,
+    "type": "ammunition",
+    "description": "description required. Used by Rubber Band Gun",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": false,
+    "slug": "rubber_band"
+  },
+  {
+    "id": 504,
+    "title": "Arrow",
+    "value": 7,
+    "type": "ammunition",
+    "description": "description required. Used by Composite bow",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": false,
+    "slug": "arrow"
+  },
+  //Headwear
+  {
+    "id": 600,
+    "title": "Killer Meemstars Cap",
+    "value": 0,
     "type": "equipment",
     "subtype": "headwear",
+    "set": "none",
     "stats": {
       "attack": 0,
       "defence": 50,
@@ -172,16 +574,732 @@
     },
     "description": "Let's get riiiiight into the pils",
     "stackable": false,
-    "quest-related":  false,
-    "rarity": 1,
+    "quest-related": false,
+    "sellable": false,
     "slug": "killer_meemstar_hat"
   },
-      {
-    "id": 999,
-    "title": "nullitem",
-    "type": "nullitem",
-    "slug": "nullitem"
+  {
+    "id": 601,
+    "title": "Sweatband",
+    "value": 5,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "none",
+    "stats": {
+      "attack": 10,
+      "defence": 10,
+      "health": 10
+    },
+    "description": "Keep your head cool and your fashion style cooler",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "sweatband"
+  },
+  {
+    "id": 602,
+    "title": "Baseball Cap",
+    "value": 20,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "sports",
+    "stats": {
+      "attack": 0,
+      "defence": 30,
+      "health": 20
+    },
+    "description": "Makes you look like a real douchebag",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "baseball_cap"
+  },
+  {
+    "id": 603,
+    "title": "Fedora",
+    "value": 40,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "none",
+    "stats": {
+      "attack": 10,
+      "defence": 40,
+      "health": 40
+    },
+    "description": "M'lady",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "fedora"
+  },
+  {
+    "id": 604,
+    "title": "Medieval Helmet",
+    "value": 60,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "medieval",
+    "stats": {
+      "attack": 0,
+      "defence": 100,
+      "health": 100
+    },
+    "description": "Protects you from harm, and protects them from your ugly face",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "medieval_helmet"
+  },
+  {
+    "id": 605,
+    "title": "Top hat",
+    "value": 80,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "gentleman",
+    "stats": {
+      "attack": 50,
+      "defence": 80,
+      "health": 50
+    },
+    "description": "You never know what's gonna come out of that hat",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "top_hat"
+  },
+  {
+    "id": 606,
+    "title": "Paper Bag",
+    "value": 1,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "dumpster",
+    "stats": {
+      "attack": 0,
+      "defence": 0,
+      "health": 1
+    },
+    "description": "At least the bag is happy",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "paper_bag"
+  },
+  {
+    "id": 607,
+    "title": "Keffiyeh",
+    "value": 50,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "arabic",
+    "stats": {
+      "attack": 50,
+      "defence": 30,
+      "health": 30
+    },
+    "description": "Rumour says that this arabic headwear hides a mind control device",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "keffiyeh"
+  },
+  {
+    "id": 608,
+    "title": "Chinese Strawhat",
+    "value": 30,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "chinese",
+    "stats": {
+      "attack": 50,
+      "defence": 0,
+      "health": 0
+    },
+    "description": "Only chinese farmers and kung-fu masters actually wear this",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "chinese_strawhat"
+  },
+  {
+    "id": 609,
+    "title": "Sombrero",
+    "value": 60,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "mexican",
+    "stats": {
+      "attack": 0,
+      "defence": 40,
+      "health": 80
+    },
+    "description": "Ay caramba!",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "sombrero"
+  },
+  {
+    "id": 610,
+    "title": "Afro wig",
+    "value": 20,
+    "type": "equipment",
+    "subtype": "headwear",
+    "set": "none",
+    "stats": {
+      "attack": 20,
+      "defence": 10,
+      "health": 10
+    },
+    "description": "Guaranteed to make you the king of the dancefloor",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "afro_wig"
+  },
+  //Bodywear
+  {
+    "id": 700,
+    "title": "T-shirt",
+    "value": 10,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "none",
+    "stats": {
+      "attack": 0,
+      "defence": 20,
+      "health": 20
+    },
+    "description": "Yes, this took a lot of inspiration",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "tshirt"
+  },
+  {
+    "id": 701,
+    "title": "Training Suit",
+    "value": 30,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "sports",
+    "stats": {
+      "attack": 0,
+      "defence": 40,
+      "health": 30
+    },
+    "description": "Gives extra bonuses to people of Slavic ethnicity",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "training_suit"
+  },
+  {
+    "id": 702,
+    "title": "Medieval armor",
+    "value": 100,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "medieval",
+    "stats": {
+      "attack": 0,
+      "defence": 200,
+      "health": 150
+    },
+    "description": "Nothing is going to get through",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "medieval_armor"
+  },
+
+  {
+    "id": 703,
+    "title": "Fur Coat",
+    "value": 50,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "none",
+    "stats": {
+      "attack": 20,
+      "defence": 50,
+      "health": 50
+    },
+    "description": "Made out of real fake fur",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "fur_coat"
+  },
+  {
+    "id": 704,
+    "title": "Sweater",
+    "value": 20,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "none",
+    "stats": {
+      "attack": 0,
+      "defence": 40,
+      "health": 10
+    },
+    "description": "Keeps you warm during cold days",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "sweater"
+  },
+  {
+    "id": 705,
+    "title": "Arabic robe",
+    "value": 35,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "arabic",
+    "stats": {
+      "attack": 10,
+      "defence": 30,
+      "health": 50
+    },
+    "description": "Some say this outfit attracts oil",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "arabic_robe"
+  },
+  {
+    "id": 706,
+    "title": "Fancy suit",
+    "value": 80,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "gentleman",
+    "stats": {
+      "attack": 0,
+      "defence": 100,
+      "health": 60
+    },
+    "description": "Beat up your enemy's in style",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "fancy_suit"
+  },
+  {
+    "id": 707,
+    "title": "Garbage bag",
+    "value": 5,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "dumpster",
+    "stats": {
+      "attack": 5,
+      "defence": 10,
+      "health": 10
+    },
+    "description": "One man's thrash is another man's treasure",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "garbage_bag"
+  },
+  {
+    "id": 708,
+    "title": "Kung Fu Jacket",
+    "value": 60,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "chinese",
+    "stats": {
+      "attack": 100,
+      "defence": 10,
+      "health": 0
+    },
+    "description": "Channel the spirit of Bruce Lee through your body",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "kung_fu_jacket"
+  },
+  {
+    "id": 709,
+    "title": "Mexican Poncho",
+    "value": 40,
+    "type": "equipment",
+    "subtype": "bodywear",
+    "set": "mexican",
+    "stats": {
+      "attack": 30,
+      "defence": 50,
+      "health": 50
+    },
+    "description": "Este es un muy buen poncho!",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "sweater"
+  },
+  //Lowerwear
+  {
+    "id": 800,
+    "title": "Medieval Leggings",
+    "value": 70,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "medieval",
+    "stats": {
+      "attack": 0,
+      "defence": 100,
+      "health": 100
+    },
+    "description": "Protects you from arrows in the knee",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "medieval_leggings"
+  },
+  {
+    "id": 801,
+    "title": "Training pants",
+    "value": 30,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "sports",
+    "stats": {
+      "attack": 30,
+      "defence": 10,
+      "health": 10
+    },
+    "description": "These are actually quite comfortable!",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "training_pants"
+  },
+  {
+    "id": 802,
+    "title": "Harem Pants",
+    "value": 60,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "arabic",
+    "stats": {
+      "attack": 30,
+      "defence": 60,
+      "health": 60
+    },
+    "description": "Harem not included",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "harem_pants"
+  },
+  {
+    "id": 803,
+    "title": "Fancy Pants",
+    "value": 50,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "gentleman",
+    "stats": {
+      "attack": 40,
+      "defence": 30,
+      "health": 60
+    },
+    "description": "Looks fancy",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "fancy_pants"
+  },
+  {
+    "id": 804,
+    "title": "Jeans",
+    "value": 20,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "mexican",
+    "stats": {
+      "attack": 0,
+      "defence": 30,
+      "health": 30
+    },
+    "description": "Worn by people all over the world",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "jeans"
+  },
+  {
+    "id": 805,
+    "title": "Black belt",
+    "value": 60,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "mexican",
+    "stats": {
+      "attack": 80,
+      "defence": 30,
+      "health": 0
+    },
+    "description": "Just wearing it turns you in a martial artist",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "jeans"
+  },
+  {
+    "id": 806,
+    "title": "Torn pants",
+    "value": 10,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "dumpster",
+    "stats": {
+      "attack": 10,
+      "defence": 10,
+      "health": 10
+    },
+    "description": "Lets hope you are wearing underwear",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "torn_pants"
+  },
+  {
+    "id": 807,
+    "title": "Swimming pants",
+    "value": 30,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "none",
+    "stats": {
+      "attack": 30,
+      "defence": 10,
+      "health": 10
+    },
+    "description": "Mom always said: Be prepared for anything!",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "swimming_pants"
+  },
+  {
+    "id": 808,
+    "title": "Shorts",
+    "value": 40,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "none",
+    "stats": {
+      "attack": 20,
+      "defence": 40,
+      "health": 10
+    },
+    "description": "Less pants for more money? Sounds like a scam",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "shorts"
+  },
+  {
+    "id": 809,
+    "title": "Underwear",
+    "value": 5,
+    "type": "equipment",
+    "subtype": "lowerwear",
+    "set": "none",
+    "stats": {
+      "attack": 0,
+      "defence": 0,
+      "health": 10
+    },
+    "description": "You really should change into something better",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "underwear"
+  },
+  //shoes
+  {
+    "id": 900,
+    "title": "Medieval boots",
+    "value": 50,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "medieval",
+    "stats": {
+      "attack": 0,
+      "defence": 70,
+      "health": 50
+    },
+    "description": "You can hear them from miles away",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "medieval_boots"
+  },
+  {
+    "id": 901,
+    "title": "Sneakers",
+    "value": 20,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "sports",
+    "stats": {
+      "attack": 20,
+      "defence": 20,
+      "health": 20
+    },
+    "description": "Does not improve Sneaking",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "sneakers"
+  },
+  {
+    "id": 902,
+    "title": "Arabic shoes",
+    "value": 30,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "arabic",
+    "stats": {
+      "attack": 0,
+      "defence": 40,
+      "health": 40
+    },
+    "description": "There is a reason no one wears these anymore",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "arabic_shoes"
+  },
+  {
+    "id": 903,
+    "title": "Patent Leathers",
+    "value": 60,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "gentleman",
+    "stats": {
+      "attack": 30,
+      "defence": 70,
+      "health": 50
+    },
+    "description": "If only your future shined as bright",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "patent_leathers"
+  },
+  {
+    "id": 904,
+    "title": "Sandals",
+    "value": 25,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "mexican",
+    "stats": {
+      "attack": 30,
+      "defence": 10,
+      "health": 10
+    },
+    "description": "Don't you DARE to wear white socks with this",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "sandals"
+  },
+  {
+    "id": 905,
+    "title": "Old Boots",
+    "value": 10,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "dumpster",
+    "stats": {
+      "attack": 10,
+      "defence": 5,
+      "health": 5
+    },
+    "description": "At least its better than no shoes",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "old_boots"
+  },
+  {
+    "id": 906,
+    "title": "Geta",
+    "value": 30,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "chinese",
+    "stats": {
+      "attack": 30,
+      "defence": 10,
+      "health": 0
+    },
+    "description": "Traditional chinese wooden sandals. Prevents your feet from stepping in the blood of your enemy's",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "geta"
+  },
+  {
+    "id": 907,
+    "title": "Cowboy Boots",
+    "value": 45,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "none",
+    "stats": {
+      "attack": 50,
+      "defence": 0,
+      "health": 20
+    },
+    "description": "YEEEEEEEEEEE-HAAAAAWWW!",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "cowboy_boots"
+  },
+  {
+    "id": 908,
+    "title": "Kroks©",
+    "value": 15,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "none",
+    "stats": {
+      "attack": 0,
+      "defence": 10,
+      "health": 20
+    },
+    "description": "There is no excuse to ever wear this",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "Kroks"
+  },
+  {
+    "id": 909,
+    "title": "Bowling Shoes",
+    "value": 35,
+    "type": "equipment",
+    "subtype": "footwear",
+    "set": "none",
+    "stats": {
+      "attack": 0,
+      "defence": 50,
+      "health": 50
+    },
+    "description": "Quite sturdy, actually",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "bowling_shoes"
   }
-
-
 ]

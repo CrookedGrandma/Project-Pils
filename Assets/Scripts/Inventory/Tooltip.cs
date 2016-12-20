@@ -106,65 +106,65 @@ public class Tooltip : MonoBehaviour
         }
         else if (item.Type == "weapon")
         {
-<<<<<<< HEAD
             data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: " + item.Damage + "</color>";
             if (item.Set != "none")
             {
                 data += "\n\n<i><color=#FFF000>This item is part of the <color=#FFFFFF>" + item.Set + "</color> set </color></i>";
-=======
-            if (item.ID == 14) {
-                data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
+                if (item.ID == 14)
+                {
+                    data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
+                }
+                else
+                {
+                    data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: " + item.Damage + "</color>";
+                }
             }
-            else {
-                data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: " + item.Damage + "</color>";
->>>>>>> f5004450fde485c9920ca8504e7406cc9b2db07e
+            else if (item.Type == "miscellaneous" || item.Type == "ammunition")
+            {
+                data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>";
             }
-        }
-        else if (item.Type == "miscellaneous" || item.Type == "ammunition")
-        {
-            data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>";
-        }
-        if (item.Questrelated == true)
-        {
-            data += "\n\n<i><color=#FFFFFF>Quest-related</color></i>";
-        }
-        if (item.Sellable == false)
-        {
-            data += "\n\n<i><color=#FFFFFF>Not Sellable</color></i>";
-        }
-        //Toont informatie over de set
+            if (item.Questrelated == true)
+            {
+                data += "\n\n<i><color=#FFFFFF>Quest-related</color></i>";
+            }
+            if (item.Sellable == false)
+            {
+                data += "\n\n<i><color=#FFFFFF>Not Sellable</color></i>";
+            }
+            //Toont informatie over de set
 
-        data += "\n\n<color=#FFFFFF>Current Sets: </color>";
-        if (setArray[0] >= 2)
-        {
-            data += "\n<color=#000000>Dumpster: " + setArray[0] + "</color>";
+            data += "\n\n<color=#FFFFFF>Current Sets: </color>";
+            if (setArray[0] >= 2)
+            {
+                data += "\n<color=#000000>Dumpster: " + setArray[0] + "</color>";
+            }
+            if (setArray[1] >= 2)
+            {
+                data += "\n<color=#A3A3A3>Medieval: " + setArray[1] + "</color>";
+            }
+            if (setArray[2] >= 2)
+            {
+                data += "\n<color=#C000FF>Gentleman: " + setArray[2] + "</color>";
+            }
+            if (setArray[3] >= 2)
+            {
+                data += "\n<color=#FFF700>Arabic: " + setArray[3] + "</color>";
+            }
+            if (setArray[4] >= 2)
+            {
+                data += "\n<color=#00FF26>Mexican: " + setArray[4] + "</color>";
+            }
+            if (setArray[5] >= 2)
+            {
+                data += "\n<color=#FF0000>Chinese: " + setArray[5] + "</color>";
+            }
+            if (setArray[6] >= 2)
+            {
+                data += "\n<color=#0000ff>Sports: " + setArray[6] + "</color>";
+            }
+            tooltip.transform.GetChild(0).GetComponent<Text>().supportRichText = true;
+            tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
         }
-        if (setArray[1] >= 2)
-        {
-            data += "\n<color=#A3A3A3>Medieval: " + setArray[1] + "</color>";
-        }
-        if (setArray[2] >= 2)
-        {
-            data += "\n<color=#C000FF>Gentleman: " + setArray[2] + "</color>";
-        }
-        if (setArray[3] >= 2)
-        {
-            data += "\n<color=#FFF700>Arabic: " + setArray[3] + "</color>";
-        }
-        if (setArray[4] >= 2)
-        {
-            data += "\n<color=#00FF26>Mexican: " + setArray[4] + "</color>";
-        }
-        if (setArray[5] >= 2)
-        {
-            data += "\n<color=#FF0000>Chinese: " + setArray[5] + "</color>";
-        }
-        if (setArray[6] >= 2)
-        {
-            data += "\n<color=#0000ff>Sports: " + setArray[6] + "</color>";
-        }
-        tooltip.transform.GetChild(0).GetComponent<Text>().supportRichText = true;
-        tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
     }
 
     public void UpdateInventoryData()

@@ -112,7 +112,7 @@ public class Tooltip : MonoBehaviour
             {
                 data += "\n\n<i><color=#FFF000>This item is part of the <color=#FFFFFF>" + item.Set + "</color> set </color></i>";
 =======
-            if (item.ID == 14) {
+            if (item.ID == 212) {
                 data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
             }
             else {

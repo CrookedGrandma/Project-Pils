@@ -320,7 +320,7 @@
   },
   //Projectiles
   {
-    "id": 300,
+    "id": 301,
     "title": "Empty Beer Can",
     "value": 1,
     "type": "weapon",

@@ -46,25 +46,16 @@ public class Inventory : MonoBehaviour {
             slots[i].transform.SetParent(equipmentPanel.transform);
         }
         AddItem(1);
-<<<<<<< HEAD
         AddItem(301);
-=======
         AddItem(201);
-        AddItem(212);
-        AddItem(213);
->>>>>>> origin/master
+        //AddItem(212);
         AddItem(302);
         AddItem(303);
         AddItem(304);
         AddItem(305);
         AddItem(306);
         AddItem(307);
-<<<<<<< HEAD
         AddItem(212);
-=======
-        AddItem(602);
-        AddItem(701);
->>>>>>> origin/master
     }
 
     public void AddItem(int ID)

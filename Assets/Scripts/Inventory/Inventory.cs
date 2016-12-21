@@ -46,7 +46,6 @@ public class Inventory : MonoBehaviour {
             slots[i].transform.SetParent(equipmentPanel.transform);
         }
         AddItem(1);
-        AddItem(201);
         AddItem(301);
         AddItem(302);
         AddItem(303);
@@ -54,8 +53,6 @@ public class Inventory : MonoBehaviour {
         AddItem(305);
         AddItem(306);
         AddItem(307);
-        AddItem(602);
-        AddItem(701);
         AddItem(212);
     }
 

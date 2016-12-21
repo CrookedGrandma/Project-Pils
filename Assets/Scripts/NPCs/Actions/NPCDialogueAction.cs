@@ -42,9 +42,9 @@ public class NPCDialogueAction : Core.FSM.FSMAction {
             timer = Time.time + Random.Range(3, 5);
         }
 
-        if(Time.time >= dialogueCooldown)
+        /*if(Time.time >= dialogueCooldown)
         {
             dialogueTriggered = false;
-        }
+        }*/
     }
 }

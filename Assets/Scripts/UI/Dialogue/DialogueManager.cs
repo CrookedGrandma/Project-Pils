@@ -2,44 +2,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using LitJson;
+using System.IO;
+using System.Linq;
 
 public class DialogueManager : Entity {
 
     public TextBox textBox;
     public Dictionary<string, DialogueOption> dialogueOptions = new Dictionary<string, DialogueOption>();
     public List<Button> buttons = new List<Button>();
-        
-    public void Start()
+    private JsonData DialogueData;
+
+    public void Awake()
     {
-        //Read and create dialogue options
-        for (int i = 0; i < 16; i++)
+        DialogueData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Dialogue.json"));
+
+        for(int i = 0; i < DialogueData.Count; i++)
         {
-            string leadsTo = (i + 1).ToString();
-            string leadsToSecond = (i == 14) ? "0" : (i + 2).ToString();
+            JsonData EntryData = DialogueData[i];
+            string[] responses = EntryData["responses"].ToString().Split(',');
+            responses = responses.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
-            int random = Random.Range(0, 100);
+            DialogueOption dialogueOption = new DialogueOption(EntryData["identifier"].ToString(), EntryData["text"].ToString(), EntryData["response"].ToString(), responses);
+            dialogueOption.entityName = EntryData["owner"].ToString();
 
-            string[] responses;
-            if(i < 15)
-            {
-                if (random > 50)
-                {
-                    responses = new string[] { leadsTo, leadsToSecond };
-                }
-                else
-                {
-                    responses = new string[] { leadsTo };
-                }
-            } else
-            {
-                responses = new string[] { };
-            }
-
-            DialogueOption dialogueOption = new DialogueOption(i.ToString(), "This leads to option " + leadsTo, "You chose option" + i.ToString(), responses);
-            dialogueOption.entityName = "DialogueManager";
-            dialogueOptions.Add(i.ToString(), dialogueOption);
+            dialogueOptions.Add(EntryData["identifier"].ToString(), dialogueOption);
         }
-
     }
 
     public void ClearDialogue()

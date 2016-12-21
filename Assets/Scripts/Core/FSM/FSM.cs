@@ -69,7 +69,7 @@ namespace Core.FSM
 		/// the Object that has an FSM.
 		///</summary>
 		public void Start (string stateName)
-		{
+		{ 
 			if (!stateMap.ContainsKey (stateName)) {
 				Debug.LogWarning ("The FSM doesn't contain: " + stateName);
 				return;

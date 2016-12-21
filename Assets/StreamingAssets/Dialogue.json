@@ -1,0 +1,23 @@
+[
+  {
+    "identifier": "StalkerDialogueStart",
+    "text": "Hello",
+    "response": "I'm a stalker and I just found you! Do you want to know more about me?",
+    "responses": "StalkerDialogueOne,StalkerDialogueTwo",
+    "owner": "Stalker"
+  },
+  {
+    "identifier": "StalkerDialogueOne",
+    "text": "Yes",
+    "response": "I'm your father Luke",
+    "responses": "",
+    "owner": "Stalker"
+  },
+  {
+    "identifier": "StalkerDialogueTwo",
+    "text": "No",
+    "response": "Well fuck you then",
+    "responses": "",
+    "owner": "Stalker"
+  }
+]

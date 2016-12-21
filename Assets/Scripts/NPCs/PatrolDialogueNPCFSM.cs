@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PatrolDialogueNPCFSM : Entity {
 
     public float movementSpeed = 0.6f;
+    public string dialogueIdentifier;
     public List<Vector3> waypoints = new List<Vector3>();
 
     private FSM fsm;
@@ -34,11 +35,12 @@ public class PatrolDialogueNPCFSM : Entity {
         dialogueState.AddAction(dialogueAction);
 
         moveAction.Init(GetComponent<Rigidbody>(), gameObject.transform, movementSpeed, waypoints, "ToIdle");
-        idleAction.Init(5, gameObject.transform);
-        dialogueAction.Init(this);
+        idleAction.Init(3, gameObject.transform);
+        dialogueAction.Init(this, dialogueIdentifier);
 
-        idleState.AddTransition("ToNextWaypoint", moveState);
         idleState.AddTransition("ToDialogue", dialogueState);
+        idleState.AddTransition("ToNextWaypoint", moveState);
+
         moveState.AddTransition("ToIdle", idleState);
         dialogueState.AddTransition("ToIdle", idleState);
 

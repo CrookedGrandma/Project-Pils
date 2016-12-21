@@ -31,9 +31,10 @@ public class WaypointMoveAction : Core.FSM.FSMAction
             Vector3 target = waypoints[0];
             Vector3 movementVector = (target - transform.position).normalized;
 
-            rigidbody.velocity = new Vector3(movementVector.x * magnitude, 0, movementVector.z * magnitude);
+            //rigidbody.velocity = new Vector3(movementVector.x * magnitude, 0, movementVector.z * magnitude);
+            transform.position += new Vector3(movementVector.x * magnitude, 0, movementVector.z * magnitude); //For use with Kinematic bodies
 
-            if(Mathf.Abs(transform.position.x - target.x) <= 0.01 && Mathf.Abs(transform.position.z - target.z) <= 0.01)
+            if(Mathf.Abs(transform.position.x - target.x) <= 0.1 && Mathf.Abs(transform.position.z - target.z) <= 0.1)
             {
                 rigidbody.velocity = Vector3.zero;
                 waypoints.Remove(target);

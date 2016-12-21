@@ -5,19 +5,19 @@ using Core.FSM;
 public class NPCDialogueAction : Core.FSM.FSMAction {
 
     float timer = Time.time + Random.Range(5, 7);
+    float dialogueCooldown = Time.time;
     bool dialogueTriggered = false;
     Entity npcEntity;
+    string identifier;
 
     public NPCDialogueAction(FSMState owner) : base(owner)
     {
     }
 
-    public void Init(Entity npc, string finishEvent = null)
+    public void Init(Entity npc, string dialogueIdentifier, string finishEvent = null)
     {
-        DialogueOption startingDialogue = new DialogueOption("-1", "Hello?", "Hey, I'm a stalker and I just found you!", new string[] { "0" });
-        startingDialogue.entityName = "Stalker";
-        GameManager.instance.dialogueManager.AddDialogueOption("-1", startingDialogue);
         npcEntity = npc;
+        identifier = dialogueIdentifier;
     }
 
 
@@ -29,8 +29,10 @@ public class NPCDialogueAction : Core.FSM.FSMAction {
             dialogueTriggered = true;
 
             Debug.Log("Dialogue triggered");
-            Message m = new Message(npcEntity, GameManager.instance.dialogueManager, MsgType.DialogueResponse, new string[] { "-1" });
+            Message m = new Message(npcEntity, GameManager.instance.dialogueManager, MsgType.DialogueResponse, new string[] { identifier });
             GameManager.instance.messageQueue.Add(m);
+
+            dialogueCooldown = Time.time + 5;
 
         }
 
@@ -39,5 +41,10 @@ public class NPCDialogueAction : Core.FSM.FSMAction {
             GetOwner().SendEvent("ToIdle");
             timer = Time.time + Random.Range(3, 5);
         }
+
+        /*if(Time.time >= dialogueCooldown)
+        {
+            dialogueTriggered = false;
+        }*/
     }
 }

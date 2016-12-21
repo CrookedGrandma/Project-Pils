@@ -304,6 +304,20 @@
     "sellable": true,
     "slug": "broken_beer_bottle"
   },
+  {
+    "id": 213,
+    "title": "Pen",
+    "value": 5,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "none",
+    "damage": 15,
+    "description": "I have a pen, I have an Enemy, Uh...",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "pen"
+  },
   //Projectiles
   {
     "id": 300,
@@ -318,20 +332,6 @@
     "quest-related": false,
     "sellable": false,
     "slug": "beer_can"
-  },
-  {
-    "id": 301,
-    "title": "Pen",
-    "value": 5,
-    "type": "weapon",
-    "subtype": "projectile",
-    "set": "none",
-    "damage": 15,
-    "description": "I have a pen, I have an Enemy, Uh...",
-    "stackable": true,
-    "quest-related": false,
-    "sellable": true,
-    "slug": "pen"
   },
   {
     "id": 302,

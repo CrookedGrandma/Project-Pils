@@ -71,11 +71,7 @@ public class PlayerFSM : Entity {
              * Terrain does not have mass, so there was a NullReferenceException. 
              * The collision with the terrain is already handled just before this.
              */
-<<<<<<< HEAD
            if (collision.rigidbody)
-=======
-            if (collision.rigidbody)
->>>>>>> origin/master
             {
                 if (PlayerRB.mass <= collision.rigidbody.mass)
                 {
@@ -116,9 +112,4 @@ public class PlayerFSM : Entity {
         moveAction.ableToMoveBackward = moveAction.ableToMoveForward = moveAction.ableToMoveLeft = moveAction.ableToMoveRight = true;
         moveAction.ableToJump = false;
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/master
-
 }

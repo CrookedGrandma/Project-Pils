@@ -19,7 +19,6 @@ public class Inventory : MonoBehaviour {
     public int slotCount;
     private int equipmentCount;
     private GameObject[] equipmentList;
-
     public List<Item> items = new List<Item>();
     public List<GameObject> slots = new List<GameObject>();
 
@@ -27,7 +26,7 @@ public class Inventory : MonoBehaviour {
     {
         equipmentList = new GameObject[] { weaponslot, ammoslot, headslot, bodyslot, lowerslot, shoeslot };
         database = GetComponent<ItemDatabase>();
-        slotCount = 36;
+        slotCount = 35;
         equipmentCount = 6;
         inventoryPanel = GameObject.Find("InventoryPanel");
         slotPanel = inventoryPanel.transform.FindChild("SlotPanel").gameObject;
@@ -46,20 +45,18 @@ public class Inventory : MonoBehaviour {
             slots[i].GetComponent<InventorySlot>().slotID = i;
             slots[i].transform.SetParent(equipmentPanel.transform);
         }
-        AddItem(0);
-        AddItem(2);
-        AddItem(3);
-        AddItem(4);
-        AddItem(5);
-        AddItem(6);
-        AddItem(7);
-        AddItem(8);
-        AddItem(9);
-        AddItem(9);
-        AddItem(9);
-        AddItem(10);
-        AddItem(11);
-        AddItem(12);
+        AddItem(1);
+        AddItem(201);
+        AddItem(212);
+        AddItem(213);
+        AddItem(302);
+        AddItem(303);
+        AddItem(304);
+        AddItem(305);
+        AddItem(306);
+        AddItem(307);
+        AddItem(602);
+        AddItem(701);
     }
 
     public void AddItem(int ID)
@@ -102,7 +99,7 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    public void RemoveItem(Item item)
+    /*public void RemoveItem(Item item)
     {
         Item nullItem = database.FetchItemById(999);
         if (item.Stackable)
@@ -143,7 +140,7 @@ public class Inventory : MonoBehaviour {
                 }
             }
         }
-    }
+    }*/
 
     bool CheckIfItemInInventory(Item item)
     {

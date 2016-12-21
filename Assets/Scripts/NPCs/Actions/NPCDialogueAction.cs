@@ -5,6 +5,7 @@ using Core.FSM;
 public class NPCDialogueAction : Core.FSM.FSMAction {
 
     float timer = Time.time + Random.Range(5, 7);
+    float dialogueCooldown = Time.time;
     bool dialogueTriggered = false;
     Entity npcEntity;
     string identifier;
@@ -31,12 +32,19 @@ public class NPCDialogueAction : Core.FSM.FSMAction {
             Message m = new Message(npcEntity, GameManager.instance.dialogueManager, MsgType.DialogueResponse, new string[] { identifier });
             GameManager.instance.messageQueue.Add(m);
 
+            dialogueCooldown = Time.time + 5;
+
         }
 
         if (Time.time >= timer)
         {
             GetOwner().SendEvent("ToIdle");
             timer = Time.time + Random.Range(3, 5);
+        }
+
+        if(Time.time >= dialogueCooldown)
+        {
+            dialogueTriggered = false;
         }
     }
 }

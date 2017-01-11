@@ -60,6 +60,12 @@ public class Dungeon_Corridor
         // This calculates the opposite direction from the corridor that enters the room.
         CorridorDirection oppositeDirection = (CorridorDirection)(((int)room.enteringCorridor + 2) % 4);
 
+        // Only the direction of the first corridor has to be checked
+        if (isFirstCorridor)
+        {
+            CheckFirstCorridorDirection(direction);
+        }
+
         if (!isFirstCorridor && direction == oppositeDirection)
         {
             // It can't be the first corridor since it doesn't have an opposite direction
@@ -103,5 +109,18 @@ public class Dungeon_Corridor
         
         // Finally, clamp the corridorlength using the maxLength calculated just before this
         corridorLength = Mathf.Clamp(corridorLength, 1, maxLength);
+    }
+
+    // If the first corridor is going down or to the left, meaning directly into the wall, choose another direction
+    void CheckFirstCorridorDirection(CorridorDirection corridorDirection)
+    {
+        if (corridorDirection == CorridorDirection.Left || corridorDirection == CorridorDirection.Down)
+        {
+            corridorDirection = (CorridorDirection)Random.Range(0, 4);
+            direction = corridorDirection;
+
+            // Do this again untill the direction is up or to the right
+            CheckFirstCorridorDirection(corridorDirection);
+        }
     }
 }

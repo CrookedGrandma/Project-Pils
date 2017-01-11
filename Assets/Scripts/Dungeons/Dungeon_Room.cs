@@ -13,9 +13,9 @@ public class Dungeon_Room
         roomWidth = width;
         roomHeight = height;
 
-        // Set the X and Z coordinates for the room so it is roughly in the center
-        xPos = columns / 2 - width / 2;
-        zPos = rows / 2 - height / 2;
+        // Set the X and Z coordinates for the room so it is in the bottom left of the dungeon
+        xPos = 0;
+        zPos = 0;
     }
 
     // Method for setting up the other rooms

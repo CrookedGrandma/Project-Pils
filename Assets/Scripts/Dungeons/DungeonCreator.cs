@@ -10,8 +10,8 @@ public class DungeonCreator : MonoBehaviour
 
     public int columns = 30, rows = 30, minNumRooms = 10, maxNumRooms = 12, minRoomWidth = 4, maxRoomWidth = 8, minRoomHeight = 4, maxRoomHeight = 8, 
                minCorridorLength = 8, maxCorridorLength = 14, minNumberOfEnemies = 2, maxNumberOfEnemies = 6;
-    public GameObject[] wallTiles, outerWallTiles;                  // Used so there can be multiple models for a certain type, for diversity
-    public GameObject player, endPoint, enemy;
+    public GameObject[] wallTiles, outerWallTiles;                          // Used so there can be multiple models for a certain type, for diversity
+    public GameObject player, endPoint, enemy;                              // Normal gameobjects for the player, endpoint and enemies
 
     private TileType[][] tiles;
     private Dungeon_Room[] rooms;
@@ -21,9 +21,16 @@ public class DungeonCreator : MonoBehaviour
 
     private void Start()
     {
-        // Create the dungeonHolder and enemyHolder GameObjects
-        dungeonHolder = new GameObject("DungeonHolder");
-        enemyHolder = new GameObject("EnemyHolder");
+        // Create the dungeonHolder and enemyHolder GameObjects if they not exist
+        if (!dungeonHolder)
+        {
+            dungeonHolder = new GameObject("DungeonHolder");
+        }
+
+        if (!enemyHolder)
+        {
+            enemyHolder = new GameObject("EnemyHolder");
+        }
 
         // Setup the maximum amount of enemies
         numberOfEnemies = Random.Range(minNumberOfEnemies, maxNumberOfEnemies + 1);
@@ -79,9 +86,23 @@ public class DungeonCreator : MonoBehaviour
             }
 
             // Put the endpoint in the last room
+            /// TODO, make sure the endpoint is not too close to the player
             if (i == rooms.Length - 1)
             {
                 Vector3 endPointPos = new Vector3(rooms[i].xPos + rooms[i].roomWidth / 2 - 0.5f, 0.35f, rooms[i].zPos + rooms[i].roomHeight / 2 - 0.5f);
+
+                for (int x = -3; x <= 3; x++)
+                {
+                    for (int z = -3; z <= 3; z++)
+                    {
+                        Vector3 pos = new Vector3(endPointPos.x + x, 0.35f, endPointPos.z + z);
+                        if (pos == endPointPos)
+                        {
+                            // Do not spawn endpoint here, because it is too close to the player
+                        }
+                    }
+                }
+
                 Instantiate(endPoint, endPointPos, Quaternion.identity);
             }
 
@@ -93,11 +114,34 @@ public class DungeonCreator : MonoBehaviour
                 if (Random.Range(0f, 1f) >= chance)
                 {
                     // Spawn an enemy
+                    /// TODO, zorg dat de enemies overal in de kamer kunnen spawnen, maar niet voor gangen
+                    /// Niet voor een eindpunt zodat je niet de dungeon uit kan
+                    /// Niet bij de startpositie van de player zodat je meteen de combatstate inkomt als je de dungeon ingaat   CHECK
+                    bool maySpawnEnemy = true;
                     Vector3 enemyPos = new Vector3(rooms[i].xPos + Random.Range(1, rooms[i].roomWidth - 1) + 0.5f, 0.35f, rooms[i].zPos + 
                                        Random.Range(1, rooms[i].roomHeight - 1) + 0.5f);
-                    GameObject enemyClone = Instantiate(enemy, enemyPos, Quaternion.identity) as GameObject;
-                    enemyClone.transform.parent = enemyHolder.transform;
-                    currentEnemies++;
+                    
+                    // Make sure the enemy does not spawn too close to the player
+                    for (int x = -3; x <= 3; x++)
+                    {
+                        for (int z = -3; z <= 3; z++)
+                        {
+                            Vector3 pos = new Vector3(enemyPos.x + x, 0.35f, enemyPos.z + z);
+                            if (pos == playerPos)
+                            {
+                                // Do not spawn enemy here, because he is too close to the player
+                                Debug.Log("Enemy too close to player to spawn");
+                                maySpawnEnemy = false;
+                            }
+                        }
+                    }
+
+                    if (maySpawnEnemy)
+                    {
+                        GameObject enemyClone = Instantiate(enemy, enemyPos, Quaternion.identity) as GameObject;
+                        enemyClone.transform.parent = enemyHolder.transform;
+                        currentEnemies++;
+                    }
                 }
             }
         }

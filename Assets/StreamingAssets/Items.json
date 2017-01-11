@@ -1,4 +1,4 @@
-[
+﻿[
   //Nullitem
   {
     "id": 0,
@@ -152,17 +152,17 @@
   },
   {
     "id": 202,
-    "title": "Clawhammer",
+    "title": "Hammer",
     "value": 50,
     "type": "weapon",
     "subtype": "melee",
     "set": "none",
     "damage": 40,
-    "description": "Just pretend the enemy's head is the nail",
+    "description": "It's like Mjölnir, but not actually Mjölnir",
     "stackable": false,
     "quest-related": false,
     "sellable": true,
-    "slug": "clawhammer"
+    "slug": "hammer"
   },
   {
     "id": 203,
@@ -172,7 +172,7 @@
     "subtype": "melee",
     "set": "none",
     "damage": 50,
-    "description": "Almost scary how clean it cuts",
+    "description": "The psycho killer starter pack",
     "stackable": false,
     "quest-related": false,
     "sellable": true,
@@ -302,21 +302,7 @@
     "stackable": false,
     "quest-related": false,
     "sellable": true,
-    "slug": "broken_beer_bottle"
-  },
-  {
-    "id": 213,
-    "title": "Pen",
-    "value": 5,
-    "type": "weapon",
-    "subtype": "melee",
-    "set": "none",
-    "damage": 15,
-    "description": "I have a pen, I have an Enemy, Uh...",
-    "stackable": false,
-    "quest-related": false,
-    "sellable": true,
-    "slug": "pen"
+    "slug": "stick"
   },
   //Projectiles
   {
@@ -391,7 +377,7 @@
   },
   {
     "id": 306,
-    "title": "Galactic� Not 7",
+    "title": "Galactic© Not 7",
     "value": 40,
     "type": "weapon",
     "subtype": "projectile",
@@ -1282,7 +1268,7 @@
   },
   {
     "id": 908,
-    "title": "Kroks�",
+    "title": "Kroks©",
     "value": 15,
     "type": "equipment",
     "subtype": "footwear",

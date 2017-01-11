@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DungeonCreator : MonoBehaviour
 {
@@ -41,6 +42,22 @@ public class DungeonCreator : MonoBehaviour
         SetTilesInCorridors();
         InstantiateTiles();
         InstantiateOuterWalls();
+    }
+
+    private void Reset()
+    {
+        // Just reload the level
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void Update()
+    {
+        // DEBUG ONLY
+        if (Input.GetButtonDown("Reset"))
+        {
+            Reset();
+        }
+        // END DEBUG ONLY
     }
 
     // Set up the tiles array to the correct size
@@ -86,19 +103,23 @@ public class DungeonCreator : MonoBehaviour
             }
 
             // Put the endpoint in the last room
-            /// TODO, make sure the endpoint is not too close to the player
             if (i == rooms.Length - 1)
             {
                 Vector3 endPointPos = new Vector3(rooms[i].xPos + rooms[i].roomWidth / 2 - 0.5f, 0.35f, rooms[i].zPos + rooms[i].roomHeight / 2 - 0.5f);
-
-                for (int x = -3; x <= 3; x++)
+                
+                // Makes sure the endpoint is somewhere above the player, with at least 20 tiles distance
+                for (int x = -30; x <= 30; x++)
                 {
-                    for (int z = -3; z <= 3; z++)
+                    for (int z = -20; z <= 0; z++)
                     {
                         Vector3 pos = new Vector3(endPointPos.x + x, 0.35f, endPointPos.z + z);
-                        if (pos == endPointPos)
+                        if (pos == playerPos)
                         {
                             // Do not spawn endpoint here, because it is too close to the player
+                            Reset();
+                            // Resetting the level is just a temporary solution. 
+                            // It may cause conflicts with the progress-saving and players are able to see the reset happening
+                            /// TODO, think of a better solution
                         }
                     }
                 }
@@ -116,7 +137,6 @@ public class DungeonCreator : MonoBehaviour
                     // Spawn an enemy
                     /// TODO, zorg dat de enemies overal in de kamer kunnen spawnen, maar niet voor gangen
                     /// Niet voor een eindpunt zodat je niet de dungeon uit kan
-                    /// Niet bij de startpositie van de player zodat je meteen de combatstate inkomt als je de dungeon ingaat   CHECK
                     bool maySpawnEnemy = true;
                     Vector3 enemyPos = new Vector3(rooms[i].xPos + Random.Range(1, rooms[i].roomWidth - 1) + 0.5f, 0.35f, rooms[i].zPos + 
                                        Random.Range(1, rooms[i].roomHeight - 1) + 0.5f);
@@ -127,12 +147,21 @@ public class DungeonCreator : MonoBehaviour
                         for (int z = -3; z <= 3; z++)
                         {
                             Vector3 pos = new Vector3(enemyPos.x + x, 0.35f, enemyPos.z + z);
+                            // Too close to the player
                             if (pos == playerPos)
                             {
                                 // Do not spawn enemy here, because he is too close to the player
                                 Debug.Log("Enemy too close to player to spawn");
                                 maySpawnEnemy = false;
                             }
+
+                            // Too close to the endpoint
+                            /*if (pos == endPointPos) // Can't use endpointpos, so this will be added later
+                            {
+                                // Do not spawn enemy here, because he is too close to the endpoint
+                                Debug.Log("Enemy too close to endpoint to spawn");
+                                maySpawnEnemy = false;
+                            }*/
                         }
                     }
 

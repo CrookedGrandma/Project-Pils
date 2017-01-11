@@ -1,0 +1,41 @@
+[
+	{
+		"id": 0,
+		"title": "CloystRenzo",
+    "type": "2attack",
+    "hp": 50,
+    "strength": 50,  
+		"attack1title": "Flap",
+		"attack1damage": 10,
+		"attack1scaling": 0.2,
+		"attack2title": "Bash",
+		"attack2damage": 15,
+		"attack2scaling": 0.2
+	},
+	{
+		"id": 1,
+		"title": "DugtRenzo",
+    "type": "2attack",
+    "hp": 50,
+    "strength": 50,
+		"attack1title": "Poke",
+		"attack1damage": 20,
+		"attack1scaling": 0.2,
+		"attack2title": "Dig",
+		"attack2damage": 15,
+		"attack2scaling": 0.2
+	},
+	{
+		"id": 2,
+		"title": "Renzo",
+		"type": "2attack",
+    "hp": 50,
+    "strength": 50,
+		"attack1title": "Look stoned",
+		"attack1damage": 5,
+		"attack1scaling": 0.69,
+		"attack2title": "Be a fat kutamsterdammer",
+		"attack2damage": 8,
+		"attack2scaling": 0.69
+	}
+]

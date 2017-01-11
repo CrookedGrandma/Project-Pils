@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "type": "melee",
+    "title": "Bottle Swipe",
+    "weaponid": 200,
+  }
+  {
+    "id": 1,
+    "type": "melee",
+    "title": "Batter Up",
+    "weaponid": 201,
+  }
+  {
+    "id": 2,
+    "type": "melee",
+    "title": "Hammer Time",
+    "weaponid": 202,
+  }
+  {
+    "id": 3,
+    "type": "melee",
+    "title": "Clean Cut",
+    "weaponid": 203,
+  }
+  {
+    "id": 4,
+    "type":  "melee",
+    "title": "Clean Cut",
+    "weaponid": 204, 
+  }
+]

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using Core.FSM;
 
@@ -8,15 +9,29 @@ public class PlayerFSM : Entity {
     public float velocity = 20f;
     public float sprintVelocity = 30f;
     public float jumpSpeed = 3000f;
+    public static PlayerFSM player;
 
     private FSM fsm;
     private FSMState moveState;
     private FSMState idleState;
     private MoveAction moveAction;
     private IdleAction idleAction;
+    private int enemyID = -1;
+    private int envID = -1;
+    private bool pleaseDie = false;
 
-	// Use this for initialization
-	void Start () {
+    void Awake() {
+        if (player != null) {
+            Destroy(gameObject);
+        }
+        else {
+            player = this;
+            GameObject.DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
         fsm = new Core.FSM.FSM("PlayerFSM");
         moveState = fsm.AddState("MoveState");
         idleState = fsm.AddState("IdleState");
@@ -39,9 +54,36 @@ public class PlayerFSM : Entity {
 	
 	// Update is called once per frame
 	void Update () {
-        if(!GameManager.instance.IsPaused)
+        if (!GameManager.instance.IsPaused) {
             fsm.Update();
-	}
+        }
+        if (enemyID != -1) {
+            Debug.Log("Enemy Plate: " + enemyID);
+        }
+        if (envID != -1) {
+            Debug.Log("Environment Plate: " + envID);
+        }
+        if (pleaseDie) {
+            Destroy(gameObject);
+        }
+
+        // Go to combat scene, purely for developing
+        if (Input.GetKeyDown(KeyCode.Keypad1)) {
+            PlayerFSM.player.Enemy = 0;
+            PlayerFSM.player.Envi = 3;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2)) {
+            PlayerFSM.player.Enemy = 1;
+            PlayerFSM.player.Envi = 2;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3)) {
+            PlayerFSM.player.Enemy = 3;
+            PlayerFSM.player.Envi = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.I)) {
+            SceneManager.LoadScene("Combat");
+        }
+    }
 
     public override void onMessage(Message m)
     {
@@ -111,5 +153,20 @@ public class PlayerFSM : Entity {
     {
         moveAction.ableToMoveBackward = moveAction.ableToMoveForward = moveAction.ableToMoveLeft = moveAction.ableToMoveRight = true;
         moveAction.ableToJump = false;
+    }
+
+    public int Enemy {
+        get { return enemyID; }
+        set { enemyID = value; }
+    }
+
+    public int Envi {
+        get { return envID; }
+        set { envID = value; }
+    }
+
+    public bool PleaseDie {
+        get { return pleaseDie; }
+        set { pleaseDie = value; }
     }
 }

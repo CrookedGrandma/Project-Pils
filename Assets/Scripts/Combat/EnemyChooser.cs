@@ -26,9 +26,9 @@ public class EnemyChooser : MonoBehaviour {
 
 	// Use this for initialization
 	public void Start () {
-        if (ThirdPersonController.player != null) {
-            enemyC = ThirdPersonController.player.Enemy;
-            enviC = ThirdPersonController.player.Envi;
+        if (PlayerFSM.player != null) {
+            enemyC = PlayerFSM.player.Enemy;
+            enviC = PlayerFSM.player.Envi;
         }
         enviSet = false;
         enemyChosen = false;
@@ -38,7 +38,7 @@ public class EnemyChooser : MonoBehaviour {
         EnemyStats = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Enemies.json"));
         ConstructEnemyDatabase();
 
-        ThirdPersonController.player.PleaseDie = true;
+        PlayerFSM.player.PleaseDie = true;
 	}
 
 	// Update is called once per frame

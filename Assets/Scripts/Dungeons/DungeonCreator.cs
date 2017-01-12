@@ -3,23 +3,25 @@ using UnityEngine.SceneManagement;
 
 public class DungeonCreator : MonoBehaviour
 {
+    #region Variable Declaration
     // The tiletypes used
     public enum TileType
     {
         Wall, Floor
     }
-
     public int columns = 30, rows = 30, minNumRooms = 10, maxNumRooms = 12, minRoomWidth = 4, maxRoomWidth = 8, minRoomHeight = 4, maxRoomHeight = 8, 
                minCorridorLength = 8, maxCorridorLength = 14, minNumberOfEnemies = 2, maxNumberOfEnemies = 6;
     public GameObject[] wallTiles, outerWallTiles;                          // Used so there can be multiple models for a certain type, for diversity
     public GameObject player, endPoint, enemy;                              // Normal gameobjects for the player, endpoint and enemies
 
     private TileType[][] tiles;
+    private Vector3 playerPos, endPointPos;
     private Dungeon_Room[] rooms;
     private Dungeon_Corridor[] corridors;
     private GameObject dungeonHolder, enemyHolder;
-    private Vector3 playerPos, endPointPos;
-    private int currentEnemies, numberOfEnemies, enemiesToSpawn;
+    private int numberOfEnemies, spawnedEnemies;
+    private bool maySpawnEnemyAtPosition;
+    #endregion
 
     private void Start()
     {
@@ -36,15 +38,16 @@ public class DungeonCreator : MonoBehaviour
 
         // Setup the maximum amount of enemies
         numberOfEnemies = Random.Range(minNumberOfEnemies, maxNumberOfEnemies + 1);
-        currentEnemies = 0;
+        spawnedEnemies = 0;
 
+        // Make the dungeon
         SetupTilesArray();
         CreateRoomsAndCorridors();
         SetTilesInRooms();
         SetTilesInCorridors();
         InstantiateTiles();
         InstantiateOuterWalls();
-        SpawnEnemies(enemiesToSpawn);
+        SpawnEnemies(numberOfEnemies);
     }
 
     private void Reset()
@@ -63,6 +66,7 @@ public class DungeonCreator : MonoBehaviour
         // END DEBUG ONLY
     }
 
+    #region Creating the Dungeon
     // Set up the tiles array to the correct size
     private void SetupTilesArray()
     {
@@ -128,18 +132,6 @@ public class DungeonCreator : MonoBehaviour
                 }
 
                 Instantiate(endPoint, endPointPos, Quaternion.identity);
-            }
-
-            // Spawn enemies in random rooms
-            if (currentEnemies < numberOfEnemies)
-            {
-                // Try to spawn an enemy
-                float chance = (float)numberOfEnemies / (float)rooms.Length;
-                if (Random.Range(0f, 1f) >= chance)
-                {
-                    currentEnemies++;
-                    enemiesToSpawn++;
-                }
             }
         }
     }
@@ -268,138 +260,311 @@ public class DungeonCreator : MonoBehaviour
         // Put the tiles in de dungeonholder
         instance.transform.parent = dungeonHolder.transform;
     }
+    #endregion
 
-    // Method for spawning the enemies
+    #region Spawning the Enemies
+    // Method that creates the enemies
     private void SpawnEnemies(int totalNumberOfEnemiesToSpawn)
     {
-        int spawnedEnemies = 0;
+        spawnedEnemies = 0;
         while (spawnedEnemies < totalNumberOfEnemiesToSpawn)
-        {            
+        {
             // Spawn an enemy
-            /// TODO, zorg dat de enemies overal in de kamer kunnen spawnen, maar niet voor gangen
-            bool maySpawnEnemy = true;
+            maySpawnEnemyAtPosition = true;
             Vector3 enemyPos = new Vector3(Random.Range(0, columns) + 0.5f, 0.35f, Random.Range(0, rows) + 0.5f);
 
-            // Make sure the enemy does not spawn too close to the player
-            for (int x = -3; x <= 3; x++)
+            // Methods which check the position of the enemy
+            CheckForWallTiles(enemyPos);
+            CheckCorridors(enemyPos);
+            CheckBlockingOfCorridors(enemyPos);
+            CheckSpecialCases(enemyPos);
+            CheckDistanceToPlayer(enemyPos);
+            CheckDistanceToEndPoint(enemyPos);
+
+            if (maySpawnEnemyAtPosition)
             {
-                for (int z = -3; z <= 3; z++)
-                {
-                    // Loop through all the positions in a 3 × 3 grid around the enemy
-                    Vector3 pos = new Vector3(enemyPos.x + x, 0.35f, enemyPos.z + z);
-
-                    // If it the position of the player is somewhere in this little grid
-                    if (pos == playerPos)
-                    {
-                        // Do not spawn enemy here, because he is too close to the player
-                        maySpawnEnemy = false;
-                        goto NotAbleToSpawnEnemy;
-                    }
-                }
+                // Actually spawn the enemy
+                SpawnEnemy(enemyPos);
             }
-
-            // Make sure the enemy does not spawn too close to the endpoint
-            for (int x = -2; x <= 2; x++)
-            {
-                for (int z = -2; z <= 2; z++)
-                {
-                    // Loop through all the positions in a 2 × 2 grid around the enemy
-                    Vector3 pos = new Vector3(enemyPos.x + x, 0.35f, enemyPos.z + z);
-
-                    // If it the position of the endpoint is somewhere in this little grid
-                    if (pos == endPointPos)
-                    {
-                        // Do not spawn enemy here, because he is too close to the endpoint
-                        maySpawnEnemy = false;
-                        goto NotAbleToSpawnEnemy;
-                    }
-                }
-            }
-
-            // Enemies may not spawn in walls
-            if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z)] == TileType.Wall)
-            {
-                maySpawnEnemy = false;
-                goto NotAbleToSpawnEnemy;
-            }
-
-            // Enemies may not spawn in corridors
-            if (enemyPos.x > 1 && enemyPos.x < columns - 1)
-            {
-                // If the positions left and right of the posible spawnposition are walls, this position is in a corridor. So we can't spawn here
-                if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z)] == TileType.Wall && tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z)] == TileType.Wall)
-                {
-                    maySpawnEnemy = false;
-                    goto NotAbleToSpawnEnemy;
-                }
-            }
-
-            // If the positions above and below of the posible spawnposition are walls, this position is in a corridor. So we can't spawn here
-            if (enemyPos.z > 1 && enemyPos.z < rows - 1)
-            {
-                if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z - 1)] == TileType.Wall && tiles[(int)(enemyPos.x)][(int)(enemyPos.z + 1)] == TileType.Wall)
-                {
-                    // In vertical corridor
-                    maySpawnEnemy = false;
-                    goto NotAbleToSpawnEnemy;
-                }
-            }
-
-            // Makes sure the enemy is not spawned in a position where he blocks a corridor
-            if (enemyPos.x > 1 && enemyPos.z > 1 && enemyPos.x < columns - 1 && enemyPos.z < rows - 1)
-            {
-                // Left corridor. The position directly left of the enemyposition should not be a wall, while the positions directly above and below the 
-                // position to the left of the enemyposition should be walls. This means the player is directly to the right of a corridor.
-                if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z + 1)] == TileType.Wall &&
-                    tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z - 1)] == TileType.Wall &&
-                    tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z)] != TileType.Wall)
-                {
-                    maySpawnEnemy = false;
-                    goto NotAbleToSpawnEnemy;
-                }
-
-                // Upper corridor. The position directly above the enemyposition should not be a wall, while the positions directly to the left and 
-                // right of the position above the enemyposition should be walls. This means the player is directly below a corridor.
-                if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z + 1)] == TileType.Wall &&
-                    tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z + 1)] == TileType.Wall &&
-                    tiles[(int)(enemyPos.x)][(int)(enemyPos.z + 1)] != TileType.Wall)
-                {
-                    maySpawnEnemy = false;
-                    goto NotAbleToSpawnEnemy;
-                }
-
-                // Right corridor. The position directly right of the enemyposition should not be a wall, while the positions directly above and below the 
-                // position to the right of the enemyposition should be walls. This means the player is directly to the left of a corridor.
-                if (tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z + 1)] == TileType.Wall &&
-                    tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z - 1)] == TileType.Wall &&
-                    tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z)] != TileType.Wall)
-                {
-                    maySpawnEnemy = false;
-                    goto NotAbleToSpawnEnemy;
-                }
-
-                // Down corridor. The position directly below the enemyposition should not be a wall, while the positions directly to the left and 
-                // right of the position below the enemyposition should be walls. This means the player is directly above of a corridor.
-                if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z - 1)] == TileType.Wall &&
-                    tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z - 1)] == TileType.Wall &&
-                    tiles[(int)(enemyPos.x)][(int)(enemyPos.z - 1)] != TileType.Wall)
-                {
-                    maySpawnEnemy = false;
-                    goto NotAbleToSpawnEnemy;
-                }
-            }
-
-            // Spawn an enemy if it is possible
-            if (maySpawnEnemy)
-            {
-                GameObject enemyClone = Instantiate(enemy, enemyPos, Quaternion.identity) as GameObject;
-                enemyClone.transform.parent = enemyHolder.transform;
-                spawnedEnemies++;
-            }
-
-            // Jump here if we are not able to spawn an enemy. 
-            // This happens immediately when we know when we can't spawn an enemy, so the rest of the code won't be executed.
-            NotAbleToSpawnEnemy:;
         }
     }
+
+    // Checks if the enemy will be spawned inside a wall
+    private void CheckForWallTiles(Vector3 enemyPos)
+    {
+        if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z)] == TileType.Wall)
+        {
+            // Enemyposition is inside a wall
+            maySpawnEnemyAtPosition = false;
+            return;
+        }
+    }
+
+    // Checks if the enemy will be spawned inside a corridor
+    private void CheckCorridors(Vector3 enemyPos)
+    {
+        // Don't look at the first and last column, because those will be outside the array
+        if (enemyPos.x > 1 && enemyPos.x < columns - 1)
+        {
+            // If the positions left and right of the possible spawnposition are walls, this position is in a corridor. So we can't spawn here
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z)] == TileType.Wall && tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z)] == TileType.Wall)
+            {
+                // In a horizontal corridor
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+
+        // If the enemy is in the first column
+        if (enemyPos.x < 1)
+        {
+            // We only have to check the tiles to the left of the enemyposition, because to the right are the outerwalltiles
+            if (tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z)] == TileType.Wall)
+            {
+                // In a horizontal corridor in the first column
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+
+        // If the enemy is in the last column
+        if (enemyPos.x > columns - 1)
+        {
+            // We only have to check the tiles to the right of the enemyposition, because to the left are the outerwalltiles
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z)] == TileType.Wall)
+            {
+                // In a horizontal corridor in the last column
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+
+        // Don't look at the first and last row, because those will be outside the array
+        if (enemyPos.z > 1 && enemyPos.z < rows - 1)
+        {
+            // If the positions above and below the possible spawnposition are walls, this position is in a corridor. So we can't spawn here
+            if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z - 1)] == TileType.Wall && tiles[(int)(enemyPos.x)][(int)(enemyPos.z + 1)] == TileType.Wall)
+            {
+                // In vertical corridor
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+
+        // If the enemy is in the first row
+        if (enemyPos.z < 1)
+        {
+            // We only have to check the tiles above the enemyposition, because the tiles below it are outerwalltiles
+            if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z + 1)] == TileType.Wall)
+            {
+                // In a vertical corridor at the bottom
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+
+        // If the enemy is in the last row
+        if (enemyPos.z > rows - 1)
+        {
+            // We only have to check the tiles below the enemyposition, because the tiles above it are outerwalltiles
+            if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z - 1)] == TileType.Wall)
+            {
+                // In a vertical corridor at the top
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+    }
+
+    // Checks if the enemy will block a corridor
+    private void CheckBlockingOfCorridors(Vector3 enemyPos)
+    {
+        // If the end of a corridor is at the first or last row of column, there is no place for an enemy to spawn, so we won't check it
+        if (enemyPos.x > 1 && enemyPos.z > 1 && enemyPos.x < columns - 1 && enemyPos.z < rows - 1)
+        {
+            // Left corridor. The position directly left of the enemyposition should not be a wall, while the positions directly above and below the 
+            // position to the left of the enemyposition should be walls. This means the player is directly to the right of a corridor.
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z + 1)] == TileType.Wall &&
+                tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z - 1)] == TileType.Wall &&
+                tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z)] != TileType.Wall)
+            {
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+
+            // Upper corridor. The position directly above the enemyposition should not be a wall, while the positions directly to the left and 
+            // right of the position above the enemyposition should be walls. This means the player is directly below a corridor.
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z + 1)] == TileType.Wall &&
+                tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z + 1)] == TileType.Wall &&
+                tiles[(int)(enemyPos.x)][(int)(enemyPos.z + 1)] != TileType.Wall)
+            {
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+
+            // Right corridor. The position directly right of the enemyposition should not be a wall, while the positions directly above and below the 
+            // position to the right of the enemyposition should be walls. This means the player is directly to the left of a corridor.
+            if (tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z + 1)] == TileType.Wall &&
+                tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z - 1)] == TileType.Wall &&
+                tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z)] != TileType.Wall)
+            {
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+
+            // Down corridor. The position directly below the enemyposition should not be a wall, while the positions directly to the left and 
+            // right of the position below the enemyposition should be walls. This means the player is directly above of a corridor.
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z - 1)] == TileType.Wall &&
+                tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z - 1)] == TileType.Wall &&
+                tiles[(int)(enemyPos.x)][(int)(enemyPos.z - 1)] != TileType.Wall)
+            {
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+    }
+
+    // Checks some special cases
+    private void CheckSpecialCases(Vector3 enemyPos)
+    {
+        // If the enemyposition is in the first or last row or column, we don't have to check these
+        if (enemyPos.x > 1 && enemyPos.z > 1 && enemyPos.x < columns - 1 && enemyPos.z < rows - 1)
+        {
+            // These are some special cases where an enemy would block something, which won't be checked in the methods above
+            // For instance, 2 rooms with just 1 overlapping tile
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z + 1)] == TileType.Wall && tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z - 1)] == TileType.Wall)
+            {
+                // Meaning the tiles directly to the top left and the bottom right of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+            if (tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z + 1)] == TileType.Wall && tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z - 1)] == TileType.Wall)
+            {
+                // Meaning the tiles directly to the top right and the bottom left of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+
+        // Or this case (draw it, it will be clear. It is quite hard to explain this situation)
+        // The first if-statements make sure every possibility is checked, without getting IndexOutOfRangeException
+        if (enemyPos.x < columns - 1 && enemyPos.z > 1 && enemyPos.z < rows - 1)
+        {
+            if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z + 1)] == TileType.Wall && tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z - 1)] == TileType.Wall)
+            {
+                // Meaning the tiles directly above and to the bottom right of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+
+            if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z - 1)] == TileType.Wall && tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z + 1)] == TileType.Wall)
+            {
+                // Meaning the tiles directly below and to the top right of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+
+        if (enemyPos.x > 1 && enemyPos.z > 1 && enemyPos.z < rows - 1)
+        {
+            if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z + 1)] == TileType.Wall && tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z - 1)] == TileType.Wall)
+            {
+                // Meaning the tiles directly above and to the bottom left of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+
+            if (tiles[(int)(enemyPos.x)][(int)(enemyPos.z - 1)] == TileType.Wall && tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z + 1)] == TileType.Wall)
+            {
+                // Meaning the tiles directly below and to the top left of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+
+        if (enemyPos.x > 1 && enemyPos.x < columns - 1 && enemyPos.z < rows - 1)
+        {
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z)] == TileType.Wall && tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z + 1)] == TileType.Wall)
+            {
+                // Meaning the tiles directly to the left and the top right of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z + 1)] == TileType.Wall && tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z)] == TileType.Wall)
+            {
+                // Meaning the tiles directly to the right and the top left of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+
+        if (enemyPos.x > 1 && enemyPos.x < columns - 1 && enemyPos.z > 1)
+        {
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z)] == TileType.Wall && tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z - 1)] == TileType.Wall)
+            {
+                // Meaning the tiles directly to the left and the bottom right of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+
+            if (tiles[(int)(enemyPos.x - 1)][(int)(enemyPos.z - 1)] == TileType.Wall && tiles[(int)(enemyPos.x + 1)][(int)(enemyPos.z)] == TileType.Wall)
+            {
+                // Meaning the tiles directly to the right and the bottom left of the enemy
+                maySpawnEnemyAtPosition = false;
+                return;
+            }
+        }
+    }
+
+    // Checks if the enemy is too close to the player
+    private void CheckDistanceToPlayer(Vector3 enemyPos)
+    {
+        // Loop through all the positions in a 3 × 3 grid around the enemy
+        for (int x = -3; x <= 3; x++)
+        {
+            for (int z = -3; z <= 3; z++)
+            {
+                Vector3 pos = new Vector3(enemyPos.x + x, 0.35f, enemyPos.z + z);
+
+                // If it the position of the player is somewhere in this little grid
+                if (pos == playerPos)
+                {
+                    // Do not spawn enemy here, because he is too close to the player
+                    maySpawnEnemyAtPosition = false;
+                    return;
+                }
+            }
+        }
+    }
+
+    // Checks if the enemy is too close to the endpoint
+    private void CheckDistanceToEndPoint(Vector3 enemyPos)
+    {
+        // Loop through all the positions in a 2 × 2 grid around the enemy
+        for (int x = -2; x <= 2; x++)
+        {
+            for (int z = -2; z <= 2; z++)
+            {
+                Vector3 pos = new Vector3(enemyPos.x + x, 0.35f, enemyPos.z + z);
+
+                // If it the position of the endpoint is somewhere in this little grid
+                if (pos == endPointPos)
+                {
+                    // Do not spawn enemy here, because he is too close to the endpoint
+                    maySpawnEnemyAtPosition = false;
+                    return;
+                }
+            }
+        }
+    }
+
+    // Spawns an enemy
+    private void SpawnEnemy(Vector3 enemyPos)
+    {
+        GameObject enemyClone = Instantiate(enemy, enemyPos, Quaternion.identity) as GameObject;
+        enemyClone.transform.parent = enemyHolder.transform;
+        spawnedEnemies++;
+    }
+    #endregion
 }

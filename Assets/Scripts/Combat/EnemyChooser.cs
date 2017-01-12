@@ -82,7 +82,7 @@ public class EnemyChooser : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.C)) {
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("Woonplaats");
         }
     }
 

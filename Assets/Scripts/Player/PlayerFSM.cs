@@ -5,11 +5,11 @@ using Core.FSM;
 
 public class PlayerFSM : Entity {
 
+    public static PlayerFSM player;
     public Rigidbody PlayerRB;
     public float velocity = 20f;
     public float sprintVelocity = 30f;
     public float jumpSpeed = 3000f;
-    public static PlayerFSM player;
 
     private FSM fsm;
     private FSMState moveState;
@@ -19,6 +19,8 @@ public class PlayerFSM : Entity {
     private int enemyID = -1;
     private int envID = -1;
     private bool pleaseDie = false;
+    private float health = 100f;
+    private float maxHealth = 100f;
 
     // Awake
     void Awake() {
@@ -68,7 +70,7 @@ public class PlayerFSM : Entity {
             Destroy(gameObject);
         }
 
-        // Go to combat scene, purely for developing
+        // Go to combat scene, purely for developing {
         if (Input.GetKeyDown(KeyCode.Keypad1)) {
             PlayerFSM.player.Enemy = 0;
             PlayerFSM.player.Envi = 3;
@@ -78,12 +80,13 @@ public class PlayerFSM : Entity {
             PlayerFSM.player.Envi = 2;
         }
         if (Input.GetKeyDown(KeyCode.Keypad3)) {
-            PlayerFSM.player.Enemy = 3;
+            PlayerFSM.player.Enemy = 2;
             PlayerFSM.player.Envi = 0;
         }
         if (Input.GetKeyDown(KeyCode.I)) {
             SceneManager.LoadScene("Combat");
         }
+        //}
     }
 
     public override void onMessage(Message m)
@@ -169,5 +172,15 @@ public class PlayerFSM : Entity {
     public bool PleaseDie {
         get { return pleaseDie; }
         set { pleaseDie = value; }
+    }
+
+    public float Health {
+        get { return health; }
+        set { health = value; }
+    }
+
+    public float MaxHealth {
+        get { return maxHealth; }
+        set { maxHealth = value; }
     }
 }

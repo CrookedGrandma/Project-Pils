@@ -20,6 +20,7 @@ public class PlayerFSM : Entity {
     private int envID = -1;
     private bool pleaseDie = false;
 
+    // Awake
     void Awake() {
         if (player != null) {
             Destroy(gameObject);

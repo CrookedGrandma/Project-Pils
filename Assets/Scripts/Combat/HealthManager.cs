@@ -50,4 +50,6 @@ public class HealthManager : MonoBehaviour {
     public void WinCombat() {
         PlayerFSM.player.Health = health;
     }
+
+    public float Health { get { return health; } }
 }

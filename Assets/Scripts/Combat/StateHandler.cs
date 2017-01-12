@@ -5,11 +5,15 @@ public class StateHandler : MonoBehaviour {
 
     enum States { START, PLAYERCHOICE, PLAYERMOVE, ENEMYCHOICE, ENEMYMOVE }
     States state;
-    bool ranOnce = false;
+    bool SRanOnce = false;
+    bool ECRanOnce = false;
     double flashTimer = 0.0;
     int attNum = 0;
+    float time = -1;
 
     public EnemyChooser enemyChooser;
+    public HealthManager healthManager;
+    public EnterPlayer PlayerEnter;
 
     Enemy e;
 
@@ -20,50 +24,72 @@ public class StateHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (Input.GetKeyDown(KeyCode.N)) {
-            state = (States)((int)state + 1);
-            if ((int)state > 4) {
-                state = States.START;
+        print("Current battle state: " + state);
+
+        if (Input.GetKeyDown(KeyCode.N)) {
+            NextState();
+        }
+
+        if (state == States.START) {
+            PlayerEnter.Enter = true;
+            if (!SRanOnce) {
+                time = Time.time;
+                SRanOnce = true;
+            }
+            if (Time.time - time >= 2.5f && time != -1) {
+                NextState();
+            }
+            
+        }
+
+        if (state == States.PLAYERCHOICE) {
+            SRanOnce = false;
+        }
+
+        if (state == States.PLAYERMOVE) {
+
+        }
+
+        if (state == States.ENEMYCHOICE) {
+            flashTimer = Mathf.PingPong(Time.time * 2, 1);
+
+            if (ECRanOnce) {
+                if (flashTimer >= 0.9) {
+                    if (attNum == 1) {
+                        enemyChooser.enemyStat.text = "HP: " + e.HP + "\n" +
+                                                      "Strength: " + e.Strength + "\n" +
+                                                      "<color=red>Attack 1: " + e.Attack1Title + "\n" +
+                                                      "Damage: " + e.Attack1Damage + "</color>\n" +
+                                                      "Attack 2: " + e.Attack2Title + "\n" +
+                                                      "Damage: " + e.Attack2Damage;
+                    }
+                    if (attNum == 2) {
+                        enemyChooser.enemyStat.text = "HP: " + e.HP + "\n" +
+                                                      "Strength: " + e.Strength + "\n" +
+                                                      "Attack 1: " + e.Attack1Title + "\n" +
+                                                      "Damage: " + e.Attack1Damage + "\n" +
+                                                      "<color=red>Attack 2: " + e.Attack2Title + "\n" +
+                                                      "Damage: " + e.Attack2Damage + "</color>";
+                    }
+                }
+                if (flashTimer <= 0.1) {
+                    TextWhite();
+                }
             }
         }
 
-        print("Current battle state: " + state);
-        flashTimer = Mathf.PingPong(Time.time * 2, 1);
-
-        if (ranOnce) {
-            if (flashTimer >= 0.9) {
-                if (attNum == 1) {
-                    enemyChooser.enemyStat.text = "HP: " + e.HP + "\n" +
-                                                  "Strength: " + e.Strength + "\n" +
-                                                  "<color=red>Attack 1: " + e.Attack1Title + "\n" +
-                                                  "Damage: " + e.Attack1Damage + "</color>\n" +
-                                                  "Attack 2: " + e.Attack2Title + "\n" +
-                                                  "Damage: " + e.Attack2Damage;
-                }
-                if (attNum == 2) {
-                    enemyChooser.enemyStat.text = "HP: " + e.HP + "\n" +
-                                                  "Strength: " + e.Strength + "\n" +
-                                                  "Attack 1: " + e.Attack1Title + "\n" +
-                                                  "Damage: " + e.Attack1Damage + "\n" +
-                                                  "<color=red>Attack 2: " + e.Attack2Title + "\n" +
-                                                  "Damage: " + e.Attack2Damage + "</color>";
-                }
+        if (state == States.ENEMYMOVE) {
+            if (ECRanOnce) {
+                TextWhite();
             }
-            if (flashTimer <= 0.1) {
-                enemyChooser.enemyStat.text = "HP: " + e.HP + "\n" +
-                                              "Strength: " + e.Strength + "\n" +
-                                              "Attack 1: " + e.Attack1Title + "\n" +
-                                              "Damage: " + e.Attack1Damage + "\n" +
-                                              "Attack 2: " + e.Attack2Title + "\n" +
-                                              "Damage: " + e.Attack2Damage;
-            }
+            ECRanOnce = false;
         }
     }
 
     void LateUpdate() {
-        if (!ranOnce) {
+        if (state == States.ENEMYCHOICE && !ECRanOnce) {
             e = enemyChooser.currentEnemy.linkedEnemy;
-            ranOnce = true;
+            ECRanOnce = true;
             attNum = GetAttack();
         }
     }
@@ -81,5 +107,21 @@ public class StateHandler : MonoBehaviour {
         else { attackNum = 3; }
 
         return attackNum;
+    }
+
+    void TextWhite() {
+        enemyChooser.enemyStat.text = "HP: " + e.HP + "\n" +
+                                      "Strength: " + e.Strength + "\n" +
+                                      "Attack 1: " + e.Attack1Title + "\n" +
+                                      "Damage: " + e.Attack1Damage + "\n" +
+                                      "Attack 2: " + e.Attack2Title + "\n" +
+                                      "Damage: " + e.Attack2Damage;
+    }
+
+    void NextState() {
+        state = (States)((int)state + 1);
+        if ((int)state > 4) {
+            state = States.PLAYERCHOICE;
+        }
     }
 }

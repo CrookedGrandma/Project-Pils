@@ -1,32 +1,152 @@
 [
   {
-    "id": 0,
+    "id": 100,
     "type": "melee",
     "title": "Bottle Swipe",
     "weaponid": 200,
   }
   {
-    "id": 1,
+    "id": 101,
     "type": "melee",
     "title": "Batter Up",
     "weaponid": 201,
   }
   {
-    "id": 2,
+    "id": 102,
     "type": "melee",
     "title": "Hammer Time",
     "weaponid": 202,
   }
   {
-    "id": 3,
+    "id": 103,
     "type": "melee",
     "title": "Clean Cut",
     "weaponid": 203,
   }
   {
-    "id": 4,
+    "id": 104,
+    "type": "melee",
+    "title": "Knuckle Dust",
+    "weaponid": 204,
+  }
+  {
+    "id": 105,
     "type":  "melee",
-    "title": "Clean Cut",
-    "weaponid": 204, 
+    "title": "Wok2Face",
+    "weaponid": 205, 
+  }
+  {
+    "id": 106,
+    "type":  "melee",
+    "title": "Plunge",
+    "weaponid": 206, 
+  }
+  {
+    "id": 107,
+    "type":  "melee",
+    "title": "Magical Strike of Deception",
+    "weaponid": 208, 
+  }
+  {
+    "id": 108,
+    "type":  "melee",
+    "title": "Sword Swipe",
+    "weaponid": 209, 
+  }
+  {
+    "id": 109,
+    "type":  "melee",
+    "title": "Weeaboo Strike",
+    "weaponid": 210, 
+  }
+  {
+    "id": 110,
+    "type":  "melee",
+    "title": "Cane Slice",
+    "weaponid": 211, 
+  }
+  {
+    "id": 111,
+    "type": "melee",
+    "title": "B-baka Strike",
+    "weaponid": 212,
+  }
+  {
+    "id": 201,
+    "type": "projectile",
+    "title": "Beer Throw",
+    "weaponid": 301,
+  }
+  {
+    "id": 202,
+    "type": "projectile",
+    "title": "Hatchet Throw",
+    "weaponid": 302,
+  }
+  {
+    "id": 203,
+    "type": "projectile",
+    "title": "Throw a... fork",
+    "weaponid": 303,
+  }
+  {
+    "id": 204,
+    "type": "projectile",
+    "title": "Discus Throw",
+    "weaponid": 304,
+  }
+  {
+    "id": 205,
+    "type": "projectile",
+    "title": "Laptop Launch",
+    "weaponid": 305,
+  }
+  {
+    "id": 206,
+    "type": "projectile",
+    "title": "Galactic© Not 7 Throw",
+    "weaponid": 306,
+  }
+  {
+    "id": 207,
+    "type": "projectile",
+    "title": "Boomer Bang",
+    "weaponid": 307,
+  }
+  {
+    "id": 208,
+    "type": "projectile",
+    "title": "Weeaboo Throw",
+    "weaponid": 308,
+  }
+  {
+    "id": 300,
+    "type": "ranged",
+    "title": "Catapult Pewpew",
+    "weaponid": 401,
+  }
+  {
+    "id": 301,
+    "type": "ranged",
+    "title": "Paintball Pewpew",
+    "weaponid": 401,
+  }
+  {
+    "id": 302,
+    "type": "ranged",
+    "title": "Staple Gun Pewpew",
+    "weaponid": 402,
+  }
+  {
+    "id": 303,
+    "type": "ranged",
+    "title": "Rubber Band Pewpew",
+    "weaponid": 403,
+  }
+  {
+    "id": 304,
+    "type": "ranged",
+    "title": "Bow Pewpew",
+    "weaponid": 404,
   }
 ]

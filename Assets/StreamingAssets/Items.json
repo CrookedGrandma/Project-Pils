@@ -327,7 +327,7 @@
     "subtype": "projectile",
     "set": "none",
     "damage": 25,
-    "description": "description needed",
+    "description": "Catchet this Hatchet (with your face)",
     "stackable": true,
     "quest-related": false,
     "sellable": true,
@@ -416,20 +416,6 @@
     "quest-related": false,
     "sellable": true,
     "slug": "shuriken"
-  },
-  {
-    "id": 309,
-    "title": "Burrito",
-    "value": 2,
-    "type": "weapon",
-    "subtype": "projectile",
-    "set": "mexican",
-    "damage": 10,
-    "description": "You would eat them yourself, but unfortunately it doesn't have any meat",
-    "stackable": true,
-    "quest-related": false,
-    "sellable": true,
-    "slug": "burrito"
   },
 
   //Ranged Weapons

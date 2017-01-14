@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class PanelVisible : MonoBehaviour {
+public class PauseMenuManager : MonoBehaviour {
 
     public Image panel;
     public bool IsVisible = false;
@@ -40,5 +40,16 @@ public class PanelVisible : MonoBehaviour {
         print("Pause Menu toggled to Invisible");
         panel.gameObject.SetActive(false);
         IsVisible = false;
+    }
+
+    /// <summary>
+    /// Will load Inventory when button is pressed
+    /// </summary>
+    public void LoadInventory()
+    {
+        print("Pause Menu is loading Inventory");
+        panel.gameObject.SetActive(false);
+        IsVisible = false;
+        Application.LoadLevel("Inventory");
     }
 }

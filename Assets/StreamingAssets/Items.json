@@ -246,7 +246,7 @@
     "stackable": false,
     "quest-related": false,
     "sellable": false,
-    "slug": "sword_of_deception"
+    "slug": "sword_of_deception_true_form"
   },
   {
     "id": 209,
@@ -292,21 +292,21 @@
   },
   {
     "id": 212,
-    "title": "ちょうど棒",
-    "value": 1,
+    "title": "Pen",
+    "value": 5,
     "type": "weapon",
     "subtype": "melee",
-    "set":  "none",
-    "damage": 25,
-    "description": "実際にこれを買ってはいけない、ちょうど無意味な棒です",
+    "set": "none",
+    "damage": 15,
+    "description": "I have a pen, I have an Enemy, Uh...",
     "stackable": false,
     "quest-related": false,
     "sellable": true,
-    "slug": "stick"
+    "slug": "pen"
   },
   //Projectiles
   {
-    "id": 301,
+    "id": 300,
     "title": "Empty Beer Can",
     "value": 1,
     "type": "weapon",
@@ -319,6 +319,21 @@
     "sellable": false,
     "slug": "beer_can"
   },
+    {
+    "id": 301,
+    "title": "Burrito",
+    "value": 2,
+    "type": "weapon",
+    "subtype": "projectile",
+    "set": "mexican",
+    "damage": 10,
+    "description": "You would eat them yourself, but unfortunately it doesn't have any meat",
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
+    "slug": "burrito"
+  },
+
   {
     "id": 302,
     "title": "Hatchet",
@@ -425,6 +440,7 @@
     "value": 30,
     "type": "weapon",
     "subtype": "ranged",
+    "linked": 500,
     "set": "none",
     "damage": 20,
     "description": "A powerful combination of a stick and a rubber band. Requires Pebbles",
@@ -439,6 +455,7 @@
     "value": 100,
     "type": "weapon",
     "subtype": "ranged",
+    "linked": 501,
     "set": "none",
     "damage": 50,
     "description": "Turns your enemy's into a Picasso painting. Requires Paintballs",
@@ -453,6 +470,7 @@
     "value": 120,
     "type": "weapon",
     "subtype": "ranged",
+    "linked": 502,
     "set": "none",
     "damage": 60,
     "description": "Shoots nails with incredible speed in between walls (or in your case, at enemy's). Requires Nails",
@@ -463,17 +481,18 @@
   },
   {
     "id": 403,
-    "title": "Rubber Band Gun",
+    "title": "Narf Gun",
     "value": 50,
     "type": "weapon",
     "subtype": "ranged",
+    "linked": 503,
     "set": "none",
     "damage": 30,
-    "description": "Bury your enemy's in a single barrage of 10 rubber bands. Requires Rubber Bands",
+    "description": "Bury your enemy's in a barrage of softness. Requires Foam darts",
     "stackable": false,
     "quest-related": false,
     "sellable": true,
-    "slug": "rubber_band_gun"
+    "slug": "narf_gun"
   },
   {
     "id": 404,
@@ -481,6 +500,7 @@
     "value": 150,
     "type": "weapon",
     "subtype": "ranged",
+    "linked": 504,
     "set": "arabic",
     "damage": 60,
     "description": "Once used by a mighty empire, now to be used by a drunk idiot. Requires Arrows",
@@ -495,6 +515,7 @@
     "title": "Pebble",
     "value": 1,
     "type": "ammunition",
+    "linked": 400,
     "description": "Can be found almost anywhere. Used by Catapult",
     "stackable": true,
     "quest-related": false,
@@ -506,6 +527,7 @@
     "title": "Paint ball",
     "value": 5,
     "type": "ammunition",
+    "linked": 401,
     "description": "Comes in any colour. Used by Paintball Gun",
     "stackable": true,
     "quest-related": false,
@@ -514,21 +536,23 @@
   },
   {
     "id": 502,
-    "title": "Nail",
+    "title": "Staple",
     "value": 1,
     "type": "ammunition",
-    "description": "description required. Used by Staple gun",
+    "linked": 402,
+    "description": "A staple for every good projectile weapon, Used by Staple gun",
     "stackable": true,
     "quest-related": false,
     "sellable": true,
-    "slug": "nail"
+    "slug": "staple"
   },
   {
     "id": 503,
-    "title": "Rubber band",
+    "title": "Foam dart",
     "value": 1,
     "type": "ammunition",
-    "description": "description required. Used by Rubber Band Gun",
+    "linked": 403,
+    "description": "More of a nuisance than actually damaging",
     "stackable": true,
     "quest-related": false,
     "sellable": false,
@@ -539,6 +563,7 @@
     "title": "Arrow",
     "value": 7,
     "type": "ammunition",
+    "linked": 404,
     "description": "description required. Used by Composite bow",
     "stackable": true,
     "quest-related": false,
@@ -1023,7 +1048,7 @@
     "value": 60,
     "type": "equipment",
     "subtype": "lowerwear",
-    "set": "mexican",
+    "set": "chinese",
     "stats": {
       "attack": 80,
       "defence": 30,

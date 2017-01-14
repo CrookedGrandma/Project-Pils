@@ -7,10 +7,6 @@ public class Tooltip : MonoBehaviour
 {
     private Item item;
     private string data;
-    private string stats;
-    private int damage;
-    private int defence;
-    private int health;
     private GameObject tooltip;
     public GameObject weaponslot;
     public GameObject ammoslot;
@@ -18,7 +14,6 @@ public class Tooltip : MonoBehaviour
     public GameObject bodyslot;
     public GameObject lowerslot;
     public GameObject shoeslot;
-    public GameObject InventoryData;
     // In volgorde van 0 tot 5: dumpster, medieval, gentleman, arabic, mexican, chinese, sports
     private int[] setArray = new int[7];
     private GameObject[] equipmentList;
@@ -33,7 +28,6 @@ public class Tooltip : MonoBehaviour
 
     private void Update()
     {
-        UpdateInventoryData();
         if (tooltip.activeSelf)
         {
             tooltip.transform.position = Input.mousePosition;
@@ -78,13 +72,36 @@ public class Tooltip : MonoBehaviour
             }
         }
     }
+    //Activates the tooltip
     public void Activate(Item item)
     {
         this.item = item;
         ConstructData();
         tooltip.SetActive(true);
     }
-
+    //Gets called when you want to sell an item in your inventory
+    public void sellActivate(Item item, bool sellConfirm)
+    {
+        this.item = item;
+        if (item.Sellable)
+        {
+            if (sellConfirm == false)
+            {
+                data = "<color=#0000ff>Are you sure you want to sell: <b><color=#ffffff>" + item.Title + "</color></b>?</color>";
+            }
+            else if (sellConfirm == true)
+            {
+                data = "<color=#00ff00>You have successfully sold: <b><color=#ffffff>" + item.Title + "</color></b>!</color>";
+            }
+        }
+        else if (!item.Sellable)
+        {
+            data = "<color=#ff0000><b>You cannot sell this item!</b></color>";
+        }
+        tooltip.transform.GetChild(0).GetComponent<Text>().supportRichText = true;
+        tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
+    }
+    //Deactivate the tooltip
     public void Deactivate(Item item)
     {
         tooltip.SetActive(false);
@@ -92,60 +109,42 @@ public class Tooltip : MonoBehaviour
 
     public void ConstructData()
     {
-        if (item.Type == "equipment")
+        if (item.active == true)
         {
-            data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Attack: " + item.Attack + "\nDefence: " + item.Defence + "\nHealth: " + item.Health + "</color>";
-            if (item.Set != "none")
+            if (item.Type == "equipment")
             {
-                data += "\n\n<i><color=#FFF000>This item is part of the <color=#FFFFFF>" + item.Set + "</color> set </color></i>";
+                data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Attack: " + item.Attack + "\nDefence: " + item.Defence + "\nHealth: " + item.Health + "</color>";
+                if (item.Set != "none")
+                {
+                    data += "\n\n<i><color=#FFF000>This item is part of the <color=#FFFFFF>" + item.Set + "</color> set </color></i>";
+                }
             }
-        }
-        else if (item.Type == "consumable")
-        {
-            data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Heal: " + item.Heal + "</color>";
-        }
-        else if (item.Type == "weapon")
-        {
-            data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: " + item.Damage + "</color>";
-            if (item.Set != "none")
+            else if (item.Type == "consumable")
             {
-                data += "\n\n<i><color=#FFF000>This item is part of the <color=#FFFFFF>" + item.Set + "</color> set </color></i>";
-            if (item.ID == 14) {
-                data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
+                data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Heal: " + item.Heal + "</color>";
             }
-            else {
+            else if (item.Type == "weapon")
+            {
                 data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: " + item.Damage + "</color>";
+                if (item.Set != "none")
+                {
+                    data += "\n\n<i><color=#FFF000>This item is part of the <color=#FFFFFF>" + item.Set + "</color> set </color></i>";
+                    if (item.ID == 14)
+                    {
+                        data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
+                    }
+                    else
+                    {
+                        data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: " + item.Damage + "</color>";
+                    }
+
+                }
             }
-        }
-        else if (item.Type == "miscellaneous" || item.Type == "ammunition")
-        {
-            data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>";
-        }
-        if (item.Questrelated == true)
-        {
-            data += "\n\n<i><color=#FFFFFF>Quest-related</color></i>";
-        }
-        if (item.Sellable == false)
-        {
-            data += "\n\n<i><color=#FFFFFF>Not Sellable</color></i>";
-        }
-        //Toont informatie over de set
-                if (item.ID == 14)
-                {
-                    data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
-                }
-                else
-                {
-                    data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: " + item.Damage + "</color>";
-                }
-                if (item.ID == 212)
-                {
-                    data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "\n" + item.Subtype + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>\n\n<color=#C000FF>Damage: ???</color>";
-                }
-                else if (item.Type == "miscellaneous" || item.Type == "ammunition")
-                {
-                    data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>";
-                }
+            else if (item.Type == "miscellaneous" || item.Type == "ammunition")
+            {
+                Debug.Log(item.Title);
+                data = "<color=#00bfff><b>" + item.Title + "</b></color>\n\n<i><color=#FFFFFF>" + item.Type + "</color></i>\n\n<color=#40ff00>" + item.Description + "</color>";
+            }
                 if (item.Questrelated == true)
                 {
                     data += "\n\n<i><color=#FFFFFF>Quest-related</color></i>";
@@ -188,33 +187,11 @@ public class Tooltip : MonoBehaviour
                 tooltip.transform.GetChild(0).GetComponent<Text>().supportRichText = true;
                 tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
             }
-        }
-
-    public void UpdateInventoryData()
-    {
-        stats = "";
-        damage = 0;
-        defence = 0;
-        health = 0;
-        for (int i = 0; i < equipmentList.Length; i++)
+        else if (item.active == false)
         {
-            if (equipmentList[i].transform.childCount > 0)
-            {
-                ItemData itemData = equipmentList[i].transform.GetChild(0).GetComponent<ItemData>();
-                if (itemData.item.Type == "weapon")
-                {
-                    damage += itemData.item.Damage;
-                }
-                if (itemData.item.Type == "equipment")
-                {
-                    damage += itemData.item.Attack;
-                    defence += itemData.item.Defence;
-                    health += itemData.item.Health;
-                }
-            }
+            data = "<color=#FF0000>THIS ITEM IS NOT ACTIVE, PLEASE MOVE IT TO THE PROPER SLOT</color>";
+            tooltip.transform.GetChild(0).GetComponent<Text>().supportRichText = true;
+            tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
         }
-        stats = "Attack: " + damage + "\nDefense: " + defence + "\nHealth: " + health;
-        InventoryData.GetComponent<Text>().supportRichText = true;
-        InventoryData.GetComponent<Text>().text = stats;
     }
 }

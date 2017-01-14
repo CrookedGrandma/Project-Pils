@@ -36,19 +36,30 @@ public class ItemDatabase : MonoBehaviour {
             }
             else if (ItemData[i]["type"].ToString() == "weapon")
             {
-                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), ItemData[i]["set"].ToString(), (int)ItemData[i]["damage"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
+                if (ItemData[i]["subtype"].ToString() == "ranged")
+                {
+                    database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), (int)ItemData[i]["linked"], ItemData[i]["set"].ToString(), (int)ItemData[i]["damage"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
+                }
+                else
+                {
+                    database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), ItemData[i]["set"].ToString(), (int)ItemData[i]["damage"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
+                }
             }
-            else if(ItemData[i]["type"].ToString() == "consumable")
+            else if (ItemData[i]["type"].ToString() == "consumable")
             {
                 database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["subtype"].ToString(), (int)ItemData[i]["heal"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
             }
-            else if (ItemData[i]["type"].ToString() == "miscellaneous" || ItemData[i]["type"].ToString() == "ammunition")
+            else if (ItemData[i]["type"].ToString() == "miscellaneous")
             {
                 database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
             }
+            else if (ItemData[i]["type"].ToString() == "ammunition")
+            {
+                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), (int)ItemData[i]["value"], ItemData[i]["type"].ToString(), (int)ItemData[i]["linked"], ItemData[i]["description"].ToString(), (bool)ItemData[i]["stackable"], (bool)ItemData[i]["quest-related"], (bool)ItemData[i]["sellable"], ItemData[i]["slug"].ToString()));
+            }
             else if (ItemData[i]["type"].ToString() == "nullitem")
             {
-                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(),  ItemData[i]["type"].ToString()));
+                database.Add(new Item((int)ItemData[i]["id"], ItemData[i]["title"].ToString(), ItemData[i]["type"].ToString(), ItemData[i]["slug"].ToString()));
             }
         }
     }
@@ -56,11 +67,13 @@ public class ItemDatabase : MonoBehaviour {
 
 public class Item
 {
+    public bool active;
     public int ID { get; set; }
     public string Title { get; set; }
     public int Value { get; set; }
     public string Type { get; set; }
     public string Subtype { get; set; }
+    public int Linked { get; set; }
     public string Set { get; set; }
     public int Attack { get; set; }
     public int Defence { get; set; }
@@ -77,6 +90,7 @@ public class Item
     //Constructor voor Equipment
     public Item(int id, string title, int value, string type, string subtype, string set, int attack, int defence, int health, string description, bool stackable, bool questrelated, bool sellable, string slug)
     {
+        this.active = true;
         this.ID = id;
         this.Title = title;
         this.Value = value;
@@ -96,6 +110,7 @@ public class Item
     //Constructor voor Weapons
     public Item(int id, string title, int value, string type, string subtype, string set, int damage, string description, bool stackable, bool questrelated, bool sellable, string slug)
     {
+        this.active = true;
         this.ID = id;
         this.Title = title;
         this.Value = value;
@@ -110,9 +125,29 @@ public class Item
         this.Slug = slug;
         this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }
+    //Constructor voor Ranged Weapons
+    public Item(int id, string title, int value, string type, string subtype, int linked, string set, int damage, string description, bool stackable, bool questrelated, bool sellable, string slug)
+    {
+        this.active = true;
+        this.ID = id;
+        this.Title = title;
+        this.Value = value;
+        this.Type = type;
+        this.Subtype = subtype;
+        this.Linked = linked;
+        this.Set = set;
+        this.Damage = damage;
+        this.Description = description;
+        this.Stackable = stackable;
+        this.Questrelated = questrelated;
+        this.Sellable = sellable;
+        this.Slug = slug;
+        this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
+    }
     //Constructor voor Consumables
     public Item(int id, string title, int value, string type, string subtype, int heal, string description, bool stackable, bool questrelated, bool sellable, string slug)
     {
+        this.active = true;
         this.ID = id;
         this.Title = title;
         this.Value = value;
@@ -126,9 +161,10 @@ public class Item
         this.Slug = slug;
         this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }
-    //Constructor voor Miscellaneous/Ammunition
+    //Constructor voor Miscellaneous
     public Item(int id, string title, int value, string type, string description, bool stackable, bool questrelated, bool sellable, string slug)
     {
+        this.active = true;
         this.ID = id;
         this.Title = title;
         this.Value = value;
@@ -140,12 +176,31 @@ public class Item
         this.Slug = slug;
         this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }
-    //Constructor voor nullitem
-    public Item(int id, string title, string type)
+    //Constructor voor Ammunition
+    public Item(int id, string title, int value, string type, int linked, string description, bool stackable, bool questrelated, bool sellable, string slug)
     {
+        this.active = true;
+        this.ID = id;
+        this.Title = title;
+        this.Value = value;
+        this.Type = type;
+        this.Linked = linked;
+        this.Description = description;
+        this.Stackable = stackable;
+        this.Questrelated = questrelated;
+        this.Sellable = sellable;
+        this.Slug = slug;
+        this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
+    }
+    //Constructor voor nullitem
+    public Item(int id, string title, string type, string slug)
+    {
+        this.active = true;
         this.ID = id;
         this.Title = title;
         this.Type = type;
+        this.Slug = slug;
+        this.Sprite = Resources.Load<Sprite>("Sprites/Inventory/Sprites/" + slug);
     }
 
     public Item()

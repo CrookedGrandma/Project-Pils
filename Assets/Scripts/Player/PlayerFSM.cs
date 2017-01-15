@@ -86,7 +86,6 @@ public class PlayerFSM : Entity {
         if (Input.GetKeyDown(KeyCode.I)) {
             SceneManager.LoadScene("Combat");
         }
-        //}
     }
 
     public override void onMessage(Message m)
@@ -107,55 +106,14 @@ public class PlayerFSM : Entity {
         var normal = collision.contacts[0].normal;
         if (normal.y > 0)
         {
-            //Hit Bottom
+            // Hit Bottom
             moveAction.ableToJump = true;
-            moveAction.ableToMoveBackward = moveAction.ableToMoveForward = moveAction.ableToMoveLeft = moveAction.ableToMoveRight = true;
-        }
-        if (collision.collider.tag != "Terrain")
-        {
-            /* 
-             * Terrain does not have mass, so there was a NullReferenceException. 
-             * The collision with the terrain is already handled just before this.
-             */
-           if (collision.rigidbody)
-            {
-                if (PlayerRB.mass <= collision.rigidbody.mass)
-                {
-                    if (normal.y < 0)
-                    {
-                        //Hit Roof  
-                        // Maybe needed in houses or dungeons
-                    }
-                    else if (normal.x > 0)
-                    {
-                        //Hit Left
-                        moveAction.ableToMoveLeft = false;
-                    }
-                    else if (normal.x < 0)
-                    {
-                        //Hit Right
-                        moveAction.ableToMoveRight = false;
-                    }
-                    else if (normal.z < 0)
-                    {
-                        //Hit Front
-                        moveAction.ableToMoveForward = false;
-                    }
-                    else if (normal.z > 0)
-                    {
-                        //Hit Back
-                        moveAction.ableToMoveBackward = false;
-                    }
-                }
-            }
-
         }
     }
 
-    //Add Collision parameter if needed, remove if not to prevent any unnecessary calculations
     private void OnCollisionExit()
     {
-        moveAction.ableToMoveBackward = moveAction.ableToMoveForward = moveAction.ableToMoveLeft = moveAction.ableToMoveRight = true;
+        // When we exit a collision (the collision with the ground), we are not allowed to jump. This is to prevent spamming the jump button to create a rocket.
         moveAction.ableToJump = false;
     }
 

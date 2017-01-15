@@ -15,7 +15,7 @@ public class MoveAction : Core.FSM.FSMAction
     private float totalIdleTime = 0.25f;
 
     private string finishEvent;
-    public bool ableToJump, ableToMoveLeft, ableToMoveRight, ableToMoveForward, ableToMoveBackward;
+    public bool ableToJump;
 
     public MoveAction (FSMState owner) : base (owner)
 	{
@@ -54,22 +54,6 @@ public class MoveAction : Core.FSM.FSMAction
         // Walking or Sprinting
         float moveLeftRight = Input.GetAxis("Horizontal") * usedVelocity * Time.deltaTime;
         float moveForwardBackward = Input.GetAxis("Vertical") * usedVelocity * Time.deltaTime;
-        if (!ableToMoveLeft && moveLeftRight < 0)
-        {
-            moveLeftRight = 0;
-        }
-        if (!ableToMoveRight && moveLeftRight > 0)
-        {
-            moveLeftRight = 0;
-        }
-        if (!ableToMoveForward && moveForwardBackward > 0)
-        {
-            moveForwardBackward = 0;
-        }
-        if (!ableToMoveBackward && moveForwardBackward < 0)
-        {
-            moveForwardBackward = 0;
-        }
          
         // Jump
         if (Input.GetButtonDown("Jump") && ableToJump)

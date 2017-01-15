@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetFirstPositionsInLevels : MonoBehaviour
+public class SetStartValuesForPlayerPrefs : MonoBehaviour
 {
     // This script sets the first positions in the levels for the player to spawn in. Every first time a level is loaded, it has to have a position for the player, otherwise
     // the player won't spawn at the right place. These positions will be overriden the next time a level is exited. The first positions will just be hardcoded.
@@ -10,7 +10,9 @@ public class SetFirstPositionsInLevels : MonoBehaviour
     // The levels at this moment in the script are:
     // BossLevel, Dungeon_FaceBeer, Dungeon_PiPi, FaceBeerLobby, FaceBeerOutside, Home, HomeFriend, Market, TheVergeInn, Wok2Stay, Woonplaats
 
-    GameObject player;
+    public int playerHealth = 100;
+
+    private GameObject player;
 
     private void Start()
     {
@@ -29,5 +31,10 @@ public class SetFirstPositionsInLevels : MonoBehaviour
         PlayerPrefsManager.SetStartPositions("TheVergeInn", player, -3.0f, 1.0f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Wok2Stay", player, -3.0f, 1.0f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Woonplaats", player, 48.3f, 1.5f, 25.4f);
+
+        // Set the health, XP and level for the player
+        PlayerPrefsManager.SetPlayerHealth(playerHealth);
+        PlayerPrefsManager.SetPlayerXP(0);
+        PlayerPrefsManager.SetPlayerLevel(1);
     }
 }

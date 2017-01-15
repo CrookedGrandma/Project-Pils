@@ -15,7 +15,8 @@ public class DungeonCreator : MonoBehaviour
     public GameObject player, endPoint, enemy;                              // Normal gameobjects for the player, endpoint and enemies
 
     private TileType[][] tiles;
-    private Vector3 playerPos, endPointPos;
+    private Vector3 playerPos = new Vector3(0.5f, 0.35f, 0.5f);             // Used to check the spawnpositions of other objects 
+    private Vector3 endPointPos;
     private Dungeon_Room[] rooms;
     private Dungeon_Corridor[] corridors;
     private GameObject dungeonHolder, enemyHolder;
@@ -93,10 +94,6 @@ public class DungeonCreator : MonoBehaviour
 
         // Setup the first corridor
         corridors[0].SetupCorridor(rooms[0], minCorridorLength, maxCorridorLength, rooms[0].roomWidth, rooms[0].roomHeight, columns, rows, true);
-
-        // Instantiate the player in the first room
-        playerPos = new Vector3(rooms[0].xPos + 0.5f, 0.35f, rooms[0].zPos + 0.5f);
-        Instantiate(player, playerPos, Quaternion.identity);
 
         // Create and Setup the other rooms
         for (int i = 1; i < rooms.Length; i++)

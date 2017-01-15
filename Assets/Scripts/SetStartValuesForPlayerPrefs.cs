@@ -20,16 +20,16 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
         player = GameObject.Find("Player");
 
         // Go through all the levels and set startpositions
-        PlayerPrefsManager.SetStartPositions("BossLevel", player, -0.4f, 1.0f, -18.5f);
-        PlayerPrefsManager.SetStartPositions("Dungeon_FaceBeer", player, 0.5f, 1.0f, 0.5f);
-        PlayerPrefsManager.SetStartPositions("Dungeon_PiPi", player, 0.5f, 1.0f, 0.5f);
-        PlayerPrefsManager.SetStartPositions("FaceBeerLobby", player, 0f, 1.0f, -6.8f);
-        PlayerPrefsManager.SetStartPositions("FaceBeerOutside", player, 93.5f, 1.0f, -63.5f);
-        PlayerPrefsManager.SetStartPositions("Home", player, -10.5f, 1.0f, -13.5f);
-        PlayerPrefsManager.SetStartPositions("HomeFriend", player, 10.5f, 1.0f, -13.5f);
-        PlayerPrefsManager.SetStartPositions("Market", player, 1.8f, 1.0f, -74.0f);
-        PlayerPrefsManager.SetStartPositions("TheVergeInn", player, -3.0f, 1.0f, -11.2f);
-        PlayerPrefsManager.SetStartPositions("Wok2Stay", player, -3.0f, 1.0f, -11.2f);
+        PlayerPrefsManager.SetStartPositions("BossLevel", player, -0.4f, 1.5f, -18.5f);
+        PlayerPrefsManager.SetStartPositions("Dungeon_FaceBeer", player, 0.5f, 1.5f, 0.5f);
+        PlayerPrefsManager.SetStartPositions("Dungeon_PiPi", player, 0.5f, 1.5f, 0.5f);
+        PlayerPrefsManager.SetStartPositions("FaceBeerLobby", player, 0f, 1.5f, -6.8f);
+        PlayerPrefsManager.SetStartPositions("FaceBeerOutside", player, 93.5f, 1.5f, -63.5f);
+        PlayerPrefsManager.SetStartPositions("Home", player, -10.5f, 1.5f, -13.5f);
+        PlayerPrefsManager.SetStartPositions("HomeFriend", player, 10.5f, 1.5f, -13.5f);
+        PlayerPrefsManager.SetStartPositions("Market", player, 1.8f, 1.5f, -74.0f);
+        PlayerPrefsManager.SetStartPositions("TheVergeInn", player, -3.0f, 1.5f, -11.2f);
+        PlayerPrefsManager.SetStartPositions("Wok2Stay", player, -3.0f, 1.5f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Woonplaats", player, 48.3f, 1.5f, 25.4f);
 
         // Set the health, XP and level for the player

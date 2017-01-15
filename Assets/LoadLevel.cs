@@ -8,21 +8,39 @@ public class LoadLevel : MonoBehaviour
 
     private void Awake()
     {
+        // Find the player in the level
         player = GameObject.Find("Player");
     }
 
-    /// <summary>
-    /// Checks's if the player is in the Collider area (trigger).
+    // Checks if the player is in the Collider area (trigger).
     public void OnTriggerStay(Collider trigger)
     {
-        print(levelName + " Scene trigger active");
+        Debug.Log(levelName + " Scene trigger active");
+
         if (Input.GetButtonDown("Accept"))
         {
+            // Store the playerposition in the current level
             PlayerPrefsManager.SetPositionInLevel(Application.loadedLevelName, player);
+
+            // Load the next level
             Application.LoadLevel(levelName);
+
+            // Create a new position from the saved position of the new level in Unity's PlayerPrefs and set the player's position to this value
             Vector3 newPosition = PlayerPrefsManager.GetPositionInLevel(levelName, player);
             player.transform.position = newPosition;
-            print("Loading " + levelName + " Scene");
+
+            Debug.Log("Loading " + levelName + " Scene");
+
+            if (levelName == "Dungeon_FaceBeer" || levelName == "Dungeon_PiPi")
+            {
+                // Scale the player so he fits in the dungeons
+                player.transform.localScale = new Vector3(0.5f, 0.5f * player.transform.localScale.y, 0.5f);
+            }
+            else
+            {
+                // Scale the player to his normal scale
+                player.transform.localScale = new Vector3(1f, 1f, 1f);
+            }
         }
     }
 }

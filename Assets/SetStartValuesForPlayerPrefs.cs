@@ -36,5 +36,9 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
         PlayerPrefsManager.SetPlayerHealth(playerHealth);
         PlayerPrefsManager.SetPlayerXP(0);
         PlayerPrefsManager.SetPlayerLevel(1);
+
+        // Set start values for the music and soundeffects volume
+        PlayerPrefsManager.SetMusicVolume(1f);
+        PlayerPrefsManager.SetSoundFXVolume(1f);
     }
 }

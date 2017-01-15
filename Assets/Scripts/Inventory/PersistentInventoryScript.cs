@@ -70,7 +70,7 @@ public class PersistentInventoryScript : MonoBehaviour {
     }
     public void removeEquipment(int slot, int number)
     {
-        if (equipmentList[slot,1] > 1)
+        if (equipmentList[slot, 1] > 1)
         {
             equipmentList[slot, 1] -= 1;
         }

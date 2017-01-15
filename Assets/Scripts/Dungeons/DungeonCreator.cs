@@ -12,7 +12,7 @@ public class DungeonCreator : MonoBehaviour
     public int columns = 30, rows = 30, minNumRooms = 10, maxNumRooms = 12, minRoomWidth = 4, maxRoomWidth = 8, minRoomHeight = 4, maxRoomHeight = 8, 
                minCorridorLength = 8, maxCorridorLength = 14, minNumberOfEnemies = 2, maxNumberOfEnemies = 6;
     public GameObject[] wallTiles, outerWallTiles;                          // Used so there can be multiple models for a certain type, for diversity
-    public GameObject player, endPoint, enemy;                              // Normal gameobjects for the player, endpoint and enemies
+    public GameObject endPoint, enemy;                                      // Normal gameobjects for the endpoint and enemies
 
     private TileType[][] tiles;
     private Vector3 playerPos = new Vector3(0.5f, 0.35f, 0.5f);             // Used to check the spawnpositions of other objects 

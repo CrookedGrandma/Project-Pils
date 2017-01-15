@@ -52,14 +52,14 @@ public class PlayerPrefsManager : MonoBehaviour
         return position;
     }
 
-    public static void SetPlayerHealth(float health)
+    public static void SetPlayerHealth(int health)
     {
-        PlayerPrefs.SetFloat(PLAYER_HEALTH, health);
+        PlayerPrefs.SetInt(PLAYER_HEALTH, health);
     }
 
     public static float GetPlayerHealth()
     {
-        return PlayerPrefs.GetFloat(PLAYER_HEALTH);
+        return PlayerPrefs.GetInt(PLAYER_HEALTH);
     }
 
     public static void SetPlayerXP(int XP)

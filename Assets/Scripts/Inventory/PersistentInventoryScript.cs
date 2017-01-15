@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class PersistentInventoryScript : MonoBehaviour {
     public GameObject persistentInventory;
     public static PersistentInventoryScript instance;
-    //weaponslot, ammoslot, headslot, bodyslot, lowerslot, shoeslot
+    //0=weaponslot, 1=ranged/throwslot, 2=headslot, 3=bodyslot, 4=lowerslot, 5=shoeslot
     public int[,] equipmentList = new int[6,2];
     public int[,] itemList;
     public int slotCount;

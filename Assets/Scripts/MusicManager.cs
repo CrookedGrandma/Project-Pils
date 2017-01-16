@@ -20,14 +20,21 @@ public class MusicManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        AudioClip thisLevelMusic = levelMusicChangeArray[level];
-
-        if (thisLevelMusic)
+        if (levelMusicChangeArray.Length != 0)
         {
-            audioSource.volume = PlayerPrefsManager.GetMusicVolume();
-            audioSource.clip = thisLevelMusic;
-            audioSource.loop = true;
-            audioSource.Play();
+            AudioClip thisLevelMusic = levelMusicChangeArray[level];
+
+            if (thisLevelMusic)
+            {
+                audioSource.volume = PlayerPrefsManager.GetMusicVolume();
+                audioSource.clip = thisLevelMusic;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            // Array is empty, so no music has to be played here
         }
     }
 

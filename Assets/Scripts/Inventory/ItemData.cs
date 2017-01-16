@@ -79,9 +79,10 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         //Verkoopt het item als speler in shop zit
         if (persistentInventory.InShop == true)
         {
+            if (slot < inv.slotCount) {
             if (!sold.HasValue)
             {
-            sold = false;
+                sold = false;
             }
             if (!sellConfirm)
             {
@@ -94,20 +95,21 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             else if (sellConfirm)
             {
                 tooltip.sellActivate(item, sellConfirm);
-                    System.Threading.Timer timer = null;
-                    timer = new System.Threading.Timer((obj) =>
+                System.Threading.Timer timer = null;
+                timer = new System.Threading.Timer((obj) =>
+                {
+                    if (sold == false)
                     {
-                        if (sold == false)
-                        {
-                            persistentInventory.Currency += item.Value;
-                        }
-                        sold = true;
-                        timer.Dispose();
-                    },
-                                null, 1000, System.Threading.Timeout.Infinite);
+                        persistentInventory.Currency += item.Value;
+                    }
+                    sold = true;
+                    timer.Dispose();
+                },
+                            null, 1000, System.Threading.Timeout.Infinite);
             }
 
         }
+    }
         else if (slot < inv.slotCount)
         {
             if (item.Type == "equipment" || item.Type == "weapon")

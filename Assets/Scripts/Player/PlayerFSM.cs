@@ -19,8 +19,6 @@ public class PlayerFSM : Entity {
     private int enemyID = -1;
     private int envID = -1;
     private bool pleaseDie = false;
-    private float health = 100f;
-    private float maxHealth = 100f;
 
     // Awake
     void Awake() {
@@ -34,7 +32,7 @@ public class PlayerFSM : Entity {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         fsm = new Core.FSM.FSM("PlayerFSM");
         moveState = fsm.AddState("MoveState");
         idleState = fsm.AddState("IdleState");
@@ -53,10 +51,10 @@ public class PlayerFSM : Entity {
         moveState.AddTransition("ToIdle", idleState);
 
         fsm.Start("IdleState");
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update() {
         if (!GameManager.instance.IsPaused) {
             fsm.Update();
         }
@@ -88,31 +86,26 @@ public class PlayerFSM : Entity {
         }
     }
 
-    public override void onMessage(Message m)
-    {
+    public override void onMessage(Message m) {
         base.onMessage(m);
 
-        switch (m.type)
-        {
+        switch (m.type) {
             case MsgType.Dialogue:
-                GameManager.instance.dialogueManager.AddLine(m.from.name, m.data.ToString(), "red");
-                break;
+            GameManager.instance.dialogueManager.AddLine(m.from.name, m.data.ToString(), "red");
+            break;
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
+    private void OnCollisionStay(Collision collision) {
         // Determine if we can jump
         var normal = collision.contacts[0].normal;
-        if (normal.y > 0)
-        {
+        if (normal.y > 0) {
             // Hit Bottom
             moveAction.ableToJump = true;
         }
     }
 
-    private void OnCollisionExit()
-    {
+    private void OnCollisionExit() {
         // When we exit a collision (the collision with the ground), we are not allowed to jump. This is to prevent spamming the jump button to create a rocket.
         moveAction.ableToJump = false;
     }
@@ -132,13 +125,4 @@ public class PlayerFSM : Entity {
         set { pleaseDie = value; }
     }
 
-    public float Health {
-        get { return health; }
-        set { health = value; }
-    }
-
-    public float MaxHealth {
-        get { return maxHealth; }
-        set { maxHealth = value; }
-    }
 }

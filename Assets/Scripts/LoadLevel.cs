@@ -22,6 +22,9 @@ public class LoadLevel : MonoBehaviour
             // Store the playerposition in the current level
             PlayerPrefsManager.SetPositionInLevel(Application.loadedLevelName, player);
 
+            // Freeze the player so he doesn't fall through the map while loading a new level
+            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
             // Load the next level
             Application.LoadLevel(levelName);
 
@@ -42,5 +45,12 @@ public class LoadLevel : MonoBehaviour
                 player.transform.localScale = new Vector3(1f, 1f, 1f);
             }
         }
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        // As soon as the level is loaded, unfreeze the player and freeze his rotation again (normal situation)
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
     }
 }

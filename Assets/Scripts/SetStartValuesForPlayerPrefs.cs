@@ -8,7 +8,7 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
     // the player won't spawn at the right place. These positions will be overriden the next time a level is exited. The first positions will just be hardcoded.
 
     // The levels at this moment in the script are:
-    // BossLevel, Dungeon_FaceBeer, Dungeon_PiPi, FaceBeerLobby, FaceBeerOutside, Home, HomeFriend, Market, TheVergeInn, Wok2Stay, Woonplaats
+    // BossLevel, Dungeon_FaceBeer, Dungeon_PiPi, FaceBeerLobby, FaceBeerOutside, Home, HomeFriend, Market, PiPiOutside, TheVergeInn, Wok2Stay, Woonplaats
 
     public int playerHealth = 100;
 
@@ -28,6 +28,7 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
         PlayerPrefsManager.SetStartPositions("Home", player, -10.5f, 1.5f, -13.5f);
         PlayerPrefsManager.SetStartPositions("HomeFriend", player, 10.5f, 1.5f, -13.5f);
         PlayerPrefsManager.SetStartPositions("Market", player, 1.8f, 1.5f, -74.0f);
+        PlayerPrefsManager.SetStartPositions("PiPiOutside", player, -37.5f, 1.5f, -13.5f);
         PlayerPrefsManager.SetStartPositions("TheVergeInn", player, -3.0f, 1.5f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Wok2Stay", player, -3.0f, 1.5f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Woonplaats", player, 48.3f, 1.5f, 25.4f);

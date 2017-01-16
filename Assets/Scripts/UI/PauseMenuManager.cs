@@ -3,56 +3,66 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PauseMenuManager : MonoBehaviour {
-    public Image ConfirmationPanel;
+    public GameObject ConfirmationPanel;
     public GameObject PauseMenu;
     public bool IsVisible = false;
 
-    ///<summary>
-    ///Will toggle the pause menu to invisible.
-    void Start () {
-        PauseMenu.gameObject.SetActive(false);
-        ConfirmationPanel.gameObject.SetActive(false);
-
-
+    /// <summary>
+    /// Makes sure The confirmation panel isn't visible when launching the game.
+    void Awake()
+    {
+        ConfirmationPanel.SetActive(false);
     }
 
     ///<summary>
     ///Will toggle the pause menu to invisible when 
     ///the escape-button is pressed while already in pause menu.
-    void Update () {
+    void Update ()
+    {
         if (Input.GetKeyDown(KeyCode.Escape)&& IsVisible)
         {
             PauseMenu.gameObject.SetActive(false);
             IsVisible = false;
+            print("Pause menu Already Visible, Toggling off");
         }
     }
    
     ///<summary>
-    ///Will toggle the pause menu to visible.
+    ///Will toggle the Confirmation Panel to visible.
     public void SetVisible()
     {
-        print("Pause Menu toggled to Visible");
-        PauseMenu.gameObject.SetActive(true);
+        print("Conf Panel toggled to Visible");
         IsVisible = true;
+        ConfirmationPanel.SetActive(true);
     }
-    
+
     ///<summary>
-    ///Will toggle the pause menu to invisible.
+    ///Will toggle the Confirmation Panel to invisible.
     public void SetInvisible()
     {
-        print("Pause Menu toggled to Invisible");
-        PauseMenu.gameObject.SetActive(false);
+        print("Conf Panel toggled to Invisible");
         IsVisible = false;
+        ConfirmationPanel.SetActive(false);
     }
 
     /// <summary>
     /// Will load Inventory when button is pressed
-    /// </summary>
     public void LoadInventory()
     {
-        print("Pause Menu is loading Inventory");
+        print("Pause is loading Inventory");
         PauseMenu.gameObject.SetActive(false);
         IsVisible = false;
         Application.LoadLevel("Inventory");
+    }
+
+
+    ///<summary>
+    ///Will toggle the Confirmation Panel to invisible.
+    public void SetAllInvisible()
+    {
+        print("Pause Menu toggled to Invisible");
+        IsVisible = false;
+        ConfirmationPanel.SetActive(false);
+        PauseMenu.SetActive(false);
     }
 }

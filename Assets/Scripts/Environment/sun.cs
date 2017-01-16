@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class sun : MonoBehaviour {
-
+    public float Speed = 1f;
 	// Use this for initialization
 	void Start () {
 		
@@ -11,7 +11,7 @@ public class sun : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.RotateAround(Vector3.zero, Vector3.right, 10f * Time.deltaTime);
+        transform.RotateAround(Vector3.zero, Vector3.right, Speed * Time.deltaTime);
         transform.LookAt(Vector3.zero);
 	}
 }

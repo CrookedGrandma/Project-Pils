@@ -4,8 +4,8 @@ using System.Collections;
 public class HealthManager : MonoBehaviour {
     public GameObject fullTex;
     private float initHealth;
-    private float maxHealth = XPManager.xpmanager.Health();
-    private float health = XPManager.xpmanager.playercurrhp;
+    private float health = PlayerFSM.player.Health;
+    private float maxHealth = PlayerFSM.player.MaxHealth;
     private float relHealth;
     private float dispHealth;
 
@@ -32,10 +32,10 @@ public class HealthManager : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
-            LoseHealth(-100);
+            LoseHealth(-10);
         }
         if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
-            LoseHealth(250);
+            LoseHealth(25);
         }
     }
 
@@ -44,11 +44,11 @@ public class HealthManager : MonoBehaviour {
     }
 
     public void LoseCombat() {
-        XPManager.xpmanager.playercurrhp = initHealth;
+        PlayerFSM.player.Health = initHealth;
     }
 
     public void WinCombat() {
-        XPManager.xpmanager.playercurrhp = health;
+        PlayerFSM.player.Health = health;
     }
 
     public float Health { get { return health; } }

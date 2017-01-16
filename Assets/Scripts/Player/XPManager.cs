@@ -17,14 +17,11 @@ public class XPManager : MonoBehaviour {
     }
 
     public double xpscaler = 0.25;
-    public double hpscaler = 0.10;
     public int playerxp = 102599; // waarde normaal gehaald uit playerprefs
     public double startxpbound = 100; // level 1 => XP van 0-100
     public int playerlvl = 1;
     public int xptonext = 0;
-    public int playerhp = 100;
 
-    // berekent level opnieuw op basis van xp
     public void Level() {
 
         double calcxp = startxpbound;
@@ -49,15 +46,6 @@ public class XPManager : MonoBehaviour {
                 calcxp = calcxp + calcxp * xpscaler;
         }
     }
-    
-    public int Health() {
-        double calchp = playerhp;
-        for (int i = 0; i < playerlvl_() ; i++) {
-            calchp = calchp + calchp * hpscaler;
-        }
-        playerhp = (int)calchp;
-        return playerhp; 
-    }
 
     public int xptonext_() {
         Level();
@@ -66,10 +54,7 @@ public class XPManager : MonoBehaviour {
 
     public int playerlvl_() {
         Level();
-        return playerlvl;
+        return xptonext;
     }
 
-    private void Start() {
-        Health();
-    }
 }

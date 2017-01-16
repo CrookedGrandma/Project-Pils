@@ -11,19 +11,22 @@ public class AbilityChooser : MonoBehaviour {
     public Text A2T;
     public Text AHT;
 
-    private List<Ability> UsableAbilities = new List<Ability>();
-    private List<Ability> AbilityDatabase = new List<Ability>();
-    private JsonData Abilities;
+    private static List<Ability> UsableAbilities = new List<Ability>();
+    private static List<Ability> AbilityDatabase = new List<Ability>();
+    private static JsonData Abilities;
 
-    private string[] weapon = new string[2];
-    private string Ability1Text;
-    private string Ability2Text;
-    private string AbilityHText;
+    private static string[] weapon = new string[2];
+    private static string Ability1Text;
+    private static string Ability2Text;
+    private static string AbilityHText;
 
+    private static bool started = false;
+    private static bool WeAreNumberOne = false;
     public static int selectedAbility = -1;
 
-    // Use this for initialization
-    void Start () {
+    // Use this for initialization, CALLED BY STATEHANDLER
+    public static void GetStarted () {
+        started = true;
         Abilities = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Abilities.json"));
         ConstructAbilityDatabase();
         FindUsables();
@@ -37,36 +40,31 @@ public class AbilityChooser : MonoBehaviour {
         catch (Exception e) { }
         WhiteText();
         selectedAbility = 1;
-        //SelectAbility(1);
+        SelectAbility(1);
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Keypad0)) {
-            SelectAbility(-1);
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad1)) {
-            SelectAbility(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad2)) {
-            SelectAbility(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad3)) {
-            SelectAbility(3);
-        }
+    private void Update() {
+        if (started) {
+            //Debug {
+            if (Input.GetKeyDown(KeyCode.Keypad0)) {
+                SelectAbility(-1);
+            }
+            //}
 
-        A1T.text = Ability1Text;
-        A2T.text = Ability2Text;
-        AHT.text = AbilityHText;
+            A1T.text = Ability1Text;
+            A2T.text = Ability2Text;
+            AHT.text = AbilityHText;
+        }
     }
 
-    private void ConstructAbilityDatabase() {
+    private static void ConstructAbilityDatabase() {
         for (int i = 0; i < Abilities.Count; i++) {
             AbilityDatabase.Add(new Ability((int)Abilities[i]["id"], Abilities[i]["type"].ToString(),
                                             Abilities[i]["title"].ToString(), (int)Abilities[i]["weaponid"]));
         }
     }
 
-    private void FindUsables() {
+    private static void FindUsables() {
         int equippedWeapon = PersistentInventoryScript.instance.equipmentList[0, 0];
         int equippedRanged = PersistentInventoryScript.instance.equipmentList[1, 0];
         for (int i = 0; i < AbilityDatabase.Count; i++) {
@@ -79,7 +77,7 @@ public class AbilityChooser : MonoBehaviour {
         }
     }
 
-    private void WhiteText() {
+    private static void WhiteText() {
         try {
             Ability1Text = UsableAbilities[0].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[0] + "</color>";
         }
@@ -91,12 +89,13 @@ public class AbilityChooser : MonoBehaviour {
         AbilityHText = "Heal <color=#bbbbbb>with</color> <color=#cccccc>Drinks</color> <color=#bbbbbb>or</color> <color=#cccccc>Food</color>";
     }
 
-    public void SelectAbility(int a) {
+    public static void SelectAbility(int a) {
         if (a == -1) {
             WhiteText();
             selectedAbility = -1;
         }
         if (a == 1) {
+            WeAreNumberOne = true;
             try {
                 Ability1Text = "<color=red>" + UsableAbilities[0].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[0] + "</color>";
                 selectedAbility = 1;
@@ -111,15 +110,16 @@ public class AbilityChooser : MonoBehaviour {
                 selectedAbility = 2;
             }
             catch (Exception e) {
-                if (selectedAbility == 1) {
+                if (selectedAbility == 1 || WeAreNumberOne) {
                     SelectAbility(3);
                 }
-                if (selectedAbility == 3) {
+                else if (selectedAbility == 3) {
                     SelectAbility(1);
                 }
             }
         }
         if (a == 3) {
+            WeAreNumberOne = false;
             AbilityHText = "<color=red>Heal</color> <color=#ff7777>with</color> <color=#ff8888>Drinks</color> <color=#ff7777>or</color> <color=#ff8888>Food</color>";
             selectedAbility = 3;
         }

@@ -6,6 +6,7 @@ public class StateHandler : MonoBehaviour {
     enum States { START, PLAYERCHOICE, PLAYERMOVE, ENEMYCHOICE, ENEMYMOVE }
     States state;
     bool SRanOnce = false;
+    bool PCRanOnce = false;
     bool ECRanOnce = false;
     double flashTimer = 0.0;
     int attNum = 0;
@@ -44,10 +45,20 @@ public class StateHandler : MonoBehaviour {
 
         if (state == States.PLAYERCHOICE) {
             SRanOnce = false;
+            if (!PCRanOnce) {
+                AbilityChooser.GetStarted();
+                PCRanOnce = true;
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow) && AbilityChooser.selectedAbility < 3) {
+                AbilityChooser.SelectAbility(AbilityChooser.selectedAbility + 1);
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow) && AbilityChooser.selectedAbility > 1) {
+                AbilityChooser.SelectAbility(AbilityChooser.selectedAbility - 1);
+            }
         }
 
         if (state == States.PLAYERMOVE) {
-
+            PCRanOnce = false;
         }
 
         if (state == States.ENEMYCHOICE) {

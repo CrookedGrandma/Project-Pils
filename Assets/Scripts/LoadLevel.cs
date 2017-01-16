@@ -6,10 +6,19 @@ public class LoadLevel : MonoBehaviour
     public string levelName;
     public GameObject player;
 
+    private TextBox textBox;
+
     private void Awake()
     {
-        // Find the player in the level
+        // Find the player, the textbox and the keycode in the level
         player = GameObject.Find("Player");
+        textBox = GameObject.FindObjectOfType<TextBox>();
+    }
+
+    // When entering the collider, put a message on the screen which informs the player where he will go
+    private void OnTriggerEnter(Collider other)
+    {
+        textBox.AddLine("Game", "Press \"E\" or \"Return\" to go to " + levelName, "White");
     }
 
     // Checks if the player is in the Collider area (trigger).

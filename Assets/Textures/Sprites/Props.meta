@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Textures/Sprites/Props.meta
+guid: 88af48b9ead6b134e970435551269add
+folderAsset: yes
+timeCreated: 1484429781
+=======
 guid: 10608ec546879ef438f5724a024cf328
 folderAsset: yes
 timeCreated: 1484570329
+>>>>>>> origin/master:Assets/Textures/Sprites/Props.meta
 licenseType: Free
 DefaultImporter:
   userData: 

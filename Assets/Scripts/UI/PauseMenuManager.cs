@@ -3,14 +3,17 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PauseMenuManager : MonoBehaviour {
-
-    public Image panel;
+    public Image ConfirmationPanel;
+    public GameObject PauseMenu;
     public bool IsVisible = false;
 
     ///<summary>
     ///Will toggle the pause menu to invisible.
     void Start () {
-        panel.gameObject.SetActive(false);
+        PauseMenu.gameObject.SetActive(false);
+        ConfirmationPanel.gameObject.SetActive(false);
+
+
     }
 
     ///<summary>
@@ -19,7 +22,7 @@ public class PauseMenuManager : MonoBehaviour {
     void Update () {
         if (Input.GetKeyDown(KeyCode.Escape)&& IsVisible)
         {
-            panel.gameObject.SetActive(false);
+            PauseMenu.gameObject.SetActive(false);
             IsVisible = false;
         }
     }
@@ -29,7 +32,7 @@ public class PauseMenuManager : MonoBehaviour {
     public void SetVisible()
     {
         print("Pause Menu toggled to Visible");
-        panel.gameObject.SetActive(true);
+        PauseMenu.gameObject.SetActive(true);
         IsVisible = true;
     }
     
@@ -38,7 +41,7 @@ public class PauseMenuManager : MonoBehaviour {
     public void SetInvisible()
     {
         print("Pause Menu toggled to Invisible");
-        panel.gameObject.SetActive(false);
+        PauseMenu.gameObject.SetActive(false);
         IsVisible = false;
     }
 
@@ -48,7 +51,7 @@ public class PauseMenuManager : MonoBehaviour {
     public void LoadInventory()
     {
         print("Pause Menu is loading Inventory");
-        panel.gameObject.SetActive(false);
+        PauseMenu.gameObject.SetActive(false);
         IsVisible = false;
         Application.LoadLevel("Inventory");
     }

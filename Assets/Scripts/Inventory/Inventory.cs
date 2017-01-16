@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour {
     public GameObject shoeslot;
     public GameObject InventoryData;
     public GameObject InventoryMoney;
+    public GameObject InventorySets;
     GameObject persistentInventoryObject;
     ItemDatabase database;
     PersistentInventoryScript persistentInventory;
@@ -30,6 +31,8 @@ public class Inventory : MonoBehaviour {
     private int damage;
     private int defence;
     private int health;
+    //volgorde : dumpster, medieval, gentleman, arabic, mexican, chinese, sports,
+    private int[] setArray = new int[7];
 
     private void Start()
     {
@@ -195,23 +198,60 @@ public class Inventory : MonoBehaviour {
         damage = 0;
         defence = 0;
         health = 0;
+        string[] setCounter = new string[6];
         for (int i = 0; i < equipmentList.Length; i++)
         {
             if (equipmentList[i].transform.childCount > 0)
             {
                 ItemData itemData = equipmentList[i].transform.GetChild(0).GetComponent<ItemData>();
-                if (itemData.item.Type == "weapon")
+                if (itemData.item.Type == "weapon" && itemData.item.active)
                 {
                     damage += itemData.item.Damage;
+                    setCounter[i] = itemData.item.Set;
                 }
-                if (itemData.item.Type == "equipment")
+                else if (itemData.item.Type == "equipment" && itemData.item.active)
                 {
                     damage += itemData.item.Attack;
                     defence += itemData.item.Defence;
                     health += itemData.item.Health;
+                    setCounter[i] = itemData.item.Set;
                 }
             }
+
         }
+        //volgorde : dumpster, medieval, gentleman, arabic, mexican, chinese, sports,
+        for (int i = 0; i < setCounter.Length; i++)
+        {
+            if (setCounter[i] == "dumpster")
+            {
+                setArray[0] += 1;
+            }
+            if (setCounter[i] == "medieval")
+            {
+                setArray[1] += 1;
+            }
+            if (setCounter[i] == "gentleman")
+            {
+                setArray[2] += 1;
+            }
+            if (setCounter[i] == "arabic")
+            {
+                setArray[3] += 1;
+            }
+            if (setCounter[i] == "mexican")
+            {
+                setArray[4] += 1;
+            }
+            if (setCounter[i] == "chinese")
+            {
+                setArray[5] += 1;
+            }
+            if (setCounter[i] == "sports")
+            {
+                setArray[6] += 1;
+            }
+        }
+        CreateSets();
         persistentInventory.itemDamage = damage;
         persistentInventory.itemDefense = defence;
         persistentInventory.itemHealth = health;
@@ -226,4 +266,261 @@ public class Inventory : MonoBehaviour {
         InventoryMoney.GetComponent<Text>().supportRichText = true;
         InventoryMoney.GetComponent<Text>().text = currency;
     }
-}
+
+    public void CreateSets()
+    {
+        string sets = "";
+        //volgorde : dumpster, medieval, gentleman, arabic, mexican, chinese, sports,
+        //Dumpster set
+        sets += "Sets:";
+        if (setArray[0] > 1)
+        {
+            sets += "\n<color=#000000>Dumpster: " + setArray[0] + " </color>";
+            if (setArray[0] == 2)
+            {
+                sets += "<color=#FFFFFF>Bonus: 5 Defence</color>";
+                defence += 5;
+            }
+            if (setArray[0] == 3)
+            {
+                sets += "<color=#FFFFFF>Bonus: 10 Defence</color>";
+                defence += 10;
+            }
+            if (setArray[0] == 4)
+            {
+                sets += "<color=#FFFFFF>Bonus: 10 Defence, 10 Damage</color>";
+                defence += 10;
+                damage += 10;
+            }
+            if (setArray[0] == 5)
+            {
+                sets += "<color=#FFFFFF>Bonus: 20 Defence, 20 Damage</color>";
+                defence += 20;
+                damage += 20;
+            }
+            if (setArray[0] == 6)
+            {
+                sets += "<color=#FFFFFF>Bonus: 50 Defence, 20 Damage</color";
+                defence += 50;
+                damage += 20;
+            }
+        }
+        //Medieval set
+        if (setArray[1] > 1)
+        {
+            sets += "\n<color=#A3A3A3>Medieval: " + setArray[1] + " </color>";
+            if (setArray[1] == 2)
+            {
+                sets += "<color=#FFFFFF>Bonus: 10 Defence</color>";
+                defence += 10;
+            }
+            if (setArray[1] == 3)
+            {
+                sets += "<color=#FFFFFF>Bonus: 20 Defence, -5 Damage </color>";
+                defence += 10;
+                damage -= 5;
+            }
+            if (setArray[1] == 4)
+            {
+                sets += "<color=#FFFFFF>Bonus: 30 Defence, 30 Health, -10 Damage</color>";
+                defence += 30;
+                health += 30;
+                damage -= 10;
+            }
+            if (setArray[1] == 5)
+            {
+                sets += "<color=#FFFFFF>Bonus: 50 Defence, 50 Health, -20 Damage</color>";
+                defence += 50;
+                health += 50;
+                damage -= 20;
+            }
+            if (setArray[1] == 6)
+            {
+                sets += "<color=#FFFFFF>Bonus: 100 Defence, 50 Health, -30 Damage</color>";
+                defence += 100;
+                health += 50;
+                damage -= 30;
+            }
+        }
+        //Gentleman
+        if (setArray[2] > 1)
+        {
+            sets += "\n<color=#C000FF>Gentleman: " + setArray[2] + " </color>";
+            if (setArray[2] == 2)
+            {
+                sets += "<color=#FFFFFF>Bonus: 5 Damage, 5 Defence, 5 Health</color>";
+                defence += 5;
+                damage += 5;
+                health += 5;
+            }
+            if (setArray[2] == 3)
+            {
+                sets += "<color=#FFFFFF>Bonus: 10 Damage, 10 Defence, 10 Health</color>";
+                defence += 10;
+                damage += 10;
+                health += 10;
+            }
+            if (setArray[2] == 4)
+            {
+                sets += "<color=#FFFFFF>Bonus: 15 Damage, 15 Defence, 15 Health</color>";
+                defence += 15;
+                damage += 15;
+                health += 15;
+            }
+            if (setArray[2] == 5)
+            {
+                sets += "<color=#FFFFFF>Bonus: 20 Damage, 20 Defence, 20 Health</color>";
+                defence += 20;
+                damage += 20;
+                health += 20;
+            }
+            if (setArray[2] == 6)
+            {
+                sets += "<color=#FFFFFF>Bonus: 30 Damage, 30 Defence, 30 Health</color>";
+                defence += 30;
+                damage += 30;
+                health += 30;
+            }
+        }
+        //Arabic
+        if (setArray[3] > 1)
+        {
+            sets += "\n<color=#FFF700>Arabic: " + setArray[3] + " </color>";
+            if (setArray[3] == 2)
+            {
+                sets += "<color=#FFFFFF>Bonus: 5 Damage, 5 Health</color>";
+                damage += 15;
+                health += 5;
+            }
+            if (setArray[3] == 4)
+            {
+                sets += "<color=#FFFFFF>Bonus: 20 Damage, 15 Health, 10 Defence</color>";
+                defence += 10;
+                damage += 20;
+                health += 15;
+            }
+            if (setArray[3] == 5)
+            {
+                sets += "<color=#FFFFFF>Bonus: 25 Damage, 20 Health, 15 Defence</color>";
+                defence += 15;
+                damage += 25;
+                health += 20;
+            }
+            if (setArray[3] == 6)
+            {
+                sets += "<color=#FFFFFF>Bonus: 30 Damage, 25 Health, 20 Defence</color>";
+                defence += 20;
+                damage += 30;
+                health += 25;
+            }
+        }
+        //Mexican
+        if (setArray[4] > 1)
+        {
+            sets += "\n<color=#00FF26>Mexican: " + setArray[4] + " </color>";
+            if (setArray[4] == 2)
+            {
+                sets += "<color=#FFFFFF>Bonus: 5 Health</color>";
+                health += 5;
+            }
+            if (setArray[4] == 3)
+            {
+                sets += "<color=#FFFFFF>Bonus: 20 Health</color>";
+                health += 20;
+            }
+            if (setArray[4] == 4)
+            {
+                sets += "<color=#FFFFFF>Bonus: 40 Health, -10 Damage</color>";
+                damage -= 10;
+                health += 40;
+            }
+            if (setArray[4] == 5)
+            {
+                sets += "<color=#FFFFFF>Bonus: 60 Health, -10 Damage, -5 Defense</color>";
+                defence -= 5;
+                damage -= 10;
+                health += 60;
+            }
+            if (setArray[4] == 6)
+            {
+                sets += "<color=#FFFFFF>Bonus: 100 Health, -20 Damage, -10 Defense</color>";
+                defence -= 10;
+                damage -= 20;
+                health += 100;
+            }
+        }
+        //Chinese
+        if (setArray[5] > 1)
+        {
+            sets += "\n<color=#FF0000>Chinese: " + setArray[5] + " </color>";
+            if (setArray[5] == 2)
+            {
+                sets += "<color=#FFFFFF>Bonus: 10 Damage</color>";
+                damage += 10;
+            }
+            if (setArray[5] == 3)
+            {
+                sets += "<color=#FFFFFF>Bonus: 20 Damage</color>";
+                damage += 20;
+            }
+            if (setArray[5] == 4)
+            {
+                sets += "<color=#FFFFFF>Bonus: 40 Damage, -5 Health</color>";
+                damage += 40;
+                health -= 5;
+            }
+            if (setArray[5] == 5)
+            {
+                sets += "<color=#FFFFFF>Bonus: 70 Damage, , -15 Health, -15 Defense</color>";
+                defence -= 15;
+                damage += 70;
+                health -= 15;
+            }
+            if (setArray[5] == 6)
+            {
+                sets += "<color=#FFFFFF>Bonus: 70 Damage</color>";
+                damage += 70;
+            }
+        }
+        //Sports
+        if (setArray[6] > 1)
+        {
+            sets += "\n<color=#0000FF>Sports: " + setArray[6] + " </color>";
+            if (setArray[6] == 2)
+            {
+                sets += "\n<color=#FFFFFF>Bonus: 10 Health</color>";
+                health += 10;
+            }
+            if (setArray[6] == 3)
+            {
+                sets += "<color=#FFFFFF>Bonus: 20 Health, 5 Damage</color>";
+                health += 20;
+                damage += 5;
+            }
+            if (setArray[6] == 4)
+            {
+                sets += "<color=#FFFFFF>Bonus: 30 Health, 10 Damage</color>";
+                damage += 10;
+                health += 30;
+            }
+            if (setArray[6] == 5)
+            {
+                sets += "<color=#FFFFFF>Bonus: 50 Health, 10 Damage</color>";
+                health += 50;
+                damage += 10;
+            }
+            if (setArray[6] == 6)
+            {
+                sets += "<color=#FFFFFF>Bonus: 80 Health, 10 Damage</color>";
+                health += 80;
+                damage += 10;
+            }
+        }
+        InventorySets.GetComponent<Text>().supportRichText = true;
+        InventorySets.GetComponent<Text>().text = sets;
+        for (int i = 0; i < setArray.Length; i++)
+        {
+            setArray[i] = 0;
+        }
+    }
+    }

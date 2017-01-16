@@ -22,12 +22,8 @@ public class LoadLevel : MonoBehaviour
             // Store the playerposition in the current level
             PlayerPrefsManager.SetPositionInLevel(Application.loadedLevelName, player);
 
-            // Freeze the player so he doesn't fall through the map while loading a new level.
-            if (levelName != "Dungeon_FaceBeer" && levelName != "Dungeon_PiPi")
-            {
-                // Not in the dungeons because the player will not unfreeze here
-                player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            }
+            // Freeze the player so he doesn't fall through the map while loading a new level
+            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
             // Load the next level
             Application.LoadLevel(levelName);

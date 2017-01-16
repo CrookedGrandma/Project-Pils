@@ -169,7 +169,6 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                     slot = inv.slotCount + 5;
                     persistentInventory.addEquipment(item.ID, 1, 5);
                 }
-
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
             }
         }

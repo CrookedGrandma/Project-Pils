@@ -8,21 +8,29 @@ public class LoadLevel : MonoBehaviour
     public bool hasToBeAccepted;
     public GameObject player;
 
-    private bool isActive = false;
+    [HideInInspector]
+    public bool isActive;
+
     private TextBox textBox;
 
     private void Awake()
     {
-        // Find the player, the textbox and the keycode in the level
+        // Find the player and the textbox in the level
         player = GameObject.Find("Player");
         textBox = GameObject.FindObjectOfType<TextBox>();
+    }
+
+    private void Start()
+    {
+        // Set all the load level collider to inactive
+        isActive = false;
     }
 
     private void Update()
     {
         Debug.Log(isActive);
     }
-    
+
     // When entering the collider
     private void OnTriggerEnter(Collider trigger)
     {

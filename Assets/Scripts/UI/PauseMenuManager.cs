@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour {
     public GameObject ConfirmationPanel;
@@ -19,7 +20,7 @@ public class PauseMenuManager : MonoBehaviour {
     ///the escape-button is pressed while already in pause menu.
     void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)&& IsVisible)
+        if (Input.GetKeyDown(KeyCode.Escape) && IsVisible)
         {
             PauseMenu.gameObject.SetActive(false);
             IsVisible = false;
@@ -52,6 +53,7 @@ public class PauseMenuManager : MonoBehaviour {
         print("Pause is loading Inventory");
         PauseMenu.gameObject.SetActive(false);
         IsVisible = false;
+        PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
         Application.LoadLevel("Inventory");
     }
 

@@ -13,6 +13,7 @@ public class PlayerPrefsManager : MonoBehaviour
     const string PLAYER_HEALTH_KEY = "player_health";
     const string PLAYER_XP_KEY = "player_xp";
     const string PLAYER_LEVEL_KEY = "player_level";
+    const string CURRENT_SCENE_KEY = "current_scene";
 
     // Sets the music volume to the float given
     public static void SetMusicVolume(float volume)
@@ -111,5 +112,17 @@ public class PlayerPrefsManager : MonoBehaviour
         PlayerPrefs.SetFloat(level + LEVEL_POSITION_X_KEY + gameObject.ToString(), xPos);
         PlayerPrefs.SetFloat(level + LEVEL_POSITION_Y_KEY + gameObject.ToString(), yPos);
         PlayerPrefs.SetFloat(level + LEVEL_POSITION_Z_KEY + gameObject.ToString(), zPos);
+    }
+
+    // Sets the current scene the player is in, used when going to inventory, shop and combat state
+    public static void SetCurrentScene(string scene)
+    {
+        PlayerPrefs.SetString(CURRENT_SCENE_KEY, scene);
+    }
+
+    // Gets the current scene, used when coming back from the inventory, shop and combat state
+    public static string GetCurrentScene()
+    {
+        return PlayerPrefs.GetString(CURRENT_SCENE_KEY);
     }
 }

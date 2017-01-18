@@ -8,7 +8,7 @@ public class LoadLevel : MonoBehaviour
     public bool hasToBeAccepted;
     public GameObject player;
 
-    private bool isActive;
+    private bool isActive = false;
     private TextBox textBox;
 
     private void Awake()
@@ -16,7 +16,6 @@ public class LoadLevel : MonoBehaviour
         // Find the player, the textbox and the keycode in the level
         player = GameObject.Find("Player");
         textBox = GameObject.FindObjectOfType<TextBox>();
-        isActive = true;
     }
 
     private void Update()

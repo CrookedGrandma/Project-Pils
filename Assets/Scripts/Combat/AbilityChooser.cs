@@ -11,7 +11,7 @@ public class AbilityChooser : MonoBehaviour {
     public Text A2T;
     public Text AHT;
 
-    private static List<Ability> UsableAbilities = new List<Ability>();
+    private static Ability[] UsableAbilities = new Ability[2];
     private static List<Ability> AbilityDatabase = new List<Ability>();
     private static JsonData Abilities;
 
@@ -22,6 +22,7 @@ public class AbilityChooser : MonoBehaviour {
 
     private static bool started = false;
     private static bool WeAreNumberOne = false;
+    private static bool FoundPrimaryWeapon = false;
     public static int selectedAbility = -1;
 
     // Use this for initialization, CALLED BY STATEHANDLER
@@ -59,8 +60,13 @@ public class AbilityChooser : MonoBehaviour {
 
     private static void ConstructAbilityDatabase() {
         for (int i = 0; i < Abilities.Count; i++) {
-            AbilityDatabase.Add(new Ability((int)Abilities[i]["id"], Abilities[i]["type"].ToString(),
-                                            Abilities[i]["title"].ToString(), (int)Abilities[i]["weaponid"]));
+            if ((int)Abilities[i]["id"] != 0) {
+                AbilityDatabase.Add(new Ability((int)Abilities[i]["id"], Abilities[i]["type"].ToString(),
+                                                Abilities[i]["title"].ToString(), (int)Abilities[i]["weaponid"]));
+            }
+            else {
+                AbilityDatabase.Add(new Ability((int)Abilities[i]["id"], Abilities[i]["type"].ToString(), Abilities[i]["title"].ToString()));
+            }
         }
     }
 
@@ -70,10 +76,14 @@ public class AbilityChooser : MonoBehaviour {
         for (int i = 0; i < AbilityDatabase.Count; i++) {
             if (AbilityDatabase[i].WeaponID == equippedWeapon) {
                 UsableAbilities[0] = AbilityDatabase[i];
+                FoundPrimaryWeapon = true;
             }
             if (AbilityDatabase[i].WeaponID == equippedRanged) {
                 UsableAbilities[1] = AbilityDatabase[i];
             }
+        }
+        if (!FoundPrimaryWeapon) {
+            UsableAbilities[0] = AbilityDatabase[0];
         }
     }
 
@@ -90,8 +100,8 @@ public class AbilityChooser : MonoBehaviour {
     }
 
     public static void SelectAbility(int a) {
+        WhiteText();
         if (a == -1) {
-            WhiteText();
             selectedAbility = -1;
         }
         if (a == 1) {

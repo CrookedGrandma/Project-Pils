@@ -18,7 +18,7 @@ public class XPManager : MonoBehaviour {
 
     public double xpscaler = 0.25;
     public double hpscaler = 0.10;
-    private int playerxp = 420; // waarde normaal gehaald uit save
+    private int playerxp = 0; // waarde normaal gehaald uit save
     public double startxpbound = 100; // level 1 => XP van 0-100
     private int playerlvl = 1;
     private int xptonext = 0;

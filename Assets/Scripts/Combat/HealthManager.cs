@@ -36,12 +36,14 @@ public class HealthManager : MonoBehaviour {
             }
         }
 
+        //Purely for development{
         if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
-            LoseHealth(-10);
+            LoseHealth(-25);
         }
         if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
             LoseHealth(10);
         }
+        //}
     }
 
     public void LoseHealth(float amount) {

@@ -1,5 +1,10 @@
 [
   {
+    "id": 0,
+    "type": "melee",
+    "title": "Sucker Punch"
+  },
+  {
     "id": 100,
     "type": "melee",
     "title": "Bottle Swipe",
@@ -31,37 +36,37 @@
   },
   {
     "id": 105,
-    "type":  "melee",
+    "type": "melee",
     "title": "Wok2Face",
     "weaponid": 205
   },
   {
     "id": 106,
-    "type":  "melee",
+    "type": "melee",
     "title": "Plunge",
     "weaponid": 206
   },
   {
     "id": 107,
-    "type":  "melee",
+    "type": "melee",
     "title": "Magical Strike of Deception",
     "weaponid": 208
   },
   {
     "id": 108,
-    "type":  "melee",
+    "type": "melee",
     "title": "Sword Swipe",
     "weaponid": 209
   },
   {
     "id": 109,
-    "type":  "melee",
+    "type": "melee",
     "title": "Weeaboo Strike",
     "weaponid": 210
   },
   {
     "id": 110,
-    "type":  "melee",
+    "type": "melee",
     "title": "Cane Slice",
     "weaponid": 211
   },

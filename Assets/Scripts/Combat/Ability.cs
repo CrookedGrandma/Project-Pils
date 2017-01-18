@@ -19,14 +19,4 @@ public class Ability {
         this.Title = title;
         this.WeaponID = weaponid;
     }
-
-    //Constructor for fists
-    /// <summary>
-    /// Create the fist ability
-    /// </summary>
-    public Ability(int id, string type, string title) {
-        this.ID = id;
-        this.Type = type;
-        this.Title = title;
-    }
 }

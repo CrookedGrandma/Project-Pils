@@ -1,4 +1,19 @@
 ﻿[
+  //Fist
+  {
+    "id": -5,
+    "title": "fist",
+    "value": 0,
+    "type": "weapon",
+    "subtype": "melee",
+    "set": "none",
+    "damage": 5,
+    "description": "Up for a fistfight?",
+    "stackable": false,
+    "quest-related": false,
+    "sellable": false,
+    "slug": "fist"
+  },
   //Nullitem
   {
     "id": 0,
@@ -319,7 +334,7 @@
     "sellable": false,
     "slug": "beer_can"
   },
-    {
+  {
     "id": 301,
     "title": "Burrito",
     "value": 2,

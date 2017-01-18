@@ -6,37 +6,35 @@ using UnityEngine.UI;
 using LitJson;
 
 public class AbilityChooser : MonoBehaviour {
-
+    
     public Text A1T;
     public Text A2T;
     public Text AHT;
 
-    private static Ability[] UsableAbilities = new Ability[2];
-    private static List<Ability> AbilityDatabase = new List<Ability>();
-    private static JsonData Abilities;
+    private Ability[] UsableAbilities = new Ability[2];
+    private List<Ability> AbilityDatabase = new List<Ability>();
+    private JsonData Abilities;
+    private ItemDatabase database;
 
-    private static string[] weapon = new string[2];
-    private static string Ability1Text;
-    private static string Ability2Text;
-    private static string AbilityHText;
+    private Item[] weapon = new Item[2];
+    private string Ability1Text;
+    private string Ability2Text;
+    private string AbilityHText;
 
-    private static bool started = false;
-    private static bool WeAreNumberOne = false;
-    private static bool FoundPrimaryWeapon = false;
-    public static int selectedAbility = -1;
+    private bool started = false;
+    private bool FoundPrimaryWeapon = false;
+    public int selectedAbility = -1;
 
     // Use this for initialization, CALLED BY STATEHANDLER
-    public static void GetStarted () {
+    public void GetStarted () {
         started = true;
         Abilities = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Abilities.json"));
+        database = GetComponent<ItemDatabase>();
         ConstructAbilityDatabase();
         FindUsables();
+        weapon[0] = database.FetchItemById(UsableAbilities[0].WeaponID);
         try {
-            weapon[0] = PersistentInventoryScript.instance.itemList[UsableAbilities[0].WeaponID, 0].ToString();
-        }
-        catch (Exception e) { }
-        try {
-            weapon[1] = PersistentInventoryScript.instance.itemList[UsableAbilities[1].WeaponID, 0].ToString();
+            weapon[1] = database.FetchItemById(UsableAbilities[1].WeaponID);
         }
         catch (Exception e) { }
         WhiteText();
@@ -58,19 +56,14 @@ public class AbilityChooser : MonoBehaviour {
         }
     }
 
-    private static void ConstructAbilityDatabase() {
+    private void ConstructAbilityDatabase() {
         for (int i = 0; i < Abilities.Count; i++) {
-            if ((int)Abilities[i]["id"] != 0) {
-                AbilityDatabase.Add(new Ability((int)Abilities[i]["id"], Abilities[i]["type"].ToString(),
-                                                Abilities[i]["title"].ToString(), (int)Abilities[i]["weaponid"]));
-            }
-            else {
-                AbilityDatabase.Add(new Ability((int)Abilities[i]["id"], Abilities[i]["type"].ToString(), Abilities[i]["title"].ToString()));
-            }
+            AbilityDatabase.Add(new Ability((int)Abilities[i]["id"], Abilities[i]["type"].ToString(),
+                                            Abilities[i]["title"].ToString(), (int)Abilities[i]["weaponid"]));
         }
     }
 
-    private static void FindUsables() {
+    private void FindUsables() {
         int equippedWeapon = PersistentInventoryScript.instance.equipmentList[0, 0];
         int equippedRanged = PersistentInventoryScript.instance.equipmentList[1, 0];
         for (int i = 0; i < AbilityDatabase.Count; i++) {
@@ -87,40 +80,31 @@ public class AbilityChooser : MonoBehaviour {
         }
     }
 
-    private static void WhiteText() {
+    private void WhiteText() {
+        Ability1Text = UsableAbilities[0].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[0].Title + "</color> (Damage: " + weapon[0].Damage + ")";
         try {
-            Ability1Text = UsableAbilities[0].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[0] + "</color>";
-        }
-        catch (Exception e) { }
-        try {
-            Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1] + "</color>";
+            Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + weapon[1].Damage + ")";
         }
         catch (Exception e) { }
         AbilityHText = "Heal <color=#bbbbbb>with</color> <color=#cccccc>Drinks</color> <color=#bbbbbb>or</color> <color=#cccccc>Food</color>";
     }
 
-    public static void SelectAbility(int a) {
+    public void SelectAbility(int a) {
         WhiteText();
         if (a == -1) {
             selectedAbility = -1;
         }
         if (a == 1) {
-            WeAreNumberOne = true;
-            try {
-                Ability1Text = "<color=red>" + UsableAbilities[0].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[0] + "</color>";
-                selectedAbility = 1;
-            }
-            catch (Exception e) {
-                SelectAbility(2);
-            }
+            Ability1Text = "<color=red>" + UsableAbilities[0].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[0].Title + "</color> <color=red>(Damage: " + weapon[0].Damage + ")</color>";
+            selectedAbility = 1;
         }
         if (a == 2) {
             try {
-                Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1] + "</color>";
+                Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + weapon[1].Damage + ")</color>";
                 selectedAbility = 2;
             }
             catch (Exception e) {
-                if (selectedAbility == 1 || WeAreNumberOne) {
+                if (selectedAbility == 1) {
                     SelectAbility(3);
                 }
                 else if (selectedAbility == 3) {
@@ -129,9 +113,12 @@ public class AbilityChooser : MonoBehaviour {
             }
         }
         if (a == 3) {
-            WeAreNumberOne = false;
             AbilityHText = "<color=red>Heal</color> <color=#ff7777>with</color> <color=#ff8888>Drinks</color> <color=#ff7777>or</color> <color=#ff8888>Food</color>";
             selectedAbility = 3;
         }
+    }
+
+    public int GetLastDoneDamage() {
+        return weapon[selectedAbility - 1].Damage;
     }
 }

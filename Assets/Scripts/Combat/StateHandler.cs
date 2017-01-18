@@ -11,10 +11,12 @@ public class StateHandler : MonoBehaviour {
     double flashTimer = 0.0;
     int attNum = 0;
     float time = -1;
+    int damage;
 
     public EnemyChooser enemyChooser;
     public HealthManager healthManager;
     public EnterPlayer PlayerEnter;
+    public AbilityChooser abilityChooser;
 
     Enemy e;
 
@@ -46,19 +48,25 @@ public class StateHandler : MonoBehaviour {
         if (state == States.PLAYERCHOICE) {
             SRanOnce = false;
             if (!PCRanOnce) {
-                AbilityChooser.GetStarted();
+                abilityChooser.GetStarted();
                 PCRanOnce = true;
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow) && AbilityChooser.selectedAbility < 3) {
-                AbilityChooser.SelectAbility(AbilityChooser.selectedAbility + 1);
+            if (Input.GetKeyDown(KeyCode.DownArrow) && abilityChooser.selectedAbility < 3) {
+                abilityChooser.SelectAbility(abilityChooser.selectedAbility + 1);
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow) && AbilityChooser.selectedAbility > 1) {
-                AbilityChooser.SelectAbility(AbilityChooser.selectedAbility - 1);
+            if (Input.GetKeyDown(KeyCode.UpArrow) && abilityChooser.selectedAbility > 1) {
+                abilityChooser.SelectAbility(abilityChooser.selectedAbility - 1);
+            }
+            if (Input.GetKeyDown(KeyCode.Return)) {
+                NextState();
             }
         }
 
         if (state == States.PLAYERMOVE) {
             PCRanOnce = false;
+            if (abilityChooser.selectedAbility != 3) {
+                damage = abilityChooser.GetLastDoneDamage();
+            }
         }
 
         if (state == States.ENEMYCHOICE) {

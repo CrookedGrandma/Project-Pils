@@ -1,8 +1,9 @@
 [
   {
-    "id": 0,
+    "id": 1,
     "type": "melee",
-    "title": "Sucker Punch"
+    "title": "Sucker Punch",
+    "weaponid": -5
   },
   {
     "id": 100,

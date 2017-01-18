@@ -11,11 +11,10 @@ public class DungeonCreator : MonoBehaviour
     }
     public int columns = 30, rows = 30, minNumRooms = 10, maxNumRooms = 12, minRoomWidth = 4, maxRoomWidth = 8, minRoomHeight = 4, maxRoomHeight = 8, 
                minCorridorLength = 8, maxCorridorLength = 14, minNumberOfEnemies = 2, maxNumberOfEnemies = 6;
-    public GameObject[] wallTiles, outerWallTiles;                          // Used so there can be multiple models for a certain type, for diversity
-    public GameObject endPoint, enemy;                                      // Normal gameobjects for the endpoint and enemies
+    public GameObject endPoint, enemy, wallTile;                            // Normal gameobjects for the endpoint and enemies and walltile
 
     private TileType[][] tiles;
-    private Vector3 playerPos = new Vector3(0.5f, 0.35f, 0.5f);             // Used to check the spawnpositions of other objects 
+    private Vector3 playerPos = new Vector3(0.5f, 0.5f, 0.5f);             // Used to check the spawnpositions of other objects 
     private Vector3 endPointPos;
     private Dungeon_Room[] rooms;
     private Dungeon_Corridor[] corridors;
@@ -47,7 +46,6 @@ public class DungeonCreator : MonoBehaviour
         SetTilesInRooms();
         SetTilesInCorridors();
         InstantiateTiles();
-        InstantiateOuterWalls();
         SpawnEndpoint();
         SpawnEnemies(numberOfEnemies);
     }
@@ -180,55 +178,20 @@ public class DungeonCreator : MonoBehaviour
                 // If the tiletype is a wall, instantiate a wall here
                 if (tiles[i][j] == TileType.Wall)
                 {
-                    InstantiateFromArray(wallTiles, i, j);
+                    InstantiateFromArray(wallTile, i, j);
                 }
             }
         }
     }
 
-    // Instantiate tiles around the dungeon so the player will not be able to escape it
-    private void InstantiateOuterWalls()
-    {
-        float leftXEdge = -1f, rightXEdge = columns, bottomZEdge = -1f, topZEdge = rows;
-
-        // Instantiate the outer wall tiles on the left and right of the dungeon
-        InstantiateVerticalOuterWalls(leftXEdge, bottomZEdge, topZEdge);
-        InstantiateVerticalOuterWalls(rightXEdge, bottomZEdge, topZEdge);
-
-        // Instantiate the outer wall tiles on the bottom and top of the dungeon
-        InstantiateHorizontalOuterWalls(leftXEdge + 1f, rightXEdge - 1f, bottomZEdge);
-        InstantiateHorizontalOuterWalls(leftXEdge + 1f, rightXEdge - 1f, topZEdge);
-    }
-
-    // Method for instantiating the vertical outer walls
-    private void InstantiateVerticalOuterWalls(float xCoordinate, float startZ, float endZ)
-    {
-        for (float currentZ = startZ; currentZ <= endZ; currentZ++)
-        {
-            InstantiateFromArray(outerWallTiles, xCoordinate, currentZ);
-        }
-    }
-
-    // Method for instantiating the horizontal outer walls
-    private void InstantiateHorizontalOuterWalls(float startX, float endX, float zCoordinate)
-    {
-        for (float currentX = startX; currentX <= endX; currentX++)
-        {
-            InstantiateFromArray(outerWallTiles, currentX, zCoordinate);
-        }
-    }
-
     // Method for instantiating things from an array at a random index
-    private void InstantiateFromArray(GameObject[] prefabs, float xCoordinate, float zCoordinate)
+    private void InstantiateFromArray(GameObject prefab, float xCoordinate, float zCoordinate)
     {
-        // Create the random index for the array
-        int randomIndex = Random.Range(0, prefabs.Length);
-
         // Get the position for the object
-        Vector3 position = new Vector3(xCoordinate + 0.5f, 0.35f, zCoordinate + 0.5f);
+        Vector3 position = new Vector3(3 * xCoordinate + 1.5f, -3f,  3 * zCoordinate + 1.5f);
 
         // Create an instance of the object
-        GameObject instance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
+        GameObject instance = Instantiate(prefab, position, Quaternion.identity) as GameObject;
 
         // Put the tiles in de dungeonholder
         instance.transform.parent = dungeonHolder.transform;
@@ -244,8 +207,14 @@ public class DungeonCreator : MonoBehaviour
         {
             // Spawn an enemy
             maySpawnAtPosition = true;
-            Vector3 enemyPos = new Vector3(Random.Range(0, columns) + 0.5f, 0.35f, Random.Range(0, rows) + 0.5f);
 
+            // Create the position for the enemy
+            float enemyXPos = Random.Range(0, columns * 3 - 1);
+            float enemyZPos = Random.Range(0, rows * 3 - 1);
+            enemyXPos -= enemyXPos % 3;
+            enemyZPos -= enemyZPos % 3;
+            Vector3 enemyPos = new Vector3(enemyXPos + 1.5f, 0.5f, enemyZPos + 1.5f);
+            
             // Methods which checks the position of the enemy
             CheckForWallTiles(enemyPos);
             // If we can't spawn at this position, do not execute the rest of the methods
@@ -288,20 +257,20 @@ public class DungeonCreator : MonoBehaviour
         float endPointXPos, endPointZPos;
 
         // Choose a random x coordinate
-        endPointXPos = Random.Range(0, columns);
-        if (endPointXPos >= 25)
+        endPointXPos = Random.Range(0, columns * 3 - 1);
+        if (endPointXPos >= 75)
         {
             // It is far away enough from the player to allow every z coordinate
-            endPointZPos = Random.Range(0, rows);
+            endPointZPos = Random.Range(0, rows * 3 - 1);
         }
         else
         {
             // Too close to the player to allow every z coordinate, it should be at least 25
-            endPointZPos = Random.Range(25, rows);
+            endPointZPos = Random.Range(75, rows * 3 - 1);
         }
 
         //endPointPos = new Vector3(Random.Range(0, columns) + 0.5f, 0.35f, Random.Range(0, rows) + 0.5f);
-        endPointPos = new Vector3(endPointXPos + 0.5f, 0.35f, endPointZPos + 0.5f);
+        endPointPos = new Vector3(endPointXPos + 1.5f, 0.5f, endPointZPos + 1.5f);
 
         // Check the position of the endpoint
         CheckForWallTiles(endPointPos);
@@ -335,7 +304,9 @@ public class DungeonCreator : MonoBehaviour
     // Checks if something will be spawned inside a wall
     private void CheckForWallTiles(Vector3 pos)
     {
-        if (tiles[(int)(pos.x)][(int)(pos.z)] == TileType.Wall)
+        Debug.Log(pos);
+        Debug.Log((pos.x / 3) + ", " + (pos.z / 3));
+        if (tiles[(int)(pos.x / 3)][(int)(pos.z / 3)] == TileType.Wall)
         {
             // Position is inside a wall
             maySpawnAtPosition = false;
@@ -350,7 +321,7 @@ public class DungeonCreator : MonoBehaviour
         if (pos.x > 1 && pos.x < columns - 1)
         {
             // If the positions left and right of the possible spawnposition are walls, this position is in a corridor. So we can't spawn here
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z)] == TileType.Wall && tiles[(int)(pos.x + 1)][(int)(pos.z)] == TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)(pos.z / 3)] == TileType.Wall && tiles[(int)((pos.x + 3)) / 3][(int)(pos.z / 3)] == TileType.Wall)
             {
                 // In a horizontal corridor
                 maySpawnAtPosition = false;
@@ -362,7 +333,7 @@ public class DungeonCreator : MonoBehaviour
         if (pos.x < 1)
         {
             // We only have to check the tiles to the left of the position, because to the right are the outerwalltiles
-            if (tiles[(int)(pos.x + 1)][(int)(pos.z)] == TileType.Wall)
+            if (tiles[(int)((pos.x + 3) / 3)][(int)(pos.z / 3)] == TileType.Wall)
             {
                 // In a horizontal corridor in the first column
                 maySpawnAtPosition = false;
@@ -374,7 +345,7 @@ public class DungeonCreator : MonoBehaviour
         if (pos.x > columns - 1)
         {
             // We only have to check the tiles to the right of the position, because to the left are the outerwalltiles
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z)] == TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)(pos.z / 3)] == TileType.Wall)
             {
                 // In a horizontal corridor in the last column
                 maySpawnAtPosition = false;
@@ -386,7 +357,7 @@ public class DungeonCreator : MonoBehaviour
         if (pos.z > 1 && pos.z < rows - 1)
         {
             // If the positions above and below the possible spawnposition are walls, this position is in a corridor. So we can't spawn here
-            if (tiles[(int)(pos.x)][(int)(pos.z - 1)] == TileType.Wall && tiles[(int)(pos.x)][(int)(pos.z + 1)] == TileType.Wall)
+            if (tiles[(int)(pos.x / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall && tiles[(int)(pos.x / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall)
             {
                 // In vertical corridor
                 maySpawnAtPosition = false;
@@ -398,7 +369,7 @@ public class DungeonCreator : MonoBehaviour
         if (pos.z < 1)
         {
             // We only have to check the tiles above the position, because the tiles below it are outerwalltiles
-            if (tiles[(int)(pos.x)][(int)(pos.z + 1)] == TileType.Wall)
+            if (tiles[(int)(pos.x / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall)
             {
                 // In a vertical corridor at the bottom
                 maySpawnAtPosition = false;
@@ -410,7 +381,7 @@ public class DungeonCreator : MonoBehaviour
         if (pos.z > rows - 1)
         {
             // We only have to check the tiles below the position, because the tiles above it are outerwalltiles
-            if (tiles[(int)(pos.x)][(int)(pos.z - 1)] == TileType.Wall)
+            if (tiles[(int)(pos.x / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall)
             {
                 // In a vertical corridor at the top
                 maySpawnAtPosition = false;
@@ -423,13 +394,13 @@ public class DungeonCreator : MonoBehaviour
     private void CheckBlockingOfCorridors(Vector3 pos)
     {
         // If the end of a corridor is at the first or last row of column, there is no place for a gameobject to spawn, so we won't check it
-        if (pos.x > 1 && pos.z > 1 && pos.x < columns - 1 && pos.z < rows - 1)
+        if (pos.x > 3 && pos.z > 3 && pos.x < columns * 3 - 3 && pos.z < rows * 3 - 3)
         {
             // Left corridor. The position directly left of the given position should not be a wall, while the positions directly above and below the 
             // position to the left of the given position should be walls. This means the given position is directly to the right of a corridor.
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z + 1)] == TileType.Wall &&
-                tiles[(int)(pos.x - 1)][(int)(pos.z - 1)] == TileType.Wall &&
-                tiles[(int)(pos.x - 1)][(int)(pos.z)] != TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall &&
+                tiles[(int)((pos.x - 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall &&
+                tiles[(int)((pos.x - 3) / 3)][(int)(pos.z / 3)] != TileType.Wall)
             {
                 maySpawnAtPosition = false;
                 return;
@@ -437,9 +408,9 @@ public class DungeonCreator : MonoBehaviour
 
             // Upper corridor. The position directly above the given position should not be a wall, while the positions directly to the left and 
             // right of the position above the given position should be walls. This means the given position is directly below a corridor.
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z + 1)] == TileType.Wall &&
-                tiles[(int)(pos.x + 1)][(int)(pos.z + 1)] == TileType.Wall &&
-                tiles[(int)(pos.x)][(int)(pos.z + 1)] != TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall &&
+                tiles[(int)((pos.x + 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall &&
+                tiles[(int)(pos.x / 3)][(int)((pos.z + 3) / 3)] != TileType.Wall)
             {
                 maySpawnAtPosition = false;
                 return;
@@ -447,9 +418,9 @@ public class DungeonCreator : MonoBehaviour
 
             // Right corridor. The position directly right of the given position should not be a wall, while the positions directly above and below the 
             // position to the right of the given position should be walls. This means the given position is directly to the left of a corridor.
-            if (tiles[(int)(pos.x + 1)][(int)(pos.z + 1)] == TileType.Wall &&
-                tiles[(int)(pos.x + 1)][(int)(pos.z - 1)] == TileType.Wall &&
-                tiles[(int)(pos.x + 1)][(int)(pos.z)] != TileType.Wall)
+            if (tiles[(int)((pos.x + 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall &&
+                tiles[(int)((pos.x + 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall &&
+                tiles[(int)((pos.x + 3) / 3)][(int)(pos.z / 3)] != TileType.Wall)
             {
                 maySpawnAtPosition = false;
                 return;
@@ -457,9 +428,9 @@ public class DungeonCreator : MonoBehaviour
 
             // Down corridor. The position directly below the given position should not be a wall, while the positions directly to the left and 
             // right of the position below the given position should be walls. This means the given position is directly above of a corridor.
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z - 1)] == TileType.Wall &&
-                tiles[(int)(pos.x + 1)][(int)(pos.z - 1)] == TileType.Wall &&
-                tiles[(int)(pos.x)][(int)(pos.z - 1)] != TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall &&
+                tiles[(int)((pos.x + 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall &&
+                tiles[(int)(pos.x / 3)][(int)((pos.z - 3) / 3)] != TileType.Wall)
             {
                 maySpawnAtPosition = false;
                 return;
@@ -471,17 +442,17 @@ public class DungeonCreator : MonoBehaviour
     private void CheckSpecialCases(Vector3 pos)
     {
         // If the given position is in the first or last row or column, we don't have to check these
-        if (pos.x > 1 && pos.z > 1 && pos.x < columns - 1 && pos.z < rows - 1)
+        if (pos.x > 3 && pos.z > 3 && pos.x < columns * 3 - 3 && pos.z < rows * 3 - 3)
         {
             // These are some special cases where a gameobject would block something, which won't be checked in the methods above
             // For instance, 2 rooms with just 1 overlapping tile
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z + 1)] == TileType.Wall && tiles[(int)(pos.x + 1)][(int)(pos.z - 1)] == TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall && tiles[(int)((pos.x + 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly to the top left and the bottom right of the enemy
                 maySpawnAtPosition = false;
                 return;
             }
-            if (tiles[(int)(pos.x + 1)][(int)(pos.z + 1)] == TileType.Wall && tiles[(int)(pos.x - 1)][(int)(pos.z - 1)] == TileType.Wall)
+            if (tiles[(int)((pos.x + 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall && tiles[(int)((pos.x - 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly to the top right and the bottom left of the enemy
                 maySpawnAtPosition = false;
@@ -491,16 +462,16 @@ public class DungeonCreator : MonoBehaviour
 
         // Or this case (draw it, it will be clear. It is quite hard to explain this situation)
         // The first if-statements make sure every possibility is checked, without getting IndexOutOfRangeException
-        if (pos.x < columns - 1 && pos.z > 1 && pos.z < rows - 1)
+        if (pos.x < columns * 3 - 3 && pos.z > 3 && pos.z < rows * 3 - 3)
         {
-            if (tiles[(int)(pos.x)][(int)(pos.z + 1)] == TileType.Wall && tiles[(int)(pos.x + 1)][(int)(pos.z - 1)] == TileType.Wall)
+            if (tiles[(int)(pos.x / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall && tiles[(int)((pos.x + 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly above and to the bottom right of the given position
                 maySpawnAtPosition = false;
                 return;
             }
 
-            if (tiles[(int)(pos.x)][(int)(pos.z - 1)] == TileType.Wall && tiles[(int)(pos.x + 1)][(int)(pos.z + 1)] == TileType.Wall)
+            if (tiles[(int)(pos.x / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall && tiles[(int)((pos.x + 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly below and to the top right of the given position
                 maySpawnAtPosition = false;
@@ -508,16 +479,16 @@ public class DungeonCreator : MonoBehaviour
             }
         }
 
-        if (pos.x > 1 && pos.z > 1 && pos.z < rows - 1)
+        if (pos.x > 3 && pos.z > 3 && pos.z < rows * 3 - 3)
         {
-            if (tiles[(int)(pos.x)][(int)(pos.z + 1)] == TileType.Wall && tiles[(int)(pos.x - 1)][(int)(pos.z - 1)] == TileType.Wall)
+            if (tiles[(int)(pos.x / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall && tiles[(int)((pos.x - 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly above and to the bottom left of the given position
                 maySpawnAtPosition = false;
                 return;
             }
 
-            if (tiles[(int)(pos.x)][(int)(pos.z - 1)] == TileType.Wall && tiles[(int)(pos.x - 1)][(int)(pos.z + 1)] == TileType.Wall)
+            if (tiles[(int)(pos.x / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall && tiles[(int)((pos.x - 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly below and to the top left of the given position
                 maySpawnAtPosition = false;
@@ -525,16 +496,16 @@ public class DungeonCreator : MonoBehaviour
             }
         }
 
-        if (pos.x > 1 && pos.x < columns - 1 && pos.z < rows - 1)
+        if (pos.x > 3 && pos.x < columns * 3 - 3 && pos.z < rows * 3 - 3)
         {
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z)] == TileType.Wall && tiles[(int)(pos.x + 1)][(int)(pos.z + 1)] == TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)(pos.z / 3)] == TileType.Wall && tiles[(int)((pos.x + 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly to the left and the top right of the given position
                 maySpawnAtPosition = false;
                 return;
             }
 
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z + 1)] == TileType.Wall && tiles[(int)(pos.x + 1)][(int)(pos.z)] == TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)((pos.z + 3) / 3)] == TileType.Wall && tiles[(int)((pos.x + 3) / 3)][(int)(pos.z / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly to the right and the top left of the given position
                 maySpawnAtPosition = false;
@@ -542,16 +513,16 @@ public class DungeonCreator : MonoBehaviour
             }
         }
 
-        if (pos.x > 1 && pos.x < columns - 1 && pos.z > 1)
+        if (pos.x > 3 && pos.x < columns * 3 - 3 && pos.z > 3)
         {
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z)] == TileType.Wall && tiles[(int)(pos.x + 1)][(int)(pos.z - 1)] == TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)(pos.z / 3)] == TileType.Wall && tiles[(int)((pos.x + 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly to the left and the bottom right of the given position
                 maySpawnAtPosition = false;
                 return;
             }
 
-            if (tiles[(int)(pos.x - 1)][(int)(pos.z - 1)] == TileType.Wall && tiles[(int)(pos.x + 1)][(int)(pos.z)] == TileType.Wall)
+            if (tiles[(int)((pos.x - 3) / 3)][(int)((pos.z - 3) / 3)] == TileType.Wall && tiles[(int)((pos.x + 3) / 3)][(int)(pos.z / 3)] == TileType.Wall)
             {
                 // Meaning the tiles directly to the right and the bottom left of the given position
                 maySpawnAtPosition = false;
@@ -564,11 +535,11 @@ public class DungeonCreator : MonoBehaviour
     private void CheckDistanceToPlayer(Vector3 pos)
     {
         // Loop through all the positions in a 3 × 3 grid around the given position
-        for (int x = -3; x <= 3; x++)
+        for (int x = -9; x <= 9; x++)
         {
-            for (int z = -3; z <= 3; z++)
+            for (int z = -9; z <= 9; z++)
             {
-                Vector3 position = new Vector3(pos.x + x, 0.35f, pos.z + z);
+                Vector3 position = new Vector3(pos.x + x, playerPos.y, pos.z + z);
 
                 // If the position of the player is somewhere in this little grid
                 if (position == playerPos)
@@ -585,11 +556,11 @@ public class DungeonCreator : MonoBehaviour
     private void CheckDistanceToEndPoint(Vector3 pos)
     {
         // Loop through all the positions in a 2 × 2 grid around the given position
-        for (int x = -2; x <= 2; x++)
+        for (int x = -6; x <= 6; x++)
         {
-            for (int z = -2; z <= 2; z++)
+            for (int z = -6; z <= 6; z++)
             {
-                Vector3 position = new Vector3(pos.x + x, 0.35f, pos.z + z);
+                Vector3 position = new Vector3(pos.x + x, endPointPos.y, pos.z + z);
 
                 // If the position of the endpoint is somewhere in this little grid
                 if (position == endPointPos)

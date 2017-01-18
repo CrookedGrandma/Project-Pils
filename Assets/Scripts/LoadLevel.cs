@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class LoadLevel : MonoBehaviour
@@ -6,6 +7,7 @@ public class LoadLevel : MonoBehaviour
     public string levelName;
     public GameObject player;
 
+    private string levelToBeLoaded;
     private TextBox textBox;
 
     private void Awake()
@@ -21,6 +23,11 @@ public class LoadLevel : MonoBehaviour
         textBox.AddLine("Game", "Press \"E\" or \"Return\" to go to " + levelName, "White");
     }
 
+    private void Update()
+    {
+        SceneManager.GetActiveScene();
+    }
+
     // Checks if the player is in the Collider area (trigger).
     public void OnTriggerStay(Collider trigger)
     {
@@ -28,14 +35,17 @@ public class LoadLevel : MonoBehaviour
 
         if (Input.GetButtonDown("Accept"))
         {
+            // Used to remove the constraints on the player
+            levelToBeLoaded = levelName;
+
             // Store the playerposition in the current level
-            PlayerPrefsManager.SetPositionInLevel(Application.loadedLevelName, player);
+            PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
 
             // Freeze the player so he doesn't fall through the map while loading a new level
             player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
             // Load the next level
-            Application.LoadLevel(levelName);
+            SceneManager.LoadScene(levelName);
 
             // Create a new position from the saved position of the new level in Unity's PlayerPrefs and set the player's position to this value
             Vector3 newPosition = PlayerPrefsManager.GetPositionInLevel(levelName, player);
@@ -43,22 +53,27 @@ public class LoadLevel : MonoBehaviour
 
             Debug.Log("Loading " + levelName + " Scene");
 
-            if (levelName == "Dungeon_FaceBeer" || levelName == "Dungeon_PiPi")
+            Debug.Log("Active scene: " + SceneManager.GetActiveScene().name);
+            Debug.Log("levelName: " + levelName);
+            Debug.Log("levelToBeLoaded: " + levelToBeLoaded);
+            if (SceneManager.GetActiveScene().name == levelToBeLoaded)
             {
-                // Scale the player so he fits in the dungeons
-                player.transform.localScale = new Vector3(0.5f, 0.5f * player.transform.localScale.y, 0.5f);
-            }
-            else
-            {
-                // Scale the player to his normal scale
-                player.transform.localScale = new Vector3(1f, 1f, 1f);
+                Debug.Log("Level geladen");
             }
         }
     }
 
-    private void OnLevelWasLoaded(int level)
+    /*private void OnLevelWasLoaded(string level)
     {
         // As soon as the level is loaded, unfreeze the player and freeze his rotation again (normal situation)
+        Debug.Log(levelName + " loaded");
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+    }*/
+
+    private void OnLevelWasLoaded(int level)
+    {
+        Debug.Log("level loaded");
         player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
     }

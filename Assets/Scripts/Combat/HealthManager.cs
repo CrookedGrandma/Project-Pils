@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class HealthManager : MonoBehaviour {
     public GameObject fullTex;
+    public Text HPText;
     private float initHealth;
-    private float health = PlayerFSM.player.Health;
-    private float maxHealth = PlayerFSM.player.MaxHealth;
+    private float maxHealth = XPManager.xpmanager.Health() /* + hp van items */ + PersistentInventoryScript.instance.itemHealth;
+    private float health = 100; //uit save
     private float relHealth;
     private float dispHealth;
 
@@ -16,6 +18,9 @@ public class HealthManager : MonoBehaviour {
     }
 
     void Update() {
+
+        HPText.text = "HP: " + health + " / " + maxHealth;
+
         if (health > maxHealth) {
             health = maxHealth;
         }
@@ -35,7 +40,7 @@ public class HealthManager : MonoBehaviour {
             LoseHealth(-10);
         }
         if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
-            LoseHealth(25);
+            LoseHealth(10);
         }
     }
 
@@ -43,13 +48,13 @@ public class HealthManager : MonoBehaviour {
         health -= amount;
     }
 
-    public void LoseCombat() {
-        PlayerFSM.player.Health = initHealth;
+    /*public void LoseCombat() {
+        health = initHealth;
     }
 
     public void WinCombat() {
-        PlayerFSM.player.Health = health;
-    }
+        XPManager.xpmanager.playercurrhp = health;
+    }*/
 
     public float Health { get { return health; } }
 }

@@ -17,32 +17,19 @@ public class XPManager : MonoBehaviour {
     }
 
     public double xpscaler = 0.25;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
-    public int playerxp = 102599; // waarde normaal gehaald uit playerprefs
-    public double startxpbound = 100; // level 1 => XP van 0-100
-    public int playerlvl = 1;
-    public int xptonext = 0;
-<<<<<<< HEAD
-=======
     public double hpscaler = 0.10;
-    public int playerxp = 5098; // waarde normaal gehaald uit save
+    private int playerxp = 420; // waarde normaal gehaald uit save
     public double startxpbound = 100; // level 1 => XP van 0-100
-    public int playerlvl = 1;
-    public int xptonext = 0;
-    public int playermaxhp = 100;
-    public float playercurrhp = 100; // uit save
->>>>>>> origin/master
-=======
->>>>>>> origin/master
+    private int playerlvl = 1;
+    private int xptonext = 0;
+    private int playermaxhp = 100;
 
+    // berekent level opnieuw op basis van xp
     public void Level() {
 
         double calcxp = startxpbound;
         double currxp = (double)playerxp;
-        double xpleft = xptonext;
+        double xpleft = 0;
 
         for (int lvl = 1; lvl <= 100; lvl++) {
 
@@ -62,21 +49,16 @@ public class XPManager : MonoBehaviour {
                 calcxp = calcxp + calcxp * xpscaler;
         }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
     public int Health() {
-        double calchp = playermaxhp;
-        for (int i = 0; i < playerlvl_(); i++) {
+        double calchp = 100;
+        int currLvl = playerlvl_();
+        for (int i = 0; i < currLvl; i++) {
             calchp = calchp + calchp * hpscaler;
         }
         playermaxhp = (int)calchp;
         return playermaxhp;
     }
->>>>>>> origin/master
-=======
->>>>>>> origin/master
 
     public int xptonext_() {
         Level();
@@ -85,7 +67,14 @@ public class XPManager : MonoBehaviour {
 
     public int playerlvl_() {
         Level();
-        return xptonext;
+        return playerlvl;
     }
 
+    public void addxp(int xpgain) {
+        playerxp += xpgain;
+    }
+
+    private void Start() {
+        Health();
+    }
 }

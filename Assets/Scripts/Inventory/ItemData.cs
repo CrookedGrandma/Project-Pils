@@ -32,11 +32,22 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log(slot);
+        Debug.Log(inv.slotCount);
         if (item != null)
         {
             for (int x = 0; x < amount; x++)
             {
-                persistentInventory.removeItem(item.ID, slot);
+                if (slot < inv.slotCount)
+                {
+                    persistentInventory.removeItem(item.ID, slot);
+                }
+                else if (slot >= inv.slotCount)
+                {
+                    Debug.Log("..");
+                    persistentInventory.removeEquipment(slot - inv.slotCount, amount);
+                }
+
             }
             offset = eventData.position - new Vector2(this.transform.position.x, this.transform.position.y);
             this.transform.SetParent(this.transform.parent.parent);
@@ -57,9 +68,16 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         this.transform.SetParent(inv.slots[slot].transform);
         this.transform.position = inv.slots[slot].transform.position;
-        for (int x = 0; x < amount; x++)
-        {
-            persistentInventory.addItem(item.ID, slot);
+            for (int x = 0; x < amount; x++)
+            {
+            if (slot < inv.slotCount)
+            {
+                persistentInventory.addItem(item.ID, slot);
+            }
+            else
+            {
+                persistentInventory.addEquipment(item.ID ,amount, slot - inv.slotCount);
+            }
         }
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
@@ -127,20 +145,15 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                     this.transform.SetParent(inv.slots[inv.slotCount].transform);
                     this.transform.position = inv.slots[inv.slotCount].transform.position;
                     slot = inv.slotCount;
-                    persistentInventory.addEquipment(item.ID, 1, 0);
+                    persistentInventory.addEquipment(item.ID, amount, 0);
                 }
                 if (item.Subtype == "ranged" || item.Subtype == "projectile")
                 {
                     this.transform.SetParent(inv.slots[inv.slotCount + 1].transform);
                     this.transform.position = inv.slots[inv.slotCount + 1].transform.position;
                     slot = inv.slotCount + 1;
-                    if(amount == 0)
                     {
-                        persistentInventory.addEquipment(item.ID, 1, 0);
-                    }
-                    else
-                    {
-                        persistentInventory.addEquipment(item.ID, amount, 0);
+                        persistentInventory.addEquipment(item.ID, amount, 1);
                     }
                 }
                 if (item.Subtype == "headwear")
@@ -148,28 +161,28 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                     this.transform.SetParent(inv.slots[inv.slotCount + 2].transform);
                     this.transform.position = inv.slots[inv.slotCount + 2].transform.position;
                     slot = inv.slotCount + 2;
-                    persistentInventory.addEquipment(item.ID, 1, 2);
+                    persistentInventory.addEquipment(item.ID, amount, 2);
                 }
                 if (item.Subtype == "bodywear")
                 {
                     this.transform.SetParent(inv.slots[inv.slotCount + 3].transform);
                     this.transform.position = inv.slots[inv.slotCount + 3].transform.position;
                     slot = inv.slotCount + 3;
-                    persistentInventory.addEquipment(item.ID, 1, 3);
+                    persistentInventory.addEquipment(item.ID, amount, 3);
                 }
                 if (item.Subtype == "lowerwear")
                 {
                     this.transform.SetParent(inv.slots[inv.slotCount + 4].transform);
                     this.transform.position = inv.slots[inv.slotCount + 4].transform.position;
                     slot = inv.slotCount + 4;
-                    persistentInventory.addEquipment(item.ID, 1, 4);
+                    persistentInventory.addEquipment(item.ID, amount, 4);
                 }
                 if (item.Subtype == "footwear")
                 {
                     this.transform.SetParent(inv.slots[inv.slotCount + 5].transform);
                     this.transform.position = inv.slots[inv.slotCount + 5].transform.position;
                     slot = inv.slotCount + 5;
-                    persistentInventory.addEquipment(item.ID, 1, 5);
+                    persistentInventory.addEquipment(item.ID, amount, 5);
                 }
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
             }

@@ -73,7 +73,6 @@ public class Inventory : MonoBehaviour {
     public void Update() {
         UpdateInventoryData();
         UpdateInventoryMoney();
-        Debug.Log("InShop" + persistentInventory.InShop);
     }
 
     public void AddItem(int ID) {
@@ -82,9 +81,6 @@ public class Inventory : MonoBehaviour {
             for (int i = 0; i < items.Count; i++) {
                 if (items[i].ID == ID) {
                     ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
-                    if (data.amount == 0) {
-                        data.amount = 1;
-                    }
                     data.amount++;
                     data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
                     break;
@@ -98,6 +94,7 @@ public class Inventory : MonoBehaviour {
                     GameObject itemObj = Instantiate(inventoryItem);
                     itemObj.GetComponent<ItemData>().item = itemToAdd;
                     itemObj.GetComponent<ItemData>().slot = i;
+                    itemObj.GetComponent<ItemData>().amount = 1;
                     itemObj.transform.SetParent(slots[i].transform);
                     itemObj.transform.position = Vector2.zero;
                     itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;
@@ -116,6 +113,7 @@ public class Inventory : MonoBehaviour {
             GameObject itemObj = Instantiate(inventoryItem);
             itemObj.GetComponent<ItemData>().item = itemToAdd;
             itemObj.GetComponent<ItemData>().slot = i;
+            itemObj.GetComponent<ItemData>().amount = 1;
             itemObj.transform.SetParent(slots[i].transform);
             itemObj.transform.position = slots[slotCount + equipmentSlot].transform.position;
             itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;

@@ -28,7 +28,7 @@ public class LoadLevel : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(isActive);
+        //Debug.Log(isActive);
     }
 
     // When entering the collider

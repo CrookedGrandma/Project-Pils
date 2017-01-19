@@ -6,10 +6,17 @@ using UnityEngine.UI;
 using LitJson;
 
 public class AbilityChooser : MonoBehaviour {
-    
+
     public Text A1T;
     public Text A2T;
     public Text AHT;
+    public Text H1T;
+    public Text H2T;
+    public Text H3T;
+    public Text H4T;
+    public Text H5T;
+    public Text H6T;
+    public Text H7T;
 
     private Ability[] UsableAbilities = new Ability[2];
     private List<Ability> AbilityDatabase = new List<Ability>();
@@ -24,6 +31,7 @@ public class AbilityChooser : MonoBehaviour {
     private bool started = false;
     private bool FoundPrimaryWeapon = false;
     public int selectedAbility = -1;
+    public int selectedHealer = -1;
 
     // Use this for initialization, CALLED BY STATEHANDLER
     public void GetStarted () {
@@ -80,7 +88,7 @@ public class AbilityChooser : MonoBehaviour {
         }
     }
 
-    private void WhiteText() {
+    public void WhiteText() {
         Ability1Text = UsableAbilities[0].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[0].Title + "</color> (Damage: " + weapon[0].Damage + ")";
         try {
             Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + weapon[1].Damage + ")";
@@ -120,5 +128,9 @@ public class AbilityChooser : MonoBehaviour {
 
     public int GetLastDoneDamage() {
         return weapon[selectedAbility - 1].Damage;
+    }
+
+    public void SelectHealer(int h) {
+        //LIST OF COMSUMABLES NEEDED
     }
 }

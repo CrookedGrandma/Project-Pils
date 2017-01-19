@@ -7,10 +7,13 @@ public class StateHandler : MonoBehaviour {
     private States state;
     private bool SRanOnce = false;
     private bool PCRanOnce = false;
+    private bool PMRanOnce = false;
     private bool ECRanOnce = false;
+    private bool healing = false;
     private double flashTimer = 0.0;
     private int attNum = 0;
-    private float time = -1;
+    private float timeS = -1;
+    private float timePM = -1;
     private int damage;
 
     public EnemyChooser enemyChooser;
@@ -18,7 +21,7 @@ public class StateHandler : MonoBehaviour {
     public EnterPlayer PlayerEnter;
     public AbilityChooser abilityChooser;
 
-    Enemy e;
+    private Enemy e;
 
 	// Use this for initialization
 	void Start () {
@@ -36,13 +39,12 @@ public class StateHandler : MonoBehaviour {
         if (state == States.START) {
             PlayerEnter.Enter = true;
             if (!SRanOnce) {
-                time = Time.time;
+                timeS = Time.time;
                 SRanOnce = true;
             }
-            if (Time.time - time >= 2.5f && time != -1) {
+            if (Time.time - timeS >= 2.5f && timeS != -1) {
                 NextState();
             }
-            
         }
 
         if (state == States.PLAYERCHOICE) {
@@ -51,25 +53,51 @@ public class StateHandler : MonoBehaviour {
                 abilityChooser.GetStarted();
                 PCRanOnce = true;
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow) && abilityChooser.selectedAbility < 3) {
-                abilityChooser.SelectAbility(abilityChooser.selectedAbility + 1);
+            if (!healing) {
+                if (Input.GetKeyDown(KeyCode.DownArrow) && abilityChooser.selectedAbility < 3) {
+                    abilityChooser.SelectAbility(abilityChooser.selectedAbility + 1);
+                }
+                if (Input.GetKeyDown(KeyCode.UpArrow) && abilityChooser.selectedAbility > 1) {
+                    abilityChooser.SelectAbility(abilityChooser.selectedAbility - 1);
+                }
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow) && abilityChooser.selectedAbility > 1) {
-                abilityChooser.SelectAbility(abilityChooser.selectedAbility - 1);
+            else {
+                if (Input.GetKeyDown(KeyCode.DownArrow) && abilityChooser.selectedHealer < 7) {
+                    abilityChooser.SelectHealer(abilityChooser.selectedHealer + 1);
+                }
+                if (Input.GetKeyDown(KeyCode.UpArrow) && abilityChooser.selectedHealer > 1) {
+                    abilityChooser.SelectHealer(abilityChooser.selectedHealer - 1);
+                }
             }
             if (Input.GetKeyDown(KeyCode.Return)) {
-                NextState();
+                abilityChooser.WhiteText();
+                if (abilityChooser.selectedAbility != 3) {
+                    NextState();
+                }
+                else {
+                    healing = true;
+                }
             }
         }
 
         if (state == States.PLAYERMOVE) {
-            PCRanOnce = false;
-            if (abilityChooser.selectedAbility != 3) {
-                damage = abilityChooser.GetLastDoneDamage();
+            PCRanOnce = false; healing = false;
+            if (!PMRanOnce) {
+                timePM = Time.time;
+                // If player has not healed
+                if (abilityChooser.selectedAbility != 3) {
+                    damage = abilityChooser.GetLastDoneDamage();
+                    healthManager.EnemyLoseHealth(damage);
+                }
+                PMRanOnce = true;
+            }
+            if (Time.time - timePM >= 4f && timePM != -1) {
+                NextState();
             }
         }
 
         if (state == States.ENEMYCHOICE) {
+            PMRanOnce = false;
             flashTimer = Mathf.PingPong(Time.time * 2, 1);
 
             if (ECRanOnce) {

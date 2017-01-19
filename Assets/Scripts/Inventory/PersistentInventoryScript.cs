@@ -11,6 +11,7 @@ public class PersistentInventoryScript : MonoBehaviour {
     public int[,] itemList;
     public int slotCount;
     public bool InShop;
+    public string shopType;
     public int itemDamage { get; set; }
     public int itemDefense { get; set; }
     public int itemHealth { get; set; }
@@ -46,6 +47,7 @@ public class PersistentInventoryScript : MonoBehaviour {
 	
     public void addItem(int id, int slot)
     {
+        Debug.Log("AddItem");
         if (id == itemList[slot, 0])
         {
             itemList[slot, 1] += 1;
@@ -58,6 +60,7 @@ public class PersistentInventoryScript : MonoBehaviour {
     }
     public void removeItem(int id, int slot)
     {
+        Debug.Log("RemoveItem");
         if (itemList[slot, 1] > 1)
         {
             itemList[slot, 1] -= 1;
@@ -70,11 +73,13 @@ public class PersistentInventoryScript : MonoBehaviour {
     }
     public void addEquipment(int id, int number, int slot)
     {
+        Debug.Log("AddEquipment");
         equipmentList[slot,0] = id;
         equipmentList[slot,1] = number;
     }
     public void removeEquipment(int slot, int number)
     {
+        Debug.Log("RemoveEquipment");
         if (equipmentList[slot, 1] > 1)
         {
             equipmentList[slot, 1] -= 1;

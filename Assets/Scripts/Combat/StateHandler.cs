@@ -3,15 +3,15 @@ using System.Collections;
 
 public class StateHandler : MonoBehaviour {
 
-    enum States { START, PLAYERCHOICE, PLAYERMOVE, ENEMYCHOICE, ENEMYMOVE }
-    States state;
-    bool SRanOnce = false;
-    bool PCRanOnce = false;
-    bool ECRanOnce = false;
-    double flashTimer = 0.0;
-    int attNum = 0;
-    float time = -1;
-    int damage;
+    private enum States { START, PLAYERCHOICE, PLAYERMOVE, ENEMYCHOICE, ENEMYMOVE }
+    private States state;
+    private bool SRanOnce = false;
+    private bool PCRanOnce = false;
+    private bool ECRanOnce = false;
+    private double flashTimer = 0.0;
+    private int attNum = 0;
+    private float time = -1;
+    private int damage;
 
     public EnemyChooser enemyChooser;
     public HealthManager healthManager;

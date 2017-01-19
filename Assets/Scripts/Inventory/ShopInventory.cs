@@ -31,9 +31,112 @@ public class ShopInventory : MonoBehaviour {
             slots[i].GetComponent<ShopSlot>().slotID = i;
             slots[i].transform.SetParent(slotPanel.transform);
         }
-        AddItem(207);
-        AddItem(301);
-        AddItem(701);
+        switch (PersistentInventory.shopType)
+        {
+            case "bar":
+                AddItem(100);
+                AddItem(102);
+                AddItem(103);
+                AddItem(104);
+                AddItem(106);
+                break;
+            case "woktostay":
+                AddItem(100);
+                AddItem(101);
+                AddItem(203);
+                AddItem(205);
+                AddItem(301);
+                AddItem(303);
+                AddItem(608);
+                break;
+            case "chinese":
+                AddItem(210);
+                AddItem(308);
+                AddItem(601);
+                AddItem(708);
+                AddItem(805);
+                AddItem(906);
+                break;
+            case "hobo":
+                AddItem(200);
+                AddItem(204);
+                AddItem(300);
+                AddItem(500);
+                AddItem(606);
+                AddItem(707);
+                AddItem(806);
+                AddItem(905);
+                break;
+            case "dress-shop":
+                AddItem(603);
+                AddItem(604);
+                AddItem(607);
+                AddItem(609);
+                AddItem(610);
+                AddItem(702);
+                AddItem(703);
+                AddItem(705);
+                AddItem(709);
+                AddItem(800);
+                AddItem(802);
+                AddItem(900);
+                AddItem(902);
+                AddItem(907);
+                break;
+            case "clothing store":
+                AddItem(601);
+                AddItem(602);
+                AddItem(701);
+                AddItem(702);
+                AddItem(704);
+                AddItem(709);
+                AddItem(801);
+                AddItem(804);
+                AddItem(807);
+                AddItem(808);
+                AddItem(809);
+                AddItem(901);
+                AddItem(904);
+                AddItem(908);
+                break;
+            case "warehouse":
+                AddItem(201);
+                AddItem(202);
+                AddItem(206);
+                AddItem(212);
+                AddItem(302);
+                AddItem(304);
+                AddItem(307);
+                AddItem(400);
+                AddItem(401);
+                AddItem(402);
+                AddItem(403);
+                AddItem(501);
+                AddItem(502);
+                AddItem(503);
+                AddItem(909);
+                break;
+            case "antique":
+                AddItem(207);
+                AddItem(209);
+                AddItem(211);
+                AddItem(404);
+                AddItem(504);
+                AddItem(604);
+                AddItem(605);
+                AddItem(702);
+                AddItem(706);
+                AddItem(800);
+                AddItem(803);
+                AddItem(900);
+                AddItem(903);
+                break;
+
+
+
+
+        }
+
     }
 
     void Update()
@@ -51,10 +154,6 @@ public class ShopInventory : MonoBehaviour {
                 if (items[i].ID == ID)
                 {
                     ShopData data = slots[i].transform.GetChild(0).GetComponent<ShopData>();
-                    if (data.amount == 0)
-                    {
-                        data.amount = 1;
-                    }
                     data.amount++;
                     data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
                     break;
@@ -72,6 +171,7 @@ public class ShopInventory : MonoBehaviour {
                     GameObject itemObj = Instantiate(shopItem);
                     itemObj.GetComponent<ShopData>().item = itemToAdd;
                     itemObj.GetComponent<ShopData>().slot = i;
+                    itemObj.GetComponent<ShopData>().amount = 1;
                     itemObj.transform.SetParent(slots[i].transform);
                     itemObj.transform.position = Vector2.zero;
                     itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;

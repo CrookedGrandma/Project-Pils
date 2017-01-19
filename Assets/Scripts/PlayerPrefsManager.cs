@@ -79,7 +79,8 @@ public class PlayerPrefsManager : MonoBehaviour
     // Gets the health from Unity's PlayerPrefs
     public static float GetPlayerHealth()
     {
-        return PlayerPrefs.GetInt(PLAYER_HEALTH_KEY);
+        int health = PlayerPrefs.GetInt(PLAYER_HEALTH_KEY);
+        return health;
     }
 
     // Sets the XP of the player to an int in Unity's PlayerPrefs
@@ -107,11 +108,23 @@ public class PlayerPrefsManager : MonoBehaviour
     }
 
     // Used for setting the startpositions in the levels
+    /// <summary>
+    /// Set start positions for non-player objects
+    /// </summary>
     public static void SetStartPositions(string level, GameObject gameObject, float xPos, float yPos, float zPos)
     {
         PlayerPrefs.SetFloat(level + LEVEL_POSITION_X_KEY + gameObject.ToString(), xPos);
         PlayerPrefs.SetFloat(level + LEVEL_POSITION_Y_KEY + gameObject.ToString(), yPos);
         PlayerPrefs.SetFloat(level + LEVEL_POSITION_Z_KEY + gameObject.ToString(), zPos);
+    }
+
+    /// <summary>
+    /// Set start positions for player
+    /// </summary>
+    public static void SetStartPositions(string level, float xPos, float yPos, float zPos) {
+        PlayerPrefs.SetFloat(level + LEVEL_POSITION_X_KEY + "Player", xPos);
+        PlayerPrefs.SetFloat(level + LEVEL_POSITION_Y_KEY + "Player", yPos);
+        PlayerPrefs.SetFloat(level + LEVEL_POSITION_Z_KEY + "Player", zPos);
     }
 
     // Sets the current scene the player is in, used when going to inventory, shop and combat state

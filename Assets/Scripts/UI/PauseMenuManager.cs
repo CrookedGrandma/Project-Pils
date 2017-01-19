@@ -67,7 +67,7 @@ public class PauseMenuManager : MonoBehaviour {
         persistentInventory.InShop = false;
         PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
         PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
-        Application.LoadLevel("Inventory");
+        SceneManager.LoadScene("Inventory");
     }
 
 

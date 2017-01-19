@@ -2,30 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class CamMovement : MonoBehaviour
 {
     public GameObject Parent;
+    public bool ForcedZoomOut = false;
+    public bool IsMoving = false;
+    private Vector3 CurPos;
+    private Vector3 LastPos;
+    public Collider CurrCollider;
 
     //Checks if the camera collides with something
     void OnTriggerStay(Collider other)
     {
-        //If true, the camera moves up and back from the player object          
+        //When colliding, the camera moves up and back from the player object          
         transform.position += new Vector3(0, 0.2f, -0.2f);
+        print("Zooming Out");
+        CurrCollider = other;
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        //other = null;
+        ForcedZoomOut = false;
+    }
 
     void Update()
     {
+        LastPos = CurPos;
+        CurPos = Parent.transform.position;
+
+        if (CurPos != LastPos)
+        {
+            IsMoving = true;
+        }
+        else if (CurPos == LastPos)
+        {
+            IsMoving = false;
+        }
+
+        if (IsMoving)
+        {
+            ForcedZoomOut = true;
+        }
+
+
         //makes sure the camera always looks at the player object   
         transform.LookAt(Parent.transform);
-        /* if (transform.localPosition.y > 5.04f)
-         {
-             transform.localPosition = new Vector3(0, -0.05f, +0.05f);
-         } */
+
+        //Moves the camera back to the normal (local) position
+        if (transform.localPosition.y > 11f && !ForcedZoomOut)
+        {
+            transform.position += new Vector3(0, Time.deltaTime * -4f, Time.deltaTime * 4f);
+            print("Zooming back in");
+        }
     }
-    /*
-    void OnTriggerExit(Collider other)
-    {
-        transform.localPosition = new Vector3(0f, 5.04f, -11.3f);
-    }*/
 }

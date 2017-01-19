@@ -57,7 +57,12 @@ public class PlayerFSM : Entity {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!GameManager.instance.IsPaused) {
+        if (GameManager.instance) {
+            if (!GameManager.instance.IsPaused) {
+                fsm.Update();
+            }
+        }
+        else {
             fsm.Update();
         }
         if (enemyID != -1) {

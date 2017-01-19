@@ -12,7 +12,7 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
 
     public int playerHealth;
 
-    private void Start()
+    public void StartPositions()
     {
 
         // Go through all the levels and set startpositions

@@ -13,22 +13,14 @@ public class LoadLevel : MonoBehaviour
 
     private TextBox textBox;
 
-    private void Awake()
+    private void Start()
     {
         // Find the player and the textbox in the level
         player = GameObject.Find("Player");
         textBox = GameObject.FindObjectOfType<TextBox>();
-    }
 
-    private void Start()
-    {
         // Set all the load level collider to inactive
         isActive = false;
-    }
-
-    private void Update()
-    {
-        Debug.Log(isActive);
     }
 
     // When entering the collider
@@ -39,42 +31,32 @@ public class LoadLevel : MonoBehaviour
         {
             textBox.AddLine("Game", "Press \"E\" or \"Return\" to go to " + levelName, "White");
         }
-        // Load the level automatically
+    }
+
+    // Checks if the player is in the Collider area (trigger).
+    public void OnTriggerStay(Collider trigger)
+    {
+        // If the scene change has to be accepted
+        if (hasToBeAccepted)
+        {
+            // And it is accepted
+            if (Input.GetButtonDown("Accept"))
+            {
+                // Load the level
+                LoadALevel(levelName);
+            }
+        }
+        // If it does not have to be accepted, load the level automatically
         else if (isActive)
         {
             LoadALevel(levelName);
         }
     }
 
-    // Checks if the player is in the Collider area (trigger).
-    public void OnTriggerStay(Collider trigger)
-    {
-        if (hasToBeAccepted)
-        {
-            if (Input.GetButtonDown("Accept"))
-            {
-                LoadALevel(levelName);
-            }
-        }
-    }
-
-    private void OnLevelWasLoaded(int level)
-    {
-        // As soon as the level is loaded, unfreeze the player and freeze his rotation again (normal situation)
-        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-    }
-
     private void LoadALevel(string levelName)
     {
         // Store the playerposition in the current level
         PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
-
-        // Freeze the player so he doesn't fall through the map while loading a new level
-        if (levelName != "Dungeon_FaceBeer" && levelName != "Dungeon_PiPi" && levelName != "BossLevel")
-        {
-            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        }
 
         // Load the next level
         SceneManager.LoadScene(levelName);

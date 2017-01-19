@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class LevelColliderActivator : MonoBehaviour
 {
+    // If the collider is not a trigger, it is used to make sure the player does not fall of the map
+
     // Setup an array with all the load level colliders in this scene
-    LoadLevel[] loadLevelArray;
+    private LoadLevel[] loadLevelArray;
 
     private void Start()
     {

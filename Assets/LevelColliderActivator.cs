@@ -15,12 +15,16 @@ public class LevelColliderActivator : MonoBehaviour
         loadLevelArray = GameObject.FindObjectsOfType<LoadLevel>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider trigger)
     {
-        // When the player enters the ColliderActivators, activate all the colliders in the scene
-        foreach (LoadLevel loadLevel in loadLevelArray)
+        // Only when the player enters the collider, else the other colliders will be able to activate this
+        if (trigger.name == "Player")
         {
-            loadLevel.isActive = true;
+            // When the player enters the ColliderActivators, activate all the colliders in the scene
+            foreach (LoadLevel loadLevel in loadLevelArray)
+            {
+                loadLevel.isActive = true;
+            }
         }
     }
 }

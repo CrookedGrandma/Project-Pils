@@ -20,6 +20,7 @@ public class ShopInventory : MonoBehaviour {
     void Start () {
         PersistentInventory = GameObject.Find("PersistentInventory").GetComponent<PersistentInventoryScript>();
         PersistentInventory.InShop = true;
+        Debug.Log("shopinventory name: " + PersistentInventory.shopType);
         slotCount = PersistentInventory.slotCount;
         database = GetComponent<ItemDatabase>();
         shopPanel = GameObject.Find("ShopPanel");
@@ -33,14 +34,14 @@ public class ShopInventory : MonoBehaviour {
         }
         switch (PersistentInventory.shopType)
         {
-            case "bar":
+            case "Bartender":
                 AddItem(100);
                 AddItem(102);
                 AddItem(103);
                 AddItem(104);
                 AddItem(106);
                 break;
-            case "woktostay":
+            case "Waiter":
                 AddItem(100);
                 AddItem(101);
                 AddItem(203);
@@ -49,7 +50,7 @@ public class ShopInventory : MonoBehaviour {
                 AddItem(303);
                 AddItem(608);
                 break;
-            case "chinese":
+            case "Chinese Man":
                 AddItem(210);
                 AddItem(308);
                 AddItem(601);
@@ -57,7 +58,7 @@ public class ShopInventory : MonoBehaviour {
                 AddItem(805);
                 AddItem(906);
                 break;
-            case "hobo":
+            case "Hobo":
                 AddItem(200);
                 AddItem(204);
                 AddItem(300);
@@ -67,7 +68,7 @@ public class ShopInventory : MonoBehaviour {
                 AddItem(806);
                 AddItem(905);
                 break;
-            case "dress-shop":
+            case "Dress Store":
                 AddItem(603);
                 AddItem(604);
                 AddItem(607);
@@ -83,7 +84,7 @@ public class ShopInventory : MonoBehaviour {
                 AddItem(902);
                 AddItem(907);
                 break;
-            case "clothing store":
+            case "Clothing Store":
                 AddItem(601);
                 AddItem(602);
                 AddItem(701);
@@ -99,7 +100,7 @@ public class ShopInventory : MonoBehaviour {
                 AddItem(904);
                 AddItem(908);
                 break;
-            case "warehouse":
+            case "Goods Store":
                 AddItem(201);
                 AddItem(202);
                 AddItem(206);
@@ -116,7 +117,7 @@ public class ShopInventory : MonoBehaviour {
                 AddItem(503);
                 AddItem(909);
                 break;
-            case "antique":
+            case "Antique Store":
                 AddItem(207);
                 AddItem(209);
                 AddItem(211);

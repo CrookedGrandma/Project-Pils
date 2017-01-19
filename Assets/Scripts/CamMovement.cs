@@ -16,18 +16,15 @@ public class CamMovement : MonoBehaviour
     //Checks if the camera collides with something
     void OnTriggerStay(Collider other)
     {
+        ForcedZoomOut = true;
         //When colliding, the camera moves up and back from the player object          
         transform.position += new Vector3(0, 0.2f, -0.2f);
         print("Zooming Out");
         CurrCollider = other;
+
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        //other = null;
-        ForcedZoomOut = false;
-    }
-
+  
     void Update()
     {
         LastPos = CurPos;
@@ -44,7 +41,7 @@ public class CamMovement : MonoBehaviour
 
         if (IsMoving)
         {
-            ForcedZoomOut = true;
+            ForcedZoomOut = false;
         }
 
 

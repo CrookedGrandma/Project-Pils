@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SetStartValuesForPlayerPrefs : MonoBehaviour
 {
-    // This script sets the first positions in the levels for the player to spawn in. Every first time a level is loaded, it has to have a position for the player, otherwise
-    // the player won't spawn at the right place. These positions will be overriden the next time a level is exited. The first positions will just be hardcoded.
+    // This script sets the first positions in the levels for the player to spawn in (and some other things). Every first time a level is loaded, it has to have a position 
+    // for the player, otherwise the player won't spawn at the right place. These positions will be overriden the next time a level is exited. The first positions will just be hardcoded.
 
     // The levels at this moment in the script are:
     // BossLevel, Dungeon_FaceBeer, Dungeon_PiPi, FaceBeerLobby, FaceBeerOutside, Home, HomeFriend, Market, PiPi, PiPiOutside, TheVergeInn, Wok2Stay, Woonplaats

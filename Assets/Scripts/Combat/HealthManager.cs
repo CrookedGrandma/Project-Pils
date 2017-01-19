@@ -8,9 +8,10 @@ public class HealthManager : MonoBehaviour {
     public GameObject RedBar;
     public Text HPText_e;
     public EnemyChooser enemyChooser;
+    private int counter = 0;
     private float initHealth;
-    private float maxHealth = XPManager.xpmanager.Health() /* + hp van items */ + PersistentInventoryScript.instance.itemHealth;
-    private float health = 100; //uit save
+    private float maxHealth = XPManager.xpmanager.Health() + PersistentInventoryScript.instance.itemHealth;
+    private float health;
     private float relHealth;
     private float dispHealth;
     private float maxHealth_e;
@@ -19,9 +20,14 @@ public class HealthManager : MonoBehaviour {
     private float dispHealth_e;
 
     void Start() {
+        health = PlayerPrefsManager.GetPlayerHealth();
         relHealth = health / maxHealth;
         dispHealth = relHealth;
         initHealth = health;
+        counter++;
+    }
+
+    void StartEnemyHealth() {
         maxHealth_e = enemyChooser.currentEnemy.linkedEnemy.HP;
         health_e = maxHealth_e;
         relHealth_e = health_e / maxHealth_e;
@@ -29,9 +35,13 @@ public class HealthManager : MonoBehaviour {
     }
 
     void Update() {
-
+        if (counter == 1) {
+            StartEnemyHealth();
+            counter++;
+            print("Enemy's health gotten");
+        }
+        // Update player's health bar
         HPText.text = "HP: " + health + " / " + maxHealth;
-
         if (health > maxHealth) {
             health = maxHealth;
         }
@@ -47,12 +57,29 @@ public class HealthManager : MonoBehaviour {
             }
         }
 
+        //Update enemy's health bar
+        HPText_e.text = "HP: " + health_e + " / " + maxHealth_e;
+        if (health_e > maxHealth_e) {
+            health_e = maxHealth_e;
+        }
+        if (health_e < 0) {
+            health_e = 0;
+        }
+        relHealth_e = health_e / maxHealth_e;
+        RedBar.transform.localScale = new Vector3(dispHealth_e, 1f, 1f);
+        if (relHealth_e != dispHealth_e) {
+            dispHealth_e -= (dispHealth_e - relHealth_e) / 30;
+            if (Mathf.Abs(dispHealth_e - relHealth_e) <= 0.002) {
+                dispHealth_e = relHealth_e;
+            }
+        }
+
         //Purely for development{
         if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
-            LoseHealth(-25);
+            LoseHealth(-10);
         }
         if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
-            LoseHealth(10);
+            EnemyLoseHealth(25);
         }
         //}
     }
@@ -62,7 +89,7 @@ public class HealthManager : MonoBehaviour {
     }
 
     public void EnemyLoseHealth(float amount) {
-
+        health_e -= amount;
     }
 
     public float Health { get { return health; } }

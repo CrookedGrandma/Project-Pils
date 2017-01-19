@@ -126,7 +126,7 @@
   {
     "id": 106,
     "title": "Mega Pils",
-    "value": 0,
+    "value": 55,
     "type": "consumable",
     "subtype": "healing",
     "heal": 75,

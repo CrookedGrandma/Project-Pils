@@ -8,7 +8,7 @@ public class HealthManager : MonoBehaviour {
     public GameObject RedBar;
     public Text HPText_e;
     public EnemyChooser enemyChooser;
-    private int counter = 0;
+    private bool started = false;
     private float initHealth;
     private float maxHealth = XPManager.xpmanager.Health() + PersistentInventoryScript.instance.itemHealth;
     private float health;
@@ -24,7 +24,7 @@ public class HealthManager : MonoBehaviour {
         relHealth = health / maxHealth;
         dispHealth = relHealth;
         initHealth = health;
-        counter++;
+        started = true;
     }
 
     void StartEnemyHealth() {
@@ -35,9 +35,9 @@ public class HealthManager : MonoBehaviour {
     }
 
     void Update() {
-        if (counter == 1) {
+        if (started) {
             StartEnemyHealth();
-            counter++;
+            started = false;
             print("Enemy's health gotten");
         }
         // Update player's health bar
@@ -92,5 +92,11 @@ public class HealthManager : MonoBehaviour {
         health_e -= amount;
     }
 
-    public float Health { get { return health; } }
+    public float GetHealth() {
+        return health;
+    }
+
+    public float GetHealth_e() {
+        return health_e;
+    }
 }

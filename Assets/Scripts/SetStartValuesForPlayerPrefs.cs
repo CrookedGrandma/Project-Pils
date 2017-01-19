@@ -25,7 +25,7 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
         PlayerPrefsManager.SetStartPositions("Dungeon_PiPi", player, 1.5f, 1.5f, 1.5f);
         PlayerPrefsManager.SetStartPositions("FaceBeerLobby", player, 0f, 1.5f, -6.8f);
         PlayerPrefsManager.SetStartPositions("FaceBeerOutside", player, 93.5f, 1.5f, -63.5f);
-        PlayerPrefsManager.SetStartPositions("Home", player, -10.5f, 1.5f, -13.5f);
+        PlayerPrefsManager.SetStartPositions("Home", player, -10.5f, 1.5f, -13.0f);
         PlayerPrefsManager.SetStartPositions("HomeFriend", player, 10.5f, 1.5f, -13.5f);
         PlayerPrefsManager.SetStartPositions("Market", player, 1.8f, 1.5f, -59.0f);
         PlayerPrefsManager.SetStartPositions("PiPi", player, -28.5f, 1.5f, 0f);

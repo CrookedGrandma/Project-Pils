@@ -73,6 +73,7 @@ public class Inventory : MonoBehaviour {
     public void Update() {
         UpdateInventoryData();
         UpdateInventoryMoney();
+        Debug.Log("InShop" + persistentInventory.InShop);
     }
 
     public void AddItem(int ID) {

@@ -17,6 +17,7 @@ public class PersistentInventoryScript : MonoBehaviour {
     public int Currency { get; set; }
 
     void Start () {
+        InShop = false;
         DontDestroyOnLoad(persistentInventory);
         Currency = 200;
         if (instance == null)

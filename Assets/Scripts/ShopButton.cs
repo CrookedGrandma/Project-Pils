@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class ShopButton : MonoBehaviour
 {
-    public GameObject knop;
+    public GameObject knopInventoryShop;
+    public GameObject KnopGame;
     GameObject persistentInventoryObject;
     PersistentInventoryScript persistentInventory;
 
@@ -15,11 +16,13 @@ public class ShopButton : MonoBehaviour
         persistentInventory = persistentInventoryObject.GetComponent<PersistentInventoryScript>();
         if (persistentInventory.InShop == false)
         {
-            knop.SetActive(false);
+            knopInventoryShop.SetActive(false);
+            KnopGame.SetActive(true);
         }
         else
         {
-            knop.SetActive(true);
+            knopInventoryShop.SetActive(true);
+            KnopGame.SetActive(false);
         }
     }
     public void GoToInventory()
@@ -29,5 +32,9 @@ public class ShopButton : MonoBehaviour
     public void GoToShop()
     {
         SceneManager.LoadScene("Shop");
+    }
+    public void ReturnToGame()
+    {
+        SceneManager.LoadScene(PlayerPrefsManager.GetCurrentScene());
     }
 }

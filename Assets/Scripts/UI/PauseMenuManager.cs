@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class PauseMenuManager : MonoBehaviour {
     public GameObject ConfirmationPanel;
     public GameObject PauseMenu;
+    GameObject persistentInventoryObject;
+    PersistentInventoryScript persistentInventory;
     public bool IsVisible = false;
 
     /// <summary>
@@ -13,6 +15,8 @@ public class PauseMenuManager : MonoBehaviour {
     void Awake()
     {
         ConfirmationPanel.SetActive(false);
+        persistentInventoryObject = GameObject.Find("PersistentInventory");
+        persistentInventory = persistentInventoryObject.GetComponent<PersistentInventoryScript>();
     }
 
     ///<summary>
@@ -53,6 +57,7 @@ public class PauseMenuManager : MonoBehaviour {
         print("Pause is loading Inventory");
         PauseMenu.gameObject.SetActive(false);
         IsVisible = false;
+        persistentInventory.InShop = false;
         PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
         Application.LoadLevel("Inventory");
     }

@@ -9,6 +9,7 @@ public class PauseMenuManager : MonoBehaviour {
     GameObject persistentInventoryObject;
     PersistentInventoryScript persistentInventory;
     public bool IsVisible = false;
+    private GameObject player;
 
     /// <summary>
     /// Makes sure The confirmation panel isn't visible when launching the game.
@@ -17,6 +18,12 @@ public class PauseMenuManager : MonoBehaviour {
         ConfirmationPanel.SetActive(false);
         persistentInventoryObject = GameObject.Find("PersistentInventory");
         persistentInventory = persistentInventoryObject.GetComponent<PersistentInventoryScript>();
+    }
+
+    private void Start()
+    {
+        // Find the player in the game
+        player = GameObject.Find("Player");
     }
 
     ///<summary>
@@ -59,6 +66,7 @@ public class PauseMenuManager : MonoBehaviour {
         IsVisible = false;
         persistentInventory.InShop = false;
         PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
+        PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
         Application.LoadLevel("Inventory");
     }
 

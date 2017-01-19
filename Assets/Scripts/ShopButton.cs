@@ -9,6 +9,7 @@ public class ShopButton : MonoBehaviour
     public GameObject KnopGame;
     GameObject persistentInventoryObject;
     PersistentInventoryScript persistentInventory;
+    private GameObject player;
 
     private void Start()
     {
@@ -24,6 +25,8 @@ public class ShopButton : MonoBehaviour
             knopInventoryShop.SetActive(true);
             KnopGame.SetActive(false);
         }
+
+        player = GameObject.Find("Player");
     }
     public void GoToInventory()
     {
@@ -36,5 +39,7 @@ public class ShopButton : MonoBehaviour
     public void ReturnToGame()
     {
         SceneManager.LoadScene(PlayerPrefsManager.GetCurrentScene());
+        Vector3 playerPos = PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player);
+        player.transform.position = playerPos;
     }
 }

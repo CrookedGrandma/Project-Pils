@@ -9,7 +9,7 @@ public class DungeonCreator : MonoBehaviour
     {
         Wall, Floor
     }
-    public int columns = 30, rows = 30, minNumRooms = 10, maxNumRooms = 12, minRoomWidth = 4, maxRoomWidth = 8, minRoomHeight = 4, maxRoomHeight = 8, 
+    public int columns = 30, rows = 30, minNumRooms = 10, maxNumRooms = 12, minRoomWidth = 4, maxRoomWidth = 8, minRoomHeight = 4, maxRoomHeight = 8,
                minCorridorLength = 8, maxCorridorLength = 14, minNumberOfEnemies = 2, maxNumberOfEnemies = 6;
     public GameObject endPoint, enemy, wallTile;                            // Normal gameobjects for the endpoint and enemies and walltile
 
@@ -50,29 +50,13 @@ public class DungeonCreator : MonoBehaviour
         SpawnEnemies(numberOfEnemies);
     }
 
-    private void Reset()
-    {
-        // Just reload the level
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    private void Update()
-    {
-        // DEBUG ONLY
-        if (Input.GetButtonDown("Reset"))
-        {
-            Reset();
-        }
-        // END DEBUG ONLY
-    }
-
     #region Creating the Dungeon
     // Set up the tiles array to the correct size
     private void SetupTilesArray()
     {
         tiles = new TileType[columns][];
 
-        for(int i = 0; i < tiles.Length; i++)
+        for (int i = 0; i < tiles.Length; i++)
         {
             tiles[i] = new TileType[rows];
         }
@@ -188,7 +172,7 @@ public class DungeonCreator : MonoBehaviour
     private void InstantiateFromArray(GameObject prefab, float xCoordinate, float zCoordinate)
     {
         // Get the position for the object
-        Vector3 position = new Vector3(3 * xCoordinate + 1.5f, -3f,  3 * zCoordinate + 1.5f);
+        Vector3 position = new Vector3(3 * xCoordinate + 1.5f, -3f, 3 * zCoordinate + 1.5f);
 
         // Create an instance of the object
         GameObject instance = Instantiate(prefab, position, Quaternion.identity) as GameObject;
@@ -214,7 +198,7 @@ public class DungeonCreator : MonoBehaviour
             enemyXPos -= enemyXPos % 3;
             enemyZPos -= enemyZPos % 3;
             Vector3 enemyPos = new Vector3(enemyXPos + 1.5f, 0.5f, enemyZPos + 1.5f);
-            
+
             // Methods which checks the position of the enemy
             CheckForWallTiles(enemyPos);
             // If we can't spawn at this position, do not execute the rest of the methods
@@ -304,8 +288,6 @@ public class DungeonCreator : MonoBehaviour
     // Checks if something will be spawned inside a wall
     private void CheckForWallTiles(Vector3 pos)
     {
-        Debug.Log(pos);
-        Debug.Log((pos.x / 3) + ", " + (pos.z / 3));
         if (tiles[(int)(pos.x / 3)][(int)(pos.z / 3)] == TileType.Wall)
         {
             // Position is inside a wall

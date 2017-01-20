@@ -4,7 +4,7 @@ using Core.FSM;
 
 public class MoveAction : Core.FSM.FSMAction
 {
-	private Transform transform;
+    private Transform transform;
     private Rigidbody PlayerRB;
 
     public float velocity = 20f;
@@ -15,21 +15,21 @@ public class MoveAction : Core.FSM.FSMAction
     private float totalIdleTime = 0.25f;
 
     private string finishEvent;
-    public bool ableToJump;
+    public bool ableToJump, ableToMoveLeft, ableToMoveRight, ableToMoveForward, ableToMoveBackward;
 
-    public MoveAction (FSMState owner) : base (owner)
-	{
-	}
+    public MoveAction(FSMState owner) : base(owner)
+    {
+    }
 
     public void Init(Transform transform, Rigidbody rb, float vel, float sprintVel, float jumpSpeed, string finishEvent = null)
-	{
-		this.transform = transform;
+    {
+        this.transform = transform;
         this.PlayerRB = rb;
         this.velocity = vel;
         this.sprintVelocity = sprintVel;
         this.jumpSpeed = jumpSpeed;
         this.finishEvent = finishEvent;
-	}
+    }
 
     public override void OnEnter()
     {
@@ -54,7 +54,25 @@ public class MoveAction : Core.FSM.FSMAction
         // Walking or Sprinting
         float moveLeftRight = Input.GetAxis("Horizontal") * usedVelocity * Time.deltaTime;
         float moveForwardBackward = Input.GetAxis("Vertical") * usedVelocity * Time.deltaTime;
-         
+
+        // Prevent sticking on wall after jumping
+        if (!ableToMoveLeft && moveLeftRight < 0)
+        {
+            moveLeftRight = 0;
+        }
+        if (!ableToMoveRight && moveLeftRight > 0)
+        {
+            moveLeftRight = 0;
+        }
+        if (!ableToMoveForward && moveForwardBackward > 0)
+        {
+            moveForwardBackward = 0;
+        }
+        if (!ableToMoveBackward && moveForwardBackward < 0)
+        {
+            moveForwardBackward = 0;
+        }
+
         // Jump
         if (Input.GetButtonDown("Jump") && ableToJump)
         {
@@ -63,6 +81,8 @@ public class MoveAction : Core.FSM.FSMAction
         }
 
         PlayerRB.velocity = new Vector3(moveLeftRight, PlayerRB.velocity.y, moveForwardBackward);
+
+        Debug.Log("X: " + PlayerRB.velocity.x + ", Y: " + PlayerRB.velocity.y + ", Z: " + PlayerRB.velocity.z);
 
         if (PlayerRB.velocity == Vector3.zero)
         {
@@ -78,10 +98,11 @@ public class MoveAction : Core.FSM.FSMAction
         }
     }
 
-	private void Finish ()
-	{
-		if (!string.IsNullOrEmpty (finishEvent)) {
-			GetOwner ().SendEvent (finishEvent);
-		}
-	}
+    private void Finish()
+    {
+        if (!string.IsNullOrEmpty(finishEvent))
+        {
+            GetOwner().SendEvent(finishEvent);
+        }
+    }
 }

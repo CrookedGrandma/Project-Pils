@@ -14,21 +14,21 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
 
     public void StartPositions()
     {
-
         // Go through all the levels and set startpositions
         PlayerPrefsManager.SetStartPositions("BossLevel", -0.4f, 1.5f, -18.5f);
         PlayerPrefsManager.SetStartPositions("Dungeon_FaceBeer", 1.5f, 1.5f, 1.5f);
         PlayerPrefsManager.SetStartPositions("Dungeon_PiPi", 1.5f, 1.5f, 1.5f);
-        PlayerPrefsManager.SetStartPositions("FaceBeerLobby", 0f, 1.5f, -6.0f);
+        PlayerPrefsManager.SetStartPositions("FaceBeerLobby", 0.0f, 1.5f, -6.0f);
         PlayerPrefsManager.SetStartPositions("FaceBeerOutside", 93.5f, 1.5f, -63.5f);
-        PlayerPrefsManager.SetStartPositions("Home", -10.5f, 1.5f, -13.0f);
+        PlayerPrefsManager.SetStartPositions("Home", 10.0f, 1.5f, 11.5f);
         PlayerPrefsManager.SetStartPositions("HomeFriend", 10.5f, 1.5f, -13.0f);
         PlayerPrefsManager.SetStartPositions("Market", 1.8f, 1.5f, -59.0f);
-        PlayerPrefsManager.SetStartPositions("PiPi", -28.5f, 1.5f, 0f);
+        PlayerPrefsManager.SetStartPositions("PiPi", -28.5f, 1.5f, 0.0f);
         PlayerPrefsManager.SetStartPositions("PiPiOutside", -25.5f, 1.5f, -13.5f);
         PlayerPrefsManager.SetStartPositions("TheVergeInn", -3.0f, 1.5f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Wok2Stay", -3.0f, 1.5f, -11.2f);
-        PlayerPrefsManager.SetStartPositions("Woonplaats", 48.3f, 1.5f, 25.4f);
+        PlayerPrefsManager.SetStartPositions("Woonplaats", 49.0f, 1.5f, 25.5f);
+        PlayerPrefsManager.SetStartPositions("Shop", 0.0f, -10.0f, 0.0f);
 
         // Set the health, XP and level for the player
         PlayerPrefsManager.SetPlayerHealth(playerHealth);

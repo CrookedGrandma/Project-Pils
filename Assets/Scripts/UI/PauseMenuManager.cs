@@ -3,12 +3,14 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PauseMenuManager : MonoBehaviour {
+public class PauseMenuManager : MonoBehaviour
+{
     public GameObject ConfirmationPanel;
     public GameObject PauseMenu;
-    GameObject persistentInventoryObject;
-    PersistentInventoryScript persistentInventory;
     public bool IsVisible = false;
+
+    private GameObject persistentInventoryObject;
+    private PersistentInventoryScript persistentInventory;
     private GameObject player;
 
     /// <summary>
@@ -29,7 +31,7 @@ public class PauseMenuManager : MonoBehaviour {
     ///<summary>
     ///Will toggle the pause menu to invisible when 
     ///the escape-button is pressed while already in pause menu.
-    void Update ()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && IsVisible)
         {
@@ -38,7 +40,7 @@ public class PauseMenuManager : MonoBehaviour {
             print("Pause menu Already Visible, Toggling off");
         }
     }
-   
+
     ///<summary>
     ///Will toggle the Confirmation Panel to visible.
     public void SetVisible()

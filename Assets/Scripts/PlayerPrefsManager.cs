@@ -121,10 +121,11 @@ public class PlayerPrefsManager : MonoBehaviour
     /// <summary>
     /// Set start positions for player
     /// </summary>
-    public static void SetStartPositions(string level, float xPos, float yPos, float zPos) {
-        PlayerPrefs.SetFloat(level + LEVEL_POSITION_X_KEY + "Player", xPos);
-        PlayerPrefs.SetFloat(level + LEVEL_POSITION_Y_KEY + "Player", yPos);
-        PlayerPrefs.SetFloat(level + LEVEL_POSITION_Z_KEY + "Player", zPos);
+    public static void SetStartPositions(string level, float xPos, float yPos, float zPos)
+    {
+        PlayerPrefs.SetFloat(level + LEVEL_POSITION_X_KEY + "Player (UnityEngine.GameObject)", xPos);
+        PlayerPrefs.SetFloat(level + LEVEL_POSITION_Y_KEY + "Player (UnityEngine.GameObject)", yPos);
+        PlayerPrefs.SetFloat(level + LEVEL_POSITION_Z_KEY + "Player (UnityEngine.GameObject)", zPos);
     }
 
     // Sets the current scene the player is in, used when going to inventory, shop and combat state

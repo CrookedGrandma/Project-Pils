@@ -26,11 +26,6 @@ public class LoadLevel : MonoBehaviour
         isActive = false;
     }
 
-    private void Update()
-    {
-        //Debug.Log(isActive);
-    }
-
     // When entering the collider
     private void OnTriggerEnter(Collider trigger)
     {
@@ -47,7 +42,7 @@ public class LoadLevel : MonoBehaviour
     }
 
     // Checks if the player is in the Collider area (trigger).
-    public void OnTriggerStay(Collider trigger)
+    private void OnTriggerStay(Collider trigger)
     {
         if (hasToBeAccepted)
         {
@@ -67,6 +62,9 @@ public class LoadLevel : MonoBehaviour
 
     private void LoadALevel(string levelName)
     {
+        // Store the active scene
+        PlayerPrefsManager.SetCurrentScene(levelName);
+
         // Store the playerposition in the current level
         PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
 
@@ -85,5 +83,18 @@ public class LoadLevel : MonoBehaviour
 
         // Put the collider on inactive
         isActive = false;
+    }
+
+    public void LoadStartLevel()
+    {
+        // Store the playerposition in the current level
+        PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
+
+        // Load Woonplaats
+        SceneManager.LoadScene("Home");
+
+        // Create a new position from the saved position of the new level in Unity's PlayerPrefs and set the player's position to this value
+        Vector3 newPosition = PlayerPrefsManager.GetPositionInLevel("Home", player);
+        player.transform.position = newPosition;
     }
 }

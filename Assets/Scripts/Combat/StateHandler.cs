@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class StateHandler : MonoBehaviour {
@@ -9,24 +10,33 @@ public class StateHandler : MonoBehaviour {
     private bool PCRanOnce = false;
     private bool PMRanOnce = false;
     private bool ECRanOnce = false;
+    private bool EMRanOnce = false;
     private bool healing = false;
-    private double flashTimer = 0.0;
+    private bool showEnterKey = false;
+    private double flashTimer = 1.0;
     private int attNum = 0;
     private float timeS = -1;
     private float timePM = -1;
+    private float timeEC = -1;
+    private float timeEM = -1;
     private int damage;
 
     public EnemyChooser enemyChooser;
     public HealthManager healthManager;
     public EnterPlayer PlayerEnter;
     public AbilityChooser abilityChooser;
+    public GameObject enterKey;
 
+    private Color enterKeyColor;
     private Enemy e;
 
 	// Use this for initialization
 	void Start () {
         state = States.START;
-	}
+        enterKeyColor = enterKey.GetComponent<Image>().color;
+        enterKeyColor.a = 0f;
+        enterKey.GetComponent<Image>().color = enterKeyColor;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -49,6 +59,7 @@ public class StateHandler : MonoBehaviour {
 
         if (state == States.PLAYERCHOICE) {
             SRanOnce = false;
+            EMRanOnce = false;
             if (!PCRanOnce) {
                 abilityChooser.GetStarted();
                 PCRanOnce = true;
@@ -91,8 +102,13 @@ public class StateHandler : MonoBehaviour {
                 }
                 PMRanOnce = true;
             }
-            if (Time.time - timePM >= 4f && timePM != -1) {
-                NextState();
+            if (Time.time - timePM >= 1.5f && timePM != -1) {
+                if (healthManager.GetHealth_e() > 0) {
+                    NextState();
+                }
+                else {
+                    Win();
+                }
             }
         }
 
@@ -100,36 +116,73 @@ public class StateHandler : MonoBehaviour {
             PMRanOnce = false;
             flashTimer = Mathf.PingPong(Time.time * 2, 1);
 
-            if (ECRanOnce) {
+            if (!ECRanOnce) {
+                timeEC = Time.time;
+            }
+            else {
                 if (flashTimer >= 0.9) {
                     if (attNum == 1) {
-                        enemyChooser.enemyStat.text = "HP: " + e.HP + "\n" +
-                                                      "Strength: " + e.Strength + "\n" +
-                                                      "<color=red>Attack 1: " + e.Attack1Title + "\n" +
+                        enemyChooser.enemyStat.text = "<color=red>Attack 1: " + e.Attack1Title + "\n" +
                                                       "Damage: " + e.Attack1Damage + "</color>\n" +
                                                       "Attack 2: " + e.Attack2Title + "\n" +
                                                       "Damage: " + e.Attack2Damage;
                     }
                     if (attNum == 2) {
-                        enemyChooser.enemyStat.text = "HP: " + e.HP + "\n" +
-                                                      "Strength: " + e.Strength + "\n" +
-                                                      "Attack 1: " + e.Attack1Title + "\n" +
+                        enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
                                                       "Damage: " + e.Attack1Damage + "\n" +
                                                       "<color=red>Attack 2: " + e.Attack2Title + "\n" +
                                                       "Damage: " + e.Attack2Damage + "</color>";
                     }
                 }
                 if (flashTimer <= 0.1) {
-                    TextWhite();
+                    WhiteText();
+                }
+            }
+            if (Time.time - timeEC >= 1f && timeEC != -1) {
+                showEnterKey = true;
+                if (Input.GetKeyDown(KeyCode.Return)) {
+                    NextState();
                 }
             }
         }
 
         if (state == States.ENEMYMOVE) {
-            if (ECRanOnce) {
-                TextWhite();
-            }
             ECRanOnce = false;
+            showEnterKey = false;
+            WhiteText();
+            if (!EMRanOnce) {
+                if (attNum == 1) {
+                    healthManager.LoseHealth(e.Attack1Damage);
+                }
+                if (attNum == 2) {
+                    healthManager.LoseHealth(e.Attack2Damage);
+                }
+                EMRanOnce = true;
+                timeEM = Time.time;
+            }
+            if (Time.time - timeEM >= 1.5f && timeEM != -1) {
+                if (healthManager.GetHealth() > 0) {
+                    NextState();
+                }
+                else {
+                    Lose();
+                }
+            }
+        }
+
+        if (showEnterKey) {
+            if (enterKeyColor.a < 1f) {
+                enterKeyColor.a += 0.005f;
+                enterKey.GetComponent<Image>().color = enterKeyColor;
+            }
+            enterKey.transform.localScale = new Vector3(Mathf.PingPong(Time.time * 0.5f, 0.3f) + 1f, Mathf.PingPong(Time.time * 0.5f, 0.3f) + 1f, 1f);
+        }
+        else {
+            if (enterKeyColor.a > 0) {
+                enterKeyColor.a -= 0.01f;
+                enterKey.GetComponent<Image>().color = enterKeyColor;
+                enterKey.transform.localScale = new Vector3(enterKey.transform.localScale.x - enterKey.transform.localScale.x / 100, enterKey.transform.localScale.y - enterKey.transform.localScale.y / 100, 1f);
+            }
         }
     }
 
@@ -156,10 +209,8 @@ public class StateHandler : MonoBehaviour {
         return attackNum;
     }
 
-    void TextWhite() {
-        enemyChooser.enemyStat.text = "HP: " + e.HP + "\n" +
-                                      "Strength: " + e.Strength + "\n" +
-                                      "Attack 1: " + e.Attack1Title + "\n" +
+    void WhiteText() {
+        enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
                                       "Damage: " + e.Attack1Damage + "\n" +
                                       "Attack 2: " + e.Attack2Title + "\n" +
                                       "Damage: " + e.Attack2Damage;
@@ -170,5 +221,14 @@ public class StateHandler : MonoBehaviour {
         if ((int)state > 4) {
             state = States.PLAYERCHOICE;
         }
+    }
+
+    void Win() {
+        showEnterKey = true;
+        XPManager.xpmanager.addxp((int)(e.HP * 1.5f));
+    }
+
+    void Lose() {
+
     }
 }

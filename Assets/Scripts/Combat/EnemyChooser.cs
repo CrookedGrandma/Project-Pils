@@ -57,9 +57,7 @@ public class EnemyChooser : MonoBehaviour {
                     currentEnemy = e;
                     enemyFound = true;
                     announce.text = "You're up against: " + currentEnemy.linkedEnemy.Title;
-                    enemyStat.text = "HP: " + currentEnemy.linkedEnemy.HP + "\n" +
-                                     "Strength: " + currentEnemy.linkedEnemy.Strength + "\n" +
-                                     "Attack 1: " + currentEnemy.linkedEnemy.Attack1Title + "\n" +
+                    enemyStat.text = "Attack 1: " + currentEnemy.linkedEnemy.Attack1Title + "\n" +
                                      "Damage: " + currentEnemy.linkedEnemy.Attack1Damage + "\n" +
                                      "Attack 2: " + currentEnemy.linkedEnemy.Attack2Title + "\n" +
                                      "Damage: " + currentEnemy.linkedEnemy.Attack2Damage;

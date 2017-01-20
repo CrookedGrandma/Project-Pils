@@ -82,8 +82,6 @@ public class MoveAction : Core.FSM.FSMAction
 
         PlayerRB.velocity = new Vector3(moveLeftRight, PlayerRB.velocity.y, moveForwardBackward);
 
-        Debug.Log("X: " + PlayerRB.velocity.x + ", Y: " + PlayerRB.velocity.y + ", Z: " + PlayerRB.velocity.z);
-
         if (PlayerRB.velocity == Vector3.zero)
         {
             idleTime -= Time.deltaTime;

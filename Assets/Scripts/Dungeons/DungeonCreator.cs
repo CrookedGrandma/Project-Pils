@@ -10,7 +10,7 @@ public class DungeonCreator : MonoBehaviour
         Wall, Floor
     }
     public int columns = 30, rows = 30, minNumRooms = 10, maxNumRooms = 12, minRoomWidth = 4, maxRoomWidth = 8, minRoomHeight = 4, maxRoomHeight = 8,
-               minCorridorLength = 8, maxCorridorLength = 14, minNumberOfEnemies = 2, maxNumberOfEnemies = 6;
+               minCorridorLength = 8, maxCorridorLength = 14, minNumberOfEnemies = 2, maxNumberOfEnemies = 6, endPointMinimumDistanceToPlayer = 25;
     public GameObject endPoint, enemy, wallTile;                            // Normal gameobjects for the endpoint and enemies and walltile
 
     private TileType[][] tiles;
@@ -172,7 +172,7 @@ public class DungeonCreator : MonoBehaviour
     private void InstantiateFromArray(GameObject prefab, float xCoordinate, float zCoordinate)
     {
         // Get the position for the object
-        Vector3 position = new Vector3(3 * xCoordinate + 1.5f, -3f, 3 * zCoordinate + 1.5f);
+        Vector3 position = new Vector3(3 * xCoordinate + 1.5f, -2f, 3 * zCoordinate + 1.5f);
 
         // Create an instance of the object
         GameObject instance = Instantiate(prefab, position, Quaternion.identity) as GameObject;
@@ -242,15 +242,18 @@ public class DungeonCreator : MonoBehaviour
 
         // Choose a random x coordinate
         endPointXPos = Random.Range(0, columns * 3 - 1);
-        if (endPointXPos >= 75)
+        endPointXPos -= endPointXPos % 3;
+        if (endPointXPos >= endPointMinimumDistanceToPlayer * 3)
         {
             // It is far away enough from the player to allow every z coordinate
             endPointZPos = Random.Range(0, rows * 3 - 1);
+            endPointZPos -= endPointZPos % 3;
         }
         else
         {
             // Too close to the player to allow every z coordinate, it should be at least 25
-            endPointZPos = Random.Range(75, rows * 3 - 1);
+            endPointZPos = Random.Range(endPointMinimumDistanceToPlayer * 3, rows * 3 - 1);
+            endPointZPos -= endPointZPos % 3;
         }
 
         //endPointPos = new Vector3(Random.Range(0, columns) + 0.5f, 0.35f, Random.Range(0, rows) + 0.5f);

@@ -12,6 +12,7 @@ public class Quest001 : MonoBehaviour {
 
         //ADD PHONE TO INVENTORY
 
+
         GameManager.instance.questManager.AddQuestToLog("Quest002");
     }
 }

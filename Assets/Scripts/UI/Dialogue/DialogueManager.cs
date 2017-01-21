@@ -59,7 +59,7 @@ public class DialogueManager : Entity {
             if (button.IsActive()) { activeButtonFound = true; break; }    
         }
 
-        return activeButtonFound;
+        return !activeButtonFound;
     }
     public override void onMessage(Message m)
     {

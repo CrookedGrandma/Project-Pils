@@ -48,7 +48,6 @@ public class PlayerFSM : Entity
         idleState = fsm.AddState("IdleState");
         moveAction = new MoveAction(moveState);
         idleAction = new IdleAction(idleState);
-        playerObj = GameObject.Find("Player");
 
         moveState.AddAction(moveAction);
         idleState.AddAction(idleAction);
@@ -67,6 +66,9 @@ public class PlayerFSM : Entity
     // Update is called once per frame
     void Update()
     {
+        if (playerObj == null) {
+            playerObj = GameObject.Find("Player");
+        }
         if (GameManager.instance)
         {
             if (!GameManager.instance.IsPaused)

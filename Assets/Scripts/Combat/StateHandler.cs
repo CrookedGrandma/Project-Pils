@@ -28,6 +28,7 @@ public class StateHandler : MonoBehaviour {
     private States state;
     private Color enterKeyColor;
     private Enemy e;
+    private GameObject player;
 
     public EnemyChooser enemyChooser;
     public HealthManager healthManager;
@@ -41,6 +42,7 @@ public class StateHandler : MonoBehaviour {
         enterKeyColor = enterKey.GetComponent<Image>().color;
         enterKeyColor.a = 0f;
         enterKey.GetComponent<Image>().color = enterKeyColor;
+        player = GameObject.Find("Player");
     }
 	
 	// Update is called once per frame
@@ -229,6 +231,12 @@ public class StateHandler : MonoBehaviour {
         }
     }
 
+    void LoadLastScene() {
+        string scene = PlayerPrefsManager.GetCurrentScene();
+        player.transform.position = PlayerPrefsManager.GetPositionInLevel(scene, player);
+        SceneManager.LoadScene(scene);
+    }
+
     void Win() {
         if (!WRanOnce) {
             timeW = Time.time;
@@ -240,7 +248,7 @@ public class StateHandler : MonoBehaviour {
         if (Time.time - timeW >= 1f && timeW != -1) {
             showEnterKey = true;
             if (Input.GetKeyDown(KeyCode.Return)) {
-                SceneManager.LoadScene(PlayerPrefsManager.GetCurrentScene());
+                LoadLastScene();
             }
         }
     }
@@ -254,7 +262,7 @@ public class StateHandler : MonoBehaviour {
         if (Time.time - timeL >= 1f && timeL != -1) {
             showEnterKey = true;
             if (Input.GetKeyDown(KeyCode.Return)) {
-                SceneManager.LoadScene(PlayerPrefsManager.GetCurrentScene());
+                LoadLastScene();
             }
         }
     }

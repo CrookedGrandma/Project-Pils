@@ -54,6 +54,22 @@ public class PauseMenuManager : MonoBehaviour {
         IsVisible = false;
         Application.LoadLevel("Inventory");
     }
+    /// <summary>
+    /// Close Pause menu when continue is pressed
+    public void ClosePauseMenu()
+    {
+        print("Pause is closing");
+        PauseMenu.gameObject.SetActive(false);
+        IsVisible = false;
+    }
+
+    public void ReturnMainMenu()
+    {
+        print("return to main menu");
+        PauseMenu.gameObject.SetActive(false);
+        IsVisible = false;
+        Application.LoadLevel("MainMenu");
+    }
 
 
     ///<summary>

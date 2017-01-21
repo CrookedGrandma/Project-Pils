@@ -3,7 +3,7 @@
     "identifier": "Quest000",
     "title": "Get off your fat ass",
     "objectives": "Quest000GetUp",
-    "dialogue": "Get the fuck up. Press Space to get up."
+    "dialogue": "It's time to get the fuck up."
   },
   {
     "identifier": "Quest001",

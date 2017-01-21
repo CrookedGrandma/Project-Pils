@@ -21,6 +21,8 @@ public class Cutscene : MonoBehaviour {
 
     public void FadeInPanel()
     {
+        GameManager.instance.IsPaused = true;
+
         cutscenePanel.CrossFadeAlpha(1.0f, 0.5f, false);
 
         Invoke("FadeInText", 0.30f);
@@ -30,6 +32,8 @@ public class Cutscene : MonoBehaviour {
 
     public void FadeOutPanel()
     {
+        GameManager.instance.IsPaused = false;
+
         cutsceneText.CrossFadeAlpha(0.0f, 0.5f, false);
         cutscenePanel.CrossFadeAlpha(0.0f, 0.5f, false);
     }

@@ -82,7 +82,7 @@ public class LoadLevel : MonoBehaviour
         GameManager.instance.cutscene.FadeInPanel(true);
 
         // Store the active scene
-        PlayerPrefsManager.SetCurrentScene(levelName);
+        PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
 
         // Store the playerposition in the current level
         PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);

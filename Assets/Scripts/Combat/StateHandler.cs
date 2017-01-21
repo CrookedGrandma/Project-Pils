@@ -1,34 +1,39 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class StateHandler : MonoBehaviour {
 
     private enum States { START, PLAYERCHOICE, PLAYERMOVE, ENEMYCHOICE, ENEMYMOVE }
-    private States state;
     private bool SRanOnce = false;
     private bool PCRanOnce = false;
     private bool PMRanOnce = false;
     private bool ECRanOnce = false;
     private bool EMRanOnce = false;
+    private bool WRanOnce = false;
+    private bool LRanOnce = false;
     private bool healing = false;
     private bool showEnterKey = false;
     private double flashTimer = 1.0;
-    private int attNum = 0;
     private float timeS = -1;
     private float timePM = -1;
     private float timeEC = -1;
     private float timeEM = -1;
+    private float timeW = -1;
+    private float timeL = -1;
+    private int attNum = 0;
     private int damage;
+
+    private States state;
+    private Color enterKeyColor;
+    private Enemy e;
 
     public EnemyChooser enemyChooser;
     public HealthManager healthManager;
     public EnterPlayer PlayerEnter;
     public AbilityChooser abilityChooser;
     public GameObject enterKey;
-
-    private Color enterKeyColor;
-    private Enemy e;
 
 	// Use this for initialization
 	void Start () {
@@ -181,7 +186,8 @@ public class StateHandler : MonoBehaviour {
             if (enterKeyColor.a > 0) {
                 enterKeyColor.a -= 0.01f;
                 enterKey.GetComponent<Image>().color = enterKeyColor;
-                enterKey.transform.localScale = new Vector3(enterKey.transform.localScale.x - enterKey.transform.localScale.x / 100, enterKey.transform.localScale.y - enterKey.transform.localScale.y / 100, 1f);
+                Vector3 s = enterKey.transform.localScale;
+                enterKey.transform.localScale = new Vector3(s.x - s.x / 100, s.y - s.y / 100, 1f);
             }
         }
     }
@@ -224,11 +230,40 @@ public class StateHandler : MonoBehaviour {
     }
 
     void Win() {
-        showEnterKey = true;
+        if (!WRanOnce) {
+            timeW = Time.time;
+            WRanOnce = true;
+        }
+        //showEnterKey = true;
         XPManager.xpmanager.addxp((int)(e.HP * 1.5f));
+        ShowWinScreen();
+        if (Time.time - timeW >= 1f && timeW != -1) {
+            showEnterKey = true;
+            if (Input.GetKeyDown(KeyCode.Return)) {
+                SceneManager.LoadScene(PlayerPrefsManager.GetCurrentScene());
+            }
+        }
     }
 
     void Lose() {
+        ShowLoseScreen();
+        if (!LRanOnce) {
+            timeL = Time.time;
+            LRanOnce = true;
+        }
+        if (Time.time - timeL >= 1f && timeL != -1) {
+            showEnterKey = true;
+            if (Input.GetKeyDown(KeyCode.Return)) {
+                SceneManager.LoadScene(PlayerPrefsManager.GetCurrentScene());
+            }
+        }
+    }
+
+    void ShowWinScreen() {
+
+    }
+
+    void ShowLoseScreen() {
 
     }
 }

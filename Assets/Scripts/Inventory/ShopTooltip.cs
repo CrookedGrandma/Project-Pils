@@ -34,7 +34,7 @@ public class ShopTooltip : MonoBehaviour
         this.item = item;
         ConstructData();
         tooltip.SetActive(true);
-        Debug.Log("hallo");
+        Debug.Log("Activate (ShotTooltip)");
     }
 
     public void Deactivate(Item item)

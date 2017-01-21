@@ -118,4 +118,8 @@ public class LoadLevel : MonoBehaviour
         Vector3 newPosition = PlayerPrefsManager.GetPositionInLevel("Home", player);
         player.transform.position = newPosition;
     }
+
+    //Special method for the pausescreen to load the main menu
+
 }
+

@@ -77,8 +77,8 @@ public class QuestManager : Entity {
     {
         questLog.Add(id, quests[id]);
 
-        Message m = new Message(this, GameManager.instance.dialogueManager, MsgType.Dialogue, quests[id].dialogueText);
-        GameManager.instance.messageQueue.Add(m);
+        GameManager.instance.cutscene.SetText(quests[id].dialogueText);
+        GameManager.instance.cutscene.FadeInPanel();
 
         RefreshText();
     }

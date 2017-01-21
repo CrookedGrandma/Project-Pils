@@ -8,6 +8,7 @@ public class GameManager : Entity {
     public MessageQueue messageQueue = new MessageQueue(); //Holds an instance of the MessageQueue
     public DialogueManager dialogueManager; //Reference to the DIalogueManager
     public QuestManager questManager; //Reference to the QuestManager
+    public Cutscene cutscene;
 
     public bool IsPaused = false;
     public Canvas canvas;

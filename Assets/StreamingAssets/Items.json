@@ -571,7 +571,7 @@
     "stackable": true,
     "quest-related": false,
     "sellable": false,
-    "slug": "rubber_band"
+    "slug": "foam_dart"
   },
   {
     "id": 504,
@@ -964,7 +964,7 @@
     "stackable": false,
     "quest-related": false,
     "sellable": true,
-    "slug": "sweater"
+    "slug": "poncho"
   },
   //Lowerwear
   {

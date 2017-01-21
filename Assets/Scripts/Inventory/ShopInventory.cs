@@ -88,7 +88,6 @@ public class ShopInventory : MonoBehaviour {
                 AddItem(601);
                 AddItem(602);
                 AddItem(701);
-                AddItem(702);
                 AddItem(704);
                 AddItem(709);
                 AddItem(801);

@@ -51,6 +51,7 @@ public class PauseMenuManager : MonoBehaviour {
     {
         print("Pause is loading Inventory");
         PauseMenu.gameObject.SetActive(false);
+        PersistentInventoryScript.instance.InShop = false;
         IsVisible = false;
         SceneManager.LoadScene("Inventory");
     }

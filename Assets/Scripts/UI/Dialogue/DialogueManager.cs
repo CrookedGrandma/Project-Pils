@@ -23,7 +23,11 @@ public class DialogueManager : Entity {
             string[] responses = EntryData["responses"].ToString().Split(',');
             responses = responses.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
-            DialogueOption dialogueOption = new DialogueOption(EntryData["identifier"].ToString(), EntryData["text"].ToString(), EntryData["response"].ToString(), responses);
+            string triggersQuest = (EntryData.Keys.Contains("triggersQuest")) ? EntryData["triggersQuest"].ToString() : "";
+            string completesQuest = (EntryData.Keys.Contains("completesQuest")) ? EntryData["completesQuest"].ToString() : "";
+
+
+            DialogueOption dialogueOption = new DialogueOption(EntryData["identifier"].ToString(), EntryData["text"].ToString(), EntryData["response"].ToString(), responses, triggersQuest, completesQuest);
             dialogueOption.entityName = EntryData["owner"].ToString();
 
             dialogueOptions.Add(EntryData["identifier"].ToString(), dialogueOption);
@@ -45,6 +49,18 @@ public class DialogueManager : Entity {
         dialogueOptions.Add(identifier, dialogueOption);
     }
 
+
+    public bool DialogueHasEnded()
+    {
+        bool activeButtonFound = false;
+
+        foreach(Button button in buttons)
+        {
+            if (button.IsActive()) { activeButtonFound = true; break; }    
+        }
+
+        return activeButtonFound;
+    }
     public override void onMessage(Message m)
     {
         base.onMessage(m);
@@ -78,6 +94,8 @@ public class DialogueManager : Entity {
                         newOption.response = data.response;
                         newOption.entityName = data.entityName;
                         newOption.name = data.entityName;
+                        newOption.triggersQuest = data.triggersQuest;
+                        newOption.completesQuest = data.completesQuest;
 
                         newOption.AssignButton(button);
                         newOption.SetOption();

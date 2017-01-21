@@ -1,0 +1,20 @@
+[
+  {
+    "identifier": "Quest000GetUp",
+    "type": "bool",
+    "description": "Get up",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest001FindPhone",
+    "type": "bool",
+    "description": "Find your phone",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest002LeaveHouse",
+    "type": "bool",
+    "description": "Go outside",
+    "goal": "0.0"
+  }
+]

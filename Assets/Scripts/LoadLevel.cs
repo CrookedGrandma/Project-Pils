@@ -62,6 +62,20 @@ public class LoadLevel : MonoBehaviour
 
     private void LoadALevel(string levelName)
     {
+
+        if(SceneManager.GetActiveScene().name == "Home" && levelName == "Woonplaats")
+        {
+            if (GameManager.instance.questManager.questLog.ContainsKey("Quest002"))
+            {
+                GameManager.instance.questManager.CompleteObjective("Quest002LeaveHouse");
+            } else
+            {
+                Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You need to find your phone before you can leave your house!");
+                GameManager.instance.messageQueue.Add(m);
+                return;
+            }
+        }
+
         // Store the active scene
         PlayerPrefsManager.SetCurrentScene(levelName);
 

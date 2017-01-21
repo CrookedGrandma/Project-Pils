@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class GameManager : Entity {
 
     public static GameManager instance = null;
-    public MessageQueue messageQueue = new MessageQueue();
-    public DialogueManager dialogueManager;
+    public MessageQueue messageQueue = new MessageQueue(); //Holds an instance of the MessageQueue
+    public DialogueManager dialogueManager; //Reference to the DIalogueManager
+    public QuestManager questManager; //Reference to the QuestManager
 
     public bool IsPaused = false;
     public Canvas canvas;
@@ -16,7 +17,6 @@ public class GameManager : Entity {
     void Start()
     {
         canvas.enabled = false;
-        dialogueManager = GetComponent<DialogueManager>();
     }
 
     void Awake()
@@ -27,7 +27,9 @@ public class GameManager : Entity {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(GameObject.Find("UI"));
 
+        //Give the player a welcome message when they start the game
         Message m = new Message(this, player, MsgType.Dialogue, "Welcome to the game!");
         messageQueue.Add(m);
     }
@@ -53,6 +55,7 @@ public class GameManager : Entity {
             }
         }
 
+        //Process the MessageQueue
         messageQueue.Dispatch();
 
     }

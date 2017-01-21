@@ -1,0 +1,20 @@
+[
+  {
+    "identifier": "Quest000",
+    "title": "Get off your fat ass",
+    "objectives": "Quest000GetUp",
+    "dialogue": "Get the fuck up. Press Space to get up."
+  },
+  {
+    "identifier": "Quest001",
+    "title": "Rise and shine",
+    "objectives": "Quest001FindPhone",
+    "dialogue": "A constant flow of notifications has woken you up. Find your phone to see what's going on."
+  },
+  {
+    "identifier": "Quest002",
+    "title": "Gotta go, and fast!",
+    "objectives": "Quest002LeaveHouse",
+    "dialogue": "Go to the door to leave your house"
+  }
+]

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Extension of the basic MonoBehaviour to give everything a customizable name and implement a onMessage function at base    
 public class Entity : MonoBehaviour {
 
     public string Name;

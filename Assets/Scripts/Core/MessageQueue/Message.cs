@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//MsgType's determine behavior of the OnMessage method
 public enum MsgType
 {
     Dialogue,
-    DialogueResponse
+    DialogueResponse,
+    QuestCompletion,
+    QuestTrigger
 }
 
+//Simple structure that holds information regarding who sent what to whom
 public class Message {
 
     public Entity from;

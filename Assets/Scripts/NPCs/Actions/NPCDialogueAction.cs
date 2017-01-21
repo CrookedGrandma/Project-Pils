@@ -36,15 +36,16 @@ public class NPCDialogueAction : Core.FSM.FSMAction {
 
         }
 
-        if (Time.time >= timer)
+        if (Time.time >= timer && GameManager.instance.dialogueManager.DialogueHasEnded())
         {
             GetOwner().SendEvent("ToIdle");
             timer = Time.time + Random.Range(3, 5);
         }
 
-        /*if(Time.time >= dialogueCooldown)
+        if(Time.time >= dialogueCooldown)
         {
-            dialogueTriggered = false;
-        }*/
+            if(GameManager.instance.dialogueManager.DialogueHasEnded())
+                dialogueTriggered = false;
+        }
     }
 }

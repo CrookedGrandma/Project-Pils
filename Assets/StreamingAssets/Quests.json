@@ -16,5 +16,17 @@
     "title": "Gotta go, and fast!",
     "objectives": "Quest002LeaveHouse",
     "dialogue": "Go to the door to leave your house"
+  },
+  {
+    "identifier": "Quest003",
+    "title": "Fisrt!!1",
+    "objectives": "Quest003EnterIanHouse,Quest003SpeakWithIan",
+    "dialogue": "You and your friends decided to meet at the pub. Stop by your friend Ian's house first!"
+  },
+  {
+    "identifier": "Quest004",
+    "title": "One more can't hurt, right?",
+    "objectives": "Quest004GoToPub",
+    "dialogue": "You've met up with Ian, now go to the pub"
   }
 ]

@@ -16,5 +16,23 @@
     "type": "bool",
     "description": "Go outside",
     "goal": "0.0"
+  },
+  {
+    "identifier": "Quest003EnterIanHouse",
+    "type": "bool",
+    "description": "Go to Ian's house",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest003SpeakWithIan",
+    "type": "bool",
+    "description": "Speak with Ian",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest004GoToPub",
+    "type": "bool",
+    "description": "Go to the pub",
+    "goal": "0.0"
   }
 ]

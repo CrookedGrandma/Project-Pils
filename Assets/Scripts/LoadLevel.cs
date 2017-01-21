@@ -68,6 +68,8 @@ public class LoadLevel : MonoBehaviour
             if (GameManager.instance.questManager.questLog.ContainsKey("Quest002"))
             {
                 GameManager.instance.questManager.CompleteObjective("Quest002LeaveHouse");
+                GameManager.instance.questManager.AddQuestToLog("Quest003");
+
             } else
             {
                 Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You need to find your phone before you can leave your house!");

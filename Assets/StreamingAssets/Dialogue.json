@@ -1,88 +1,27 @@
 [
   {
-    "identifier": "StalkerDialogueStart",
-    "text": "Hello",
-    "response": "I'm a stalker and I just found you! Do you want to know more about me?",
-    "responses": "StalkerDialogueOne,StalkerDialogueTwo",
-    "owner": "Stalker"
-  },
-  {
-    "identifier": "StalkerDialogueOne",
-    "text": "Yes",
-    "response": "I'm your father Luke",
-    "responses": "",
-    "owner": "Stalker"
-  },
-  {
-    "identifier": "StalkerDialogueTwo",
-    "text": "No",
-    "response": "Well fuck you then",
-    "responses": "",
-    "owner": "Stalker"
-  },
-  {
-    "identifier": "IanDialogueStart",
-    "text": "Hello!",
-    "response": "Mate did you see your pictures on FaceBeer?",
-    "responses": "IanDialogueOne,IanDialogueTwo",
+    "identifier": "Quest003IanDialogue",
+    "text": "Hey Ian",
+    "response": "Ey wazzap homie",
+    "responses": "Quest003IanResponseOne,Quest003IanResponseTwo",
     "owner": "Ian"
   },
   {
-    "identifier": "IanDialogueOne",
-    "text": "Yes",
-    "response": "SeemsGood",
+    "identifier": "Quest003IanResponseOne",
+    "text": "Not much",
+    "response": "Ayy that's what you think mate",
     "responses": "",
+    "triggersQuest": "Quest004",
+    "completesQuest": "Quest003SpeakWithIan",
     "owner": "Ian"
   },
-  {
-    "identifier": "IanDialogueTwo",
-    "text": "No",
-    "response": "Are you even paying attention to the story?",
+   {
+    "identifier": "Quest003IanResponseTwo",
+    "text": "...",
+    "response": "Yeah that's what I thought",
     "responses": "",
+    "triggersQuest": "Quest004",
+    "completesQuest": "Quest003SpeakWithIan",
     "owner": "Ian"
-  },
-  {
-    "identifier": "FrankDialogueStart",
-    "text": "Hi Frank",
-    "response": "Did you even play the tutorial? You don't even know me.",
-    "responses": "FrankDialogueOne,FrankDialogueTwo",
-    "owner": "Frank"
-  },
-  {
-    "identifier": "FrankDialogueOne",
-    "text": "Yes",
-    "response": "Jebaited",
-    "responses": "",
-    "owner": "Frank"
-  },
-  {
-    "identifier": "FrankDialogueTwo",
-    "text": "No",
-    "response": "Go play it then",
-    "responses": "",
-    "owner": "Frank"
-  },
-    {
-    "identifier": "MaxDialogueStart",
-    "text": "Sup Max",
-    "response": "Bitch you better holla your ass down to FaceBeer's HQ soon",
-    "responses": "MaxDialogueOne,MaxDialogueTwo",
-    "owner": "Max"
-  },
-  {
-    "identifier": "MaxDialogueOne",
-    "text": "Where is it?",
-    "response": "How should I know",
-    "responses": "",
-    "owner": "Max"
-  },
-  {
-    "identifier": "MaxDialogueTwo",
-    "text": "Fuck you Max",
-    "response": "DansGame",
-    "responses": "",
-    "owner": "Max"
   }
-
-
 ]

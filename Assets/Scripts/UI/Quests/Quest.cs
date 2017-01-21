@@ -68,7 +68,8 @@ public class Quest : Entity {
 
         foreach(KeyValuePair<string, QuestObjective> kvp in objectives)
         {
-            questDesc += kvp.Value.CreateDescription() + "\n";
+            if(!kvp.Value.completed)
+                questDesc += kvp.Value.CreateDescription() + "\n";
         }
 
         questDesc += "\n";

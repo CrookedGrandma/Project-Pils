@@ -12,6 +12,10 @@ public class Environment : MonoBehaviour
     public Color Sky = Color.black;
     //Set these colors in Unity Editor, replace with backdrop sprites later on
 
+    void Start() {
+        //MainCamera = FindObjectOfType<Camera>();
+    }
+
     public void changebg(int bgcolor)
     {
         switch (bgcolor)

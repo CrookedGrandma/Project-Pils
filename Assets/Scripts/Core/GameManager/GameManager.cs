@@ -15,13 +15,7 @@ public class GameManager : Entity {
 
     public Entity player;
 
-    void Start()
-    {
-        canvas.enabled = false;
-    }
-
-    void Awake()
-    {
+    void Awake() {
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -35,6 +29,11 @@ public class GameManager : Entity {
         messageQueue.Add(m);
     }
 
+    void Start()
+    {
+        canvas.enabled = false;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -44,15 +43,12 @@ public class GameManager : Entity {
                 Time.timeScale = 1;
                 IsPaused = false;
                 canvas.enabled = false;
-
             }
             else
             {
                 Time.timeScale = 0;
                 IsPaused = true;
                 canvas.enabled = true;
-
-
             }
         }
 

@@ -37,8 +37,6 @@ public class EnemyChooser : MonoBehaviour {
 
         EnemyStats = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Enemies.json"));
         ConstructEnemyDatabase();
-
-        PlayerFSM.player.PleaseDie = true;
 	}
 
 	// Update is called once per frame

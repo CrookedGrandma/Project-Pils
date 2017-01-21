@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour {
     public GameObject ConfirmationPanel;
@@ -52,7 +52,7 @@ public class PauseMenuManager : MonoBehaviour {
         print("Pause is loading Inventory");
         PauseMenu.gameObject.SetActive(false);
         IsVisible = false;
-        Application.LoadLevel("Inventory");
+        SceneManager.LoadScene("Inventory");
     }
     /// <summary>
     /// Close Pause menu when continue is pressed
@@ -68,7 +68,7 @@ public class PauseMenuManager : MonoBehaviour {
         print("return to main menu");
         PauseMenu.gameObject.SetActive(false);
         IsVisible = false;
-        Application.LoadLevel("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 
 

@@ -20,7 +20,6 @@ public class PlayerFSM : Entity
     private GameObject playerObj;
     private int enemyID = -1;
     private int envID = -1;
-    private bool pleaseDie = false;
     private float health = 100f;
     private float maxHealth = 100f;
 
@@ -86,10 +85,6 @@ public class PlayerFSM : Entity
         if (envID != -1)
         {
             Debug.Log("Environment Plate: " + envID);
-        }
-        if (pleaseDie)
-        {
-            Destroy(gameObject);
         }
 
         // Go to combat scene, purely for developing {
@@ -214,12 +209,6 @@ public class PlayerFSM : Entity
     {
         get { return envID; }
         set { envID = value; }
-    }
-
-    public bool PleaseDie
-    {
-        get { return pleaseDie; }
-        set { pleaseDie = value; }
     }
 
     public float Health

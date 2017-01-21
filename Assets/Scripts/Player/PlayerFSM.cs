@@ -53,6 +53,7 @@ public class PlayerFSM : Entity
         idleState.AddAction(idleAction);
 
         PlayerRB = gameObject.GetComponent<Rigidbody>();
+        playerObj = GameObject.Find("Player");
 
         moveAction.Init(gameObject.transform, PlayerRB, velocity, sprintVelocity, jumpSpeed, "ToIdle");
         idleAction.Init();
@@ -66,9 +67,6 @@ public class PlayerFSM : Entity
     // Update is called once per frame
     void Update()
     {
-        if (playerObj == null) {
-            playerObj = GameObject.Find("Player");
-        }
         if (GameManager.instance)
         {
             if (!GameManager.instance.IsPaused)

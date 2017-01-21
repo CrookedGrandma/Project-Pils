@@ -5,11 +5,15 @@ using UnityEngine.UI;
 
 public class Cutscene : MonoBehaviour {
 
+    public GameObject main;
     public Image cutscenePanel;
     public Text cutsceneText;
+
         
     public void Start()
     {
+        main = cutscenePanel.gameObject;
+
         cutscenePanel.CrossFadeAlpha(0.0f, 0.0f, false);
         cutsceneText.CrossFadeAlpha(0.0f, 0.0f, false);
     }
@@ -22,6 +26,7 @@ public class Cutscene : MonoBehaviour {
     public void FadeInPanel()
     {
         GameManager.instance.IsPaused = true;
+        main.SetActive(true);
 
         cutscenePanel.CrossFadeAlpha(1.0f, 0.5f, false);
 
@@ -36,6 +41,13 @@ public class Cutscene : MonoBehaviour {
 
         cutsceneText.CrossFadeAlpha(0.0f, 0.5f, false);
         cutscenePanel.CrossFadeAlpha(0.0f, 0.5f, false);
+
+        Invoke("DisablePanel", 0.5f);
+    }
+
+    public void DisablePanel()
+    {
+        main.SetActive(false);
     }
 
     public void FadeInText()

@@ -24,6 +24,9 @@ public class PlayerFSM : Entity
     private float health = 100f;
     private float maxHealth = 100f;
 
+    public Animator animator;
+  
+
     // Awake
     void Awake()
     {
@@ -111,6 +114,38 @@ public class PlayerFSM : Entity
             PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, playerObj);
             SceneManager.LoadScene("Combat");
         }
+
+        //Animations
+        if (Input.GetAxis("Vertical") > 0 && (Input.GetAxis("Horizontal") != 0))
+        {
+            animator.Play("MeUp");
+        }
+        else if (Input.GetAxis("Vertical") < 0 && (Input.GetAxis("Horizontal") != 0))
+        {
+            animator.Play("MeDown");
+        }
+        else if((Input.GetAxis("Horizontal") == 0) && (Input.GetAxis("Vertical") == 0))
+        {
+            animator.Play("MeIdle");
+        }
+        else if(Input.GetAxis("Horizontal") < 0)
+        {
+            animator.Play("MeLeft");
+        }
+        else if(Input.GetAxis("Horizontal") > 0)
+        {
+            animator.Play("MeRight");
+        }
+        else if(Input.GetAxis("Vertical") < 0)
+        {
+            animator.Play("MeDown");
+        }
+        else if(Input.GetAxis("Vertical") > 0)
+        {
+            animator.Play("MeUp");
+        }
+        
+
     }
 
     public override void onMessage(Message m)

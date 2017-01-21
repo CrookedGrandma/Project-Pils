@@ -51,6 +51,14 @@ public class MoveAction : Core.FSM.FSMAction
             usedVelocity = sprintVelocity;
         }
 
+        //Animations
+        if ((Input.GetAxis("Horizontal") == 0) && (Input.GetAxis("Vertical") == 0))
+        {
+            
+        }
+
+
+
         // Walking or Sprinting
         float moveLeftRight = Input.GetAxis("Horizontal") * usedVelocity * Time.deltaTime;
         float moveForwardBackward = Input.GetAxis("Vertical") * usedVelocity * Time.deltaTime;

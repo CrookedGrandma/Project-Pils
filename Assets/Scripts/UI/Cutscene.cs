@@ -23,7 +23,7 @@ public class Cutscene : MonoBehaviour {
         cutsceneText.text = s;
     }
 
-    public void FadeInPanel()
+    public void FadeInPanel(bool manualFade = false)
     {
         GameManager.instance.IsPaused = true;
         main.SetActive(true);
@@ -32,7 +32,8 @@ public class Cutscene : MonoBehaviour {
 
         Invoke("FadeInText", 0.30f);
 
-        Invoke("FadeOutPanel", 2.5f);
+        if(!manualFade)
+            Invoke("FadeOutPanel", 2.5f);
     }
 
     public void FadeOutPanel()

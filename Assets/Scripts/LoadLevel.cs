@@ -78,6 +78,9 @@ public class LoadLevel : MonoBehaviour
             }
         }
 
+        GameManager.instance.cutscene.SetText("");
+        GameManager.instance.cutscene.FadeInPanel(true);
+
         // Store the active scene
         PlayerPrefsManager.SetCurrentScene(levelName);
 
@@ -99,6 +102,8 @@ public class LoadLevel : MonoBehaviour
 
         // Put the collider on inactive
         isActive = false;
+
+        GameManager.instance.cutscene.FadeOutPanel();
     }
 
     public void LoadStartLevel()

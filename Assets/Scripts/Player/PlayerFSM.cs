@@ -111,35 +111,26 @@ public class PlayerFSM : Entity
         }
 
         //Animations
-        if (Input.GetAxis("Vertical") > 0 && (Input.GetAxis("Horizontal") != 0))
+        if (PlayerRB.velocity.z > 0)
         {
             animator.Play("MeUp");
         }
-        else if (Input.GetAxis("Vertical") < 0 && (Input.GetAxis("Horizontal") != 0))
+        else if (PlayerRB.velocity.z < 0)
         {
             animator.Play("MeDown");
         }
-        else if((Input.GetAxis("Horizontal") == 0) && (Input.GetAxis("Vertical") == 0))
-        {
-            animator.Play("MeIdle");
-        }
-        else if(Input.GetAxis("Horizontal") < 0)
-        {
-            animator.Play("MeLeft");
-        }
-        else if(Input.GetAxis("Horizontal") > 0)
+        else if (PlayerRB.velocity.x > 0)
         {
             animator.Play("MeRight");
         }
-        else if(Input.GetAxis("Vertical") < 0)
+        else if (PlayerRB.velocity.x < 0)
         {
-            animator.Play("MeDown");
+            animator.Play("MeLeft");
         }
-        else if(Input.GetAxis("Vertical") > 0)
+        else
         {
-            animator.Play("MeUp");
+            animator.Play("MeIdle");
         }
-        
 
     }
 

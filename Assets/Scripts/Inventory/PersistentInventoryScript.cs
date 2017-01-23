@@ -33,9 +33,7 @@ public class PersistentInventoryScript : MonoBehaviour {
         }
         slotCount = 40;
         itemList = new int[slotCount, 2];
-        for (int x = 0; x < itemList.Length / 2; x++)
-        {
-        }
+        addEquipment(809, 1, 4);
     }
 	
     public void addItem(int id, int slot)

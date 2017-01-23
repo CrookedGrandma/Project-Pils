@@ -228,7 +228,7 @@ public class Inventory : MonoBehaviour {
         //Dumpster set
         sets += "Sets:";
         if (setArray[0] > 1) {
-            sets += "\n<color=#aaaaaa>Dumpster: " + setArray[0] + " </color>";
+            sets += "\n<color=#000000>Dumpster: " + setArray[0] + " </color>";
             if (setArray[0] == 2) {
                 sets += "<color=#FFFFFF>Bonus: 5 Defence</color>";
                 defence += 5;

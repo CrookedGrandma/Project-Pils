@@ -24,6 +24,7 @@ public class LoadStore : MonoBehaviour
             Debug.Log(other.GetComponentInParent<Nameplate>().nameplateName);
 
         Script = GameObject.Find("PersistentInventory").GetComponent<PersistentInventoryScript>();
+        Script.InShop = true;
         string Shopnaam = other.GetComponentInParent<Nameplate>().nameplateName;
         Script.shopType = Shopnaam;
         PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);

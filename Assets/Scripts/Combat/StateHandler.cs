@@ -99,6 +99,7 @@ public class StateHandler : MonoBehaviour {
             }
             if (Input.GetKeyDown(KeyCode.Return)) {
                 abilityChooser.WhiteText();
+                print("Ability chosen: " + abilityChooser.selectedAbility);
                 if (abilityChooser.selectedAbility != 3) {
                     NextState();
                 }
@@ -217,7 +218,7 @@ public class StateHandler : MonoBehaviour {
         }
     }
 
-    int GetAttack() {
+    private int GetAttack() {
         int attackNum = 0;
         int a1d = e.Attack1Damage;
         int a2d = e.Attack2Damage;
@@ -232,42 +233,42 @@ public class StateHandler : MonoBehaviour {
         return attackNum;
     }
 
-    void WhiteText() {
+    private void WhiteText() {
         enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
                                       "Damage: " + e.Attack1Damage + "\n" +
                                       "Attack 2: " + e.Attack2Title + "\n" +
                                       "Damage: " + e.Attack2Damage;
     }
 
-    void NextState() {
+    private void NextState() {
         state = (States)((int)state + 1);
         if ((int)state > 4) {
             state = States.PLAYERCHOICE;
         }
     }
 
-    void LoadLastScene() {
+    private void LoadLastScene() {
         string scene = PlayerPrefsManager.GetCurrentScene();
         player.transform.position = PlayerPrefsManager.GetPositionInLevel(scene, player);
         SceneManager.LoadScene(scene);
     }
 
-    int moneygain() {
+    private int moneygain() {
         float moneygain_ = (e.HP * 1.25f);
         return (int)moneygain_;
     }
 
-    int xpgain() {
+    private int xpgain() {
         float xpgain_ = (e.HP * 1.5f);
         return (int)xpgain_;
     }
 
-    int moneylost() {
+    private int moneylost() {
         float moneylost_ = PersistentInventoryScript.instance.Currency - PersistentInventoryScript.instance.Currency * 0.15f;
         return (int)moneylost_;
     }
 
-    void Win() {
+    private void Win() {
         if (!WRanOnce) {
             timeW = Time.time;
             XPManager.xpmanager.addxp(xpgain());
@@ -282,7 +283,7 @@ public class StateHandler : MonoBehaviour {
         }
     }
 
-    void Lose() {
+    private void Lose() {
         if (!LRanOnce) {
             timeL = Time.time;
             PersistentInventoryScript.instance.Currency -= moneylost();

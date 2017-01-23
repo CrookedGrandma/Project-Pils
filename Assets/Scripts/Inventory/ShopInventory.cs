@@ -19,7 +19,6 @@ public class ShopInventory : MonoBehaviour {
 
     void Start () {
         PersistentInventory = GameObject.Find("PersistentInventory").GetComponent<PersistentInventoryScript>();
-        PersistentInventory.InShop = true;
         Debug.Log("shopinventory name: " + PersistentInventory.shopType);
         slotCount = PersistentInventory.slotCount;
         database = GetComponent<ItemDatabase>();

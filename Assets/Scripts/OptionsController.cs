@@ -44,7 +44,7 @@ public class OptionsController : MonoBehaviour
         SSAOScrollbar.value = PlayerPrefsManager.GetSSAO();
         noiseAndGrainToggle.isOn = PlayerPrefsManager.GetNoiseAndGrain();
         bloomToggle.isOn = PlayerPrefsManager.GetBloom();
-        antiAliasing.mode = (AAMode)PlayerPrefsManager.GetAntiAliasing() + 4;
+        antiAliasingDropdown.value = PlayerPrefsManager.GetAntiAliasing();
     }
 
     private void Update()
@@ -56,20 +56,16 @@ public class OptionsController : MonoBehaviour
         SSAO.m_Radius = SSAOScrollbar.value * 0.4f;
         noiseAndGrain.enabled = noiseAndGrainToggle.isOn;
         bloom.enabled = bloomToggle.isOn;
-        antiAliasing.mode = (AAMode)antiAliasingDropdown.value + 4;
+        antiAliasing.mode = (AAMode)(antiAliasingDropdown.value + 4);
     }
 
     public void SaveAndExit()
     {
-        Debug.Log("MotionBlur: " + motionBlur.blurAmount);
-        Debug.Log("DepthOfField: " + depthOfField.focalSize);
-        Debug.Log("SSAO: " + SSAO.m_Radius);
-
         PlayerPrefsManager.SetMusicVolume(musicScrollbar.value);
         PlayerPrefsManager.SetSoundFXVolume(soundFXScrollbar.value);
-        PlayerPrefsManager.SetMotionBlur(motionBlurScrollbar.value);
-        PlayerPrefsManager.SetDepthOfField(depthOfFieldScrollbar.value);
-        PlayerPrefsManager.SetSSAO(SSAOScrollbar.value);
+        PlayerPrefsManager.SetMotionBlur(motionBlurScrollbar.value * 5.0f);
+        PlayerPrefsManager.SetDepthOfField(depthOfFieldScrollbar.value * 2.0f - 1.5f);
+        PlayerPrefsManager.SetSSAO(SSAOScrollbar.value * 2.5f);
 
         if (noiseAndGrainToggle.isOn)
         {
@@ -89,7 +85,7 @@ public class OptionsController : MonoBehaviour
             PlayerPrefsManager.SetBloom(0);
         }
 
-        PlayerPrefsManager.SetAntiAliasing((int)antiAliasing.mode);
+        PlayerPrefsManager.SetAntiAliasing(antiAliasingDropdown.value);
  
         levelManager.Loadlevel("MainMenu");
     }

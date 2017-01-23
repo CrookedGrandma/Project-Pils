@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class PauseMenuManager : MonoBehaviour {
     public GameObject ConfirmationPanel;
     public GameObject PauseMenu;
-    public bool IsVisible = false;
+    public GameObject Components;
+    private GameManager gameManager;
+
 
     /// <summary>
     /// Makes sure The confirmation panel isn't visible when launching the game.
@@ -14,25 +16,37 @@ public class PauseMenuManager : MonoBehaviour {
         ConfirmationPanel.SetActive(false);
     }
 
-    ///<summary>
-    ///Will toggle the pause menu to invisible when 
-    ///the escape-button is pressed while already in pause menu.
     void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)&& IsVisible)
+        print("NewFrame");
+
+        Components.SetActive(true);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseMenu.gameObject.SetActive(false);
-            IsVisible = false;
-            print("Pause menu Already Visible, Toggling off");
+            TogglePauseMenu();
+            //Components.SetActiveRecursively(true);
+            ConfirmationPanel.SetActive(false);
         }
     }
-   
+
+    /// <summary>
+    /// Close Pause menu when continue is pressed
+    public void TogglePauseMenu()
+    {
+        print("Pause Menu Toggled");
+        Components.SetActive(true);
+        ConfirmationPanel.SetActive(false);
+    }
+
+
+    //***METHODS FOR BUTTONS***//
+
     ///<summary>
     ///Will toggle the Confirmation Panel to visible.
     public void SetVisible()
     {
         print("Conf Panel toggled to Visible");
-        IsVisible = true;
         ConfirmationPanel.SetActive(true);
     }
 
@@ -41,7 +55,6 @@ public class PauseMenuManager : MonoBehaviour {
     public void SetInvisible()
     {
         print("Conf Panel toggled to Invisible");
-        IsVisible = false;
         ConfirmationPanel.SetActive(false);
     }
 
@@ -52,23 +65,17 @@ public class PauseMenuManager : MonoBehaviour {
         print("Pause is loading Inventory");
         PauseMenu.gameObject.SetActive(false);
         PersistentInventoryScript.instance.InShop = false;
-        IsVisible = false;
+        GameObject player = GameObject.Find("Player");
+        PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
+        PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
         SceneManager.LoadScene("Inventory");
-    }
-    /// <summary>
-    /// Close Pause menu when continue is pressed
-    public void ClosePauseMenu()
-    {
-        print("Pause is closing");
-        PauseMenu.gameObject.SetActive(false);
-        IsVisible = false;
+        player.transform.position = PlayerPrefsManager.GetPositionInLevel("Inventory", player);
     }
 
     public void ReturnMainMenu()
     {
         print("return to main menu");
         PauseMenu.gameObject.SetActive(false);
-        IsVisible = false;
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -77,9 +84,16 @@ public class PauseMenuManager : MonoBehaviour {
     ///Will toggle the Confirmation Panel to invisible.
     public void SetAllInvisible()
     {
+        Components.SetActive(false);
         print("Pause Menu toggled to Invisible");
-        IsVisible = false;
         ConfirmationPanel.SetActive(false);
-        PauseMenu.SetActive(false);
+
     }
+
+    public void ContinueButton()
+    {
+        
+    }
+
+
 }

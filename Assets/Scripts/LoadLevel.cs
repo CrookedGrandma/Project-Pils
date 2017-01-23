@@ -30,50 +30,53 @@ public class LoadLevel : MonoBehaviour
     private void OnTriggerEnter(Collider trigger)
     {
         // If the scene change has to be accepted, put a message on the screen which informs the player where he will go
-        if (hasToBeAccepted)
+        if (isActive)
         {
-            // Dialogue text changes depending on the level
-            string message = "go to " + levelName;
-            if (levelName == "Home")
+            if (hasToBeAccepted)
             {
-                message = "go to your home";
+                // Dialogue text changes depending on the level
+                string message = "go to " + levelName;
+                if (levelName == "Home")
+                {
+                    message = "go to your home";
+                }
+                if (levelName == "HomeFriend")
+                {
+                    message = "go to Ian's home";
+                }
+                if (levelName == "Dungeon_PiPi")
+                {
+                    message = "enter PiPi";
+                }
+                if (levelName == "Dungeon_FaceBeer")
+                {
+                    message = "go down the elevator";
+                }
+                if (levelName == "FaceBeerLobby")
+                {
+                    message = "enter the building of FaceBeer";
+                }
+                if (levelName == "BossLevel")
+                {
+                    message = "enter the serverroom";
+                }
+                if (levelName == "TheVergeInn")
+                {
+                    message = "enter TheVergeInn";
+                }
+                if (levelName == "Wok2Stay")
+                {
+                    message = "enter the Wok2Stay";
+                }
+
+                // Add the text to the dialoguebox
+                textBox.AddLine("Game", "Press \"E\" or \"Return\" to " + message + ".", "White");
             }
-            if (levelName == "HomeFriend")
+            // Load the level automatically
+            else
             {
-                message = "go to Ian's home";
+                LoadALevel(levelName);
             }
-            if (levelName == "Dungeon_PiPi")
-            {
-                message = "enter PiPi";
-            }
-            if (levelName == "Dungeon_FaceBeer")
-            {
-                message = "go down the elevator";
-            }
-            if (levelName == "FaceBeerLobby")
-            {
-                message = "enter the building of FaceBeer";
-            }
-            if (levelName == "BossLevel")
-            {
-                message = "enter the serverroom";
-            }
-            if (levelName == "TheVergeInn")
-            {
-                message = "enter TheVergeInn";
-            }
-            if (levelName == "Wok2Stay")
-            {
-                message = "enter the Wok2Stay";
-            }
-            
-            // Add the text to the dialoguebox
-            textBox.AddLine("Game", "Press \"E\" or \"Return\" to " + message + ".", "White");
-        }
-        // Load the level automatically
-        else if (isActive)
-        {
-            LoadALevel(levelName);
         }
     }
 

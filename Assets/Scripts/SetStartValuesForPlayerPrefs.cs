@@ -14,6 +14,9 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
 
     public void StartPositions()
     {
+        // Set the current level to Home
+        PlayerPrefsManager.SetCurrentScene("Home");
+
         // Go through all the levels and set startpositions
         PlayerPrefsManager.SetStartPositions("BossLevel", -0.4f, 1.5f, -18.5f);
         PlayerPrefsManager.SetStartPositions("Dungeon_FaceBeer", 1.5f, 1.5f, 1.5f);
@@ -28,6 +31,7 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
         PlayerPrefsManager.SetStartPositions("TheVergeInn", -3.0f, 1.5f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Wok2Stay", -3.0f, 1.5f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Woonplaats", 49.0f, 1.5f, 25.5f);
+
         PlayerPrefsManager.SetStartPositions("Shop", -10.0f, -10.0f, -10.0f);
         PlayerPrefsManager.SetStartPositions("Inventory", -10.0f, -10.0f, -10.0f);
         PlayerPrefsManager.SetStartPositions("Combat", -10.0f, -10.0f, -10.0f);

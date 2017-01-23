@@ -29,53 +29,57 @@ public class LoadLevel : MonoBehaviour
     // When entering the collider
     private void OnTriggerEnter(Collider trigger)
     {
-        // If the scene change has to be accepted, put a message on the screen which informs the player where he will go
-        if (isActive)
+        // Only if the player is the one to collide with the collider
+        if (trigger.name == "Player")
         {
-            if (hasToBeAccepted)
+            // If the scene change has to be accepted, put a message on the screen which informs the player where he will go
+            if (isActive)
             {
-                // Dialogue text changes depending on the level
-                string message = "go to " + levelName;
-                if (levelName == "Home")
+                if (hasToBeAccepted)
                 {
-                    message = "go to your home";
-                }
-                if (levelName == "HomeFriend")
-                {
-                    message = "go to Ian's home";
-                }
-                if (levelName == "Dungeon_PiPi")
-                {
-                    message = "enter PiPi";
-                }
-                if (levelName == "Dungeon_FaceBeer")
-                {
-                    message = "go down the elevator";
-                }
-                if (levelName == "FaceBeerLobby")
-                {
-                    message = "enter the building of FaceBeer";
-                }
-                if (levelName == "BossLevel")
-                {
-                    message = "enter the serverroom";
-                }
-                if (levelName == "TheVergeInn")
-                {
-                    message = "enter TheVergeInn";
-                }
-                if (levelName == "Wok2Stay")
-                {
-                    message = "enter the Wok2Stay";
-                }
+                    // Dialogue text changes depending on the level
+                    string message = "go to " + levelName;
+                    if (levelName == "Home")
+                    {
+                        message = "go to your home";
+                    }
+                    if (levelName == "HomeFriend")
+                    {
+                        message = "go to Ian's home";
+                    }
+                    if (levelName == "Dungeon_PiPi")
+                    {
+                        message = "enter PiPi";
+                    }
+                    if (levelName == "Dungeon_FaceBeer")
+                    {
+                        message = "go down the elevator";
+                    }
+                    if (levelName == "FaceBeerLobby")
+                    {
+                        message = "enter the building of FaceBeer";
+                    }
+                    if (levelName == "BossLevel")
+                    {
+                        message = "enter the serverroom";
+                    }
+                    if (levelName == "TheVergeInn")
+                    {
+                        message = "enter TheVergeInn";
+                    }
+                    if (levelName == "Wok2Stay")
+                    {
+                        message = "enter the Wok2Stay";
+                    }
 
-                // Add the text to the dialoguebox
-                textBox.AddLine("Game", "Press \"E\" or \"Return\" to " + message + ".", "White");
-            }
-            // Load the level automatically
-            else
-            {
-                LoadALevel(levelName);
+                    // Add the text to the dialoguebox
+                    textBox.AddLine("Game", "Press \"E\" or \"Return\" to " + message + ".", "White");
+                }
+                // Load the level automatically
+                else
+                {
+                    LoadALevel(levelName);
+                }
             }
         }
     }
@@ -83,11 +87,15 @@ public class LoadLevel : MonoBehaviour
     // Checks if the player is in the Collider area (trigger).
     private void OnTriggerStay(Collider trigger)
     {
-        if (hasToBeAccepted)
+        // Only if the player is the one to collide with the collider
+        if (trigger.name == "Player")
         {
-            if (Input.GetButtonDown("Accept"))
+            if (hasToBeAccepted)
             {
-                LoadALevel(levelName);
+                if (Input.GetButtonDown("Accept"))
+                {
+                    LoadALevel(levelName);
+                }
             }
         }
     }
@@ -101,7 +109,6 @@ public class LoadLevel : MonoBehaviour
 
     private void LoadALevel(string levelName)
     {
-
         if(SceneManager.GetActiveScene().name == "Home" && levelName == "Woonplaats")
         {
             if (GameManager.instance.questManager.questLog.ContainsKey("Quest002"))

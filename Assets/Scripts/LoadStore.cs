@@ -19,7 +19,6 @@ public class LoadStore : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.name);
         if(other.GetComponentInParent<Nameplate>() != null)
             Debug.Log(other.GetComponentInParent<Nameplate>().nameplateName);
 

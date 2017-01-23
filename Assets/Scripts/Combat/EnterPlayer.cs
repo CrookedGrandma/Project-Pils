@@ -21,7 +21,7 @@ public class EnterPlayer : MonoBehaviour {
                 }
             }
             else {
-                this.transform.Rotate(new Vector3(0f, 0f, Time.deltaTime * -1000));
+                transform.localScale = new Vector3(Mathf.PingPong(Time.time / 12, 0.1f) + 1, Mathf.PingPong(Time.time / 6, 0.1f) + 1, 1f);
             }
         }
     }

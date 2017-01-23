@@ -83,4 +83,17 @@ public class PersistentInventoryScript : MonoBehaviour {
             equipmentList[slot, 1] = 0;
         }
     }
+    public int returnNumberOfItems(int id)
+    {
+        int numberOfItems = 0;
+        for (int i = 0; i < itemList.Length; i++)
+        {
+            if (itemList[i,0] == id)
+            {
+                numberOfItems += itemList[i, 1];
+            }
+        }
+        return numberOfItems;
+    }
+
 }

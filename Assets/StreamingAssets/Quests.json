@@ -3,30 +3,30 @@
     "identifier": "Quest000",
     "title": "Get off your fat ass",
     "objectives": "Quest000GetUp",
-    "dialogue": "Ow... My head... Wait, what time is it? I Should get up..."
+    "dialogue": "It's time to get the fuck up."
   },
   {
     "identifier": "Quest001",
     "title": "Rise and shine",
     "objectives": "Quest001FindPhone",
-    "dialogue": "What is making so much noise... Is that my phone? Where did i leave it?"
+    "dialogue": "A constant flow of notifications has woken you up. Find your phone to see what's going on."
   },
   {
     "identifier": "Quest002",
     "title": "Gotta go, and fast!",
     "objectives": "Quest002LeaveHouse",
-    "dialogue": "Wait, i don't remember that picture! And who is that girl? I've got to find out!"
+    "dialogue": "Go to the door to leave your house"
   },
   {
     "identifier": "Quest003",
-    "title": "First!!!",
+    "title": "Fisrt!!1",
     "objectives": "Quest003EnterIanHouse,Quest003SpeakWithIan",
-    "dialogue": "I should go to the pub, i could really use a beer right now. Maybe Ian wants to join?"
+    "dialogue": "You and your friends decided to meet at the pub. Stop by your friend Ian's house first!"
   },
   {
     "identifier": "Quest004",
     "title": "One more can't hurt, right?",
     "objectives": "Quest004GoToPub",
-    "dialogue": "Ian doesn't want to... Well i'd better go, the pils is waiting!"
+    "dialogue": "You've met up with Ian, now go to the pub"
   }
 ]

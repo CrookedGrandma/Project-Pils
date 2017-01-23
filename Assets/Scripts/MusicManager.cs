@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour
 {
@@ -24,7 +25,24 @@ public class MusicManager : MonoBehaviour
         {
             AudioClip thisLevelMusic = levelMusicChangeArray[level];
 
-            if (thisLevelMusic)
+            if (level > 2 && level < 18)
+            {
+                // Normal ingame music has to be played here
+
+                // If the current playing clip is the clip that has to be played at the first real scene in the build settings (Home)
+                if (audioSource.clip == levelMusicChangeArray[3])
+                {
+                    // Do nothing
+                }
+                else
+                {
+                    audioSource.volume = PlayerPrefsManager.GetMusicVolume();
+                    audioSource.clip = levelMusicChangeArray[3];
+                    audioSource.loop = true;
+                    audioSource.Play();
+                }
+            }
+            else if (thisLevelMusic)
             {
                 audioSource.volume = PlayerPrefsManager.GetMusicVolume();
                 audioSource.clip = thisLevelMusic;

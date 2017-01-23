@@ -72,7 +72,7 @@ public class Quest : Entity {
     {
         string questDesc = "";
 
-        questDesc += "<b><color=#D8B80580>" + title + "</color></b>\n";
+        questDesc += "<b><color=#DAB12BD2>" + title + "</color></b>\n";
 
         foreach(KeyValuePair<string, QuestObjective> kvp in objectives)
         {

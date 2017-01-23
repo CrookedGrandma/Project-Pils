@@ -6,53 +6,81 @@ public class PauseMenuManager : MonoBehaviour {
     public GameObject ConfirmationPanel;
     public GameObject PauseMenu;
     public GameObject Components;
-    private GameManager gameManager;
-
+    public GameManager gameManager;
+    public CanvasGroup canvas;
 
     /// <summary>
     /// Makes sure The confirmation panel isn't visible when launching the game.
     void Awake()
     {
         ConfirmationPanel.SetActive(false);
+        canvas.alpha = 0;
     }
 
     void Update ()
     {
-        print("NewFrame");
-
-        Components.SetActive(true);
-
+        //Debug.Log("Cycle");
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            TogglePauseMenu();
-            //Components.SetActiveRecursively(true);
-            ConfirmationPanel.SetActive(false);
+            if (gameManager.IsPaused)
+            {
+                TogglePauseMenuOff();                
+            }
+            if (!gameManager.IsPaused)
+            {
+                TogglePauseMenuOn();                
+            }
         }
     }
 
     /// <summary>
     /// Close Pause menu when continue is pressed
-    public void TogglePauseMenu()
+    public void TogglePauseMenuOn()
     {
-        print("Pause Menu Toggled");
-        Components.SetActive(true);
-        ConfirmationPanel.SetActive(false);
+        print("Pause Menu Visible");
+        //Components.SetActive(true);
+        SetConfInvisible();
+        canvas.alpha = 1;
+    }
+    public void TogglePauseMenuOff()
+    {
+        print("Pause Menu Invisible");
+        //Components.SetActive(false);
+        SetConfInvisible();
+        canvas.alpha = 0;
     }
 
+    public void QuitButton()
+    {
+        SetConfVisible();
+    }
 
-    //***METHODS FOR BUTTONS***//
+    public void ConfirmButton()
+    {
+        print("Quit to main menu");
+        SetConfInvisible();
+        SceneManager.LoadScene("MainMenu");
+    }
 
-    ///<summary>
-    ///Will toggle the Confirmation Panel to visible.
-    public void SetVisible()
+    public void CancelButton()
+    {
+        SetConfInvisible();
+    }
+
+    public void ContinueButton()
+    {
+        gameManager.IsPaused = false;
+        //canvas.alpha = 0;
+        TogglePauseMenuOff();
+    }
+
+    public void SetConfVisible()
     {
         print("Conf Panel toggled to Visible");
         ConfirmationPanel.SetActive(true);
     }
 
-    ///<summary>
-    ///Will toggle the Confirmation Panel to invisible.
-    public void SetInvisible()
+    public void SetConfInvisible()
     {
         print("Conf Panel toggled to Invisible");
         ConfirmationPanel.SetActive(false);
@@ -63,7 +91,7 @@ public class PauseMenuManager : MonoBehaviour {
     public void LoadInventory()
     {
         print("Pause is loading Inventory");
-        PauseMenu.gameObject.SetActive(false);
+        TogglePauseMenuOff();
         PersistentInventoryScript.instance.InShop = false;
         GameObject player = GameObject.Find("Player");
         PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
@@ -71,29 +99,5 @@ public class PauseMenuManager : MonoBehaviour {
         SceneManager.LoadScene("Inventory");
         player.transform.position = PlayerPrefsManager.GetPositionInLevel("Inventory", player);
     }
-
-    public void ReturnMainMenu()
-    {
-        print("return to main menu");
-        PauseMenu.gameObject.SetActive(false);
-        SceneManager.LoadScene("MainMenu");
-    }
-
-
-    ///<summary>
-    ///Will toggle the Confirmation Panel to invisible.
-    public void SetAllInvisible()
-    {
-        Components.SetActive(false);
-        print("Pause Menu toggled to Invisible");
-        ConfirmationPanel.SetActive(false);
-
-    }
-
-    public void ContinueButton()
-    {
-        
-    }
-
 
 }

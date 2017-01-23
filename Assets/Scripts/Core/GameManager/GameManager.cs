@@ -9,9 +9,8 @@ public class GameManager : Entity {
     public DialogueManager dialogueManager; //Reference to the DIalogueManager
     public QuestManager questManager; //Reference to the QuestManager
     public Cutscene cutscene;
-
     public bool IsPaused = false;
-    public Canvas canvas;
+
 
     public Entity player;
 
@@ -30,9 +29,7 @@ public class GameManager : Entity {
     }
 
     void Start()
-    {
-        canvas.enabled = false;
-    }
+    {}
 
     void Update()
     {
@@ -42,13 +39,11 @@ public class GameManager : Entity {
             {
                 Time.timeScale = 1;
                 IsPaused = false;
-                canvas.enabled = false;
             }
             else
             {
                 Time.timeScale = 0;
                 IsPaused = true;
-                canvas.enabled = true;
             }
         }
 
@@ -62,4 +57,8 @@ public class GameManager : Entity {
 
     }
 
+    public void TogglePause()
+    {
+        Time.timeScale = 1;
+    }
 }

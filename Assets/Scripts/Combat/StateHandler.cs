@@ -262,6 +262,11 @@ public class StateHandler : MonoBehaviour {
         return (int)xpgain_;
     }
 
+    int moneylost() {
+        float moneylost_ = PersistentInventoryScript.instance.Currency - PersistentInventoryScript.instance.Currency * 0.15f;
+        return (int)moneylost_;
+    }
+
     void Win() {
         if (!WRanOnce) {
             timeW = Time.time;
@@ -277,15 +282,10 @@ public class StateHandler : MonoBehaviour {
         }
     }
 
-    int moneylost() {
-        float moneylost_ = (float)GetComponent<PersistentInventoryScript>().Currency - (float)GetComponent<PersistentInventoryScript>().Currency * (float)0.15;
-        return (int)moneylost_;
-    }
-
     void Lose() {
         if (!LRanOnce) {
             timeL = Time.time;
-            GetComponent<PersistentInventoryScript>().Currency -= moneylost();
+            PersistentInventoryScript.instance.Currency -= moneylost();
             LRanOnce = true;
         }
         if (Time.time - timeL >= 1f && timeL != -1) {

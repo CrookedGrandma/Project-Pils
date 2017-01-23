@@ -63,9 +63,9 @@ public class OptionsController : MonoBehaviour
     {
         PlayerPrefsManager.SetMusicVolume(musicScrollbar.value);
         PlayerPrefsManager.SetSoundFXVolume(soundFXScrollbar.value);
-        PlayerPrefsManager.SetMotionBlur(motionBlurScrollbar.value * 5.0f);
-        PlayerPrefsManager.SetDepthOfField(depthOfFieldScrollbar.value * 2.0f - 1.5f);
-        PlayerPrefsManager.SetSSAO(SSAOScrollbar.value * 2.5f);
+        PlayerPrefsManager.SetMotionBlur(motionBlurScrollbar.value);
+        PlayerPrefsManager.SetDepthOfField(depthOfFieldScrollbar.value);
+        PlayerPrefsManager.SetSSAO(SSAOScrollbar.value);
 
         if (noiseAndGrainToggle.isOn)
         {

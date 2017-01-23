@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
     public void Loadlevel(string name)
     {
         SceneManager.LoadScene(name);
+        GameObject player = GameObject.Find("Player");
+        player.transform.position = PlayerPrefsManager.GetPositionInLevel(name, player);
     }
 
     ///<summary>

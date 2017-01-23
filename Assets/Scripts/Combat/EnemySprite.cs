@@ -20,7 +20,7 @@ public class EnemySprite : MonoBehaviour {
         if (pleaseEnter) {
             EnterScreen();
         }
-        transform.localScale = new Vector3(Mathf.PingPong(Time.time / 6, 0.2f) + 1, Mathf.PingPong(Time.time / 3, 0.2f) + 1, Mathf.PingPong(Time.time / 3, 0.2f) + 1);
+        transform.localScale = new Vector3(Mathf.PingPong(Time.time / 6, 0.2f) + 1, Mathf.PingPong(Time.time / 3, 0.2f) + 1, 1f);
     }
 
     public void opacity(float alpha) {

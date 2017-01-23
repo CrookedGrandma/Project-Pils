@@ -38,7 +38,6 @@ public class HealthManager : MonoBehaviour {
         if (started) {
             StartEnemyHealth();
             started = false;
-            print("Enemy's health gotten");
         }
         // Update player's health bar
         HPText.text = "HP: " + health + " / " + maxHealth;

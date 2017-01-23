@@ -6,6 +6,7 @@ using System.Collections;
 public class StateHandler : MonoBehaviour {
 
     private enum States { START, PLAYERCHOICE, PLAYERMOVE, ENEMYCHOICE, ENEMYMOVE }
+    private bool RanOnce = false;
     private bool SRanOnce = false;
     private bool PCRanOnce = false;
     private bool PMRanOnce = false;
@@ -35,6 +36,7 @@ public class StateHandler : MonoBehaviour {
     public EnterPlayer PlayerEnter;
     public AbilityChooser abilityChooser;
     public GameObject enterKey;
+    public Text EndText;
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +50,14 @@ public class StateHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         print("Current battle state: " + state);
+
+        if (Input.GetKeyDown(KeyCode.L)) {
+            Lose();
+        }
+
+        if (Input.GetKeyDown(KeyCode.W)) {
+            Win();
+        }
 
         if (Input.GetKeyDown(KeyCode.N)) {
             NextState();
@@ -110,10 +120,10 @@ public class StateHandler : MonoBehaviour {
                 PMRanOnce = true;
             }
             if (Time.time - timePM >= 1.5f && timePM != -1) {
-                if (healthManager.GetHealth_e() > 0) {
+                if (healthManager.GetHealth_e() >= 1) {
                     NextState();
                 }
-                else {
+                else if (healthManager.GetHealth_e() <= 0) {
                     Win();
                 }
             }
@@ -168,14 +178,16 @@ public class StateHandler : MonoBehaviour {
                 timeEM = Time.time;
             }
             if (Time.time - timeEM >= 1.5f && timeEM != -1) {
-                if (healthManager.GetHealth() > 0) {
+                if (healthManager.GetHealth() >= 1) {
                     NextState();
                 }
-                else {
+                else if (healthManager.GetHealth() <= 0) {
                     Lose();
                 }
             }
         }
+
+
 
         if (showEnterKey) {
             if (enterKeyColor.a < 1f) {
@@ -195,8 +207,11 @@ public class StateHandler : MonoBehaviour {
     }
 
     void LateUpdate() {
-        if (state == States.ENEMYCHOICE && !ECRanOnce) {
+        if (!RanOnce) {
             e = enemyChooser.currentEnemy.linkedEnemy;
+            RanOnce = true;
+        }
+        if (state == States.ENEMYCHOICE && !ECRanOnce) {
             ECRanOnce = true;
             attNum = GetAttack();
         }
@@ -237,15 +252,29 @@ public class StateHandler : MonoBehaviour {
         SceneManager.LoadScene(scene);
     }
 
+    int moneygain() {
+        float moneygain_ = (e.HP * 1.25f);
+        return (int)moneygain_;
+    }
+
+    int xpgain() {
+        float xpgain_ = (e.HP * 1.5f);
+        return (int)xpgain_;
+    }
+
+    int moneylost() {
+        float moneylost_ = PersistentInventoryScript.instance.Currency - PersistentInventoryScript.instance.Currency * 0.15f;
+        return (int)moneylost_;
+    }
+
     void Win() {
         if (!WRanOnce) {
             timeW = Time.time;
+            XPManager.xpmanager.addxp(xpgain());
             WRanOnce = true;
         }
-        //showEnterKey = true;
-        XPManager.xpmanager.addxp((int)(e.HP * 1.5f));
-        ShowWinScreen();
         if (Time.time - timeW >= 1f && timeW != -1) {
+            EndText.text = "You have defeated <i><color=#ffff66>" + e.Title + "</color></i> and received <i><color=#ffff66> " + moneygain() + " currency</color></i> and gained <i><color=#ffff66>" + xpgain() + " experience.</color></i>" + "\nCurrent Level: <i><color=#ffff66>" + XPManager.xpmanager.playerlvl_() + "</color></i>\nExperience till level-up: <i><color=#ffff66>" + XPManager.xpmanager.xptonext_() + "XP</color></i>";
             showEnterKey = true;
             if (Input.GetKeyDown(KeyCode.Return)) {
                 LoadLastScene();
@@ -254,24 +283,17 @@ public class StateHandler : MonoBehaviour {
     }
 
     void Lose() {
-        ShowLoseScreen();
         if (!LRanOnce) {
             timeL = Time.time;
+            PersistentInventoryScript.instance.Currency -= moneylost();
             LRanOnce = true;
         }
         if (Time.time - timeL >= 1f && timeL != -1) {
+            EndText.text = "You were defeated by <i><color=#ffff66>" + e.Title + "</color></i>and dropped <i><color=#ffff66>" + moneylost() + " currency</color></i>." + "You didn't gain any <i><color=#ffff66>experience.</color></i>" + "\nCurrent Level: <i><color=#ffff66>" + XPManager.xpmanager.playerlvl_() + "</color></i>\nExperience till level-up: <i><color=#ffff66>" + XPManager.xpmanager.xptonext_() + "XP</color></i>";
             showEnterKey = true;
             if (Input.GetKeyDown(KeyCode.Return)) {
                 LoadLastScene();
             }
         }
-    }
-
-    void ShowWinScreen() {
-
-    }
-
-    void ShowLoseScreen() {
-
     }
 }

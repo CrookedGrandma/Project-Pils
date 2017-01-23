@@ -28,7 +28,9 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
         PlayerPrefsManager.SetStartPositions("TheVergeInn", -3.0f, 1.5f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Wok2Stay", -3.0f, 1.5f, -11.2f);
         PlayerPrefsManager.SetStartPositions("Woonplaats", 49.0f, 1.5f, 25.5f);
-        PlayerPrefsManager.SetStartPositions("Shop", 0.0f, -10.0f, 0.0f);
+        PlayerPrefsManager.SetStartPositions("Shop", -10.0f, -10.0f, -10.0f);
+        PlayerPrefsManager.SetStartPositions("Inventory", -10.0f, -10.0f, -10.0f);
+        PlayerPrefsManager.SetStartPositions("Combat", -10.0f, -10.0f, -10.0f);
 
         // Set the health, XP and level for the player
         PlayerPrefsManager.SetPlayerHealth(playerHealth);

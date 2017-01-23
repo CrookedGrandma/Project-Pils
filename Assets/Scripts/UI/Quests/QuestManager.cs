@@ -57,8 +57,10 @@ public class QuestManager : Entity {
             JsonData EntryData = QuestData[i];
             string id = EntryData["identifier"].ToString();
             string dialogue = EntryData["dialogue"].ToString();
+            int xpReward = (EntryData.Keys.Contains("xp")) ? int.Parse(EntryData["xp"].ToString()) : 0;
+            string itemRewards = (EntryData.Keys.Contains("items")) ? EntryData["items"].ToString() : "";
 
-            Quest quest = new Quest(id, EntryData["title"].ToString(), dialogue);
+            Quest quest = new Quest(id, EntryData["title"].ToString(), dialogue, xpReward, itemRewards);
 
             string[] objectives = EntryData["objectives"].ToString().Split(',');
 

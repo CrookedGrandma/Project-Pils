@@ -56,15 +56,23 @@ public class Quest : Entity {
     {
         hasBeenRewarded = true;
 
-        //ADD XP REWARDS
-        //ADD ITEM REWARDS
+        XPManager.xpmanager.addxp(xp);
+        foreach(string s in items)
+        {
+            int itemID;
+
+            if(int.TryParse(s, out itemID))
+            {
+                PersistentInventoryScript.instance.addItemToEnd(itemID);
+            }
+        }
     }
 
     public string CreateDescription()
     {
         string questDesc = "";
 
-        questDesc += "<b><color=#D8B80580>" + title + "</color></b>\n";
+        questDesc += "<b><color=#DAB12BD2>" + title + "</color></b>\n";
 
         foreach(KeyValuePair<string, QuestObjective> kvp in objectives)
         {

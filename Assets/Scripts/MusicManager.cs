@@ -26,6 +26,11 @@ public class MusicManager : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
+        audioSource.volume = PlayerPrefsManager.GetMusicVolume();
+        audioSource.clip = levelMusicChangeArray[0];
+        audioSource.loop = true;
+        audioSource.Play();
     }
 
     private void OnLevelWasLoaded(int level)
@@ -37,11 +42,7 @@ public class MusicManager : MonoBehaviour
             if (level < 2)
             {
                 // If the current playing clip is the clip that has to be played at the first real scene in the build settings (Home)
-                if (audioSource.clip == levelMusicChangeArray[0])
-                {
-                    // Do nothing
-                }
-                else
+                if (audioSource.clip != levelMusicChangeArray[0])
                 {
                     audioSource.volume = PlayerPrefsManager.GetMusicVolume();
                     audioSource.clip = levelMusicChangeArray[0];
@@ -54,11 +55,7 @@ public class MusicManager : MonoBehaviour
                 // Normal ingame music has to be played here
 
                 // If the current playing clip is the clip that has to be played at the first real scene in the build settings (Home)
-                if (audioSource.clip == levelMusicChangeArray[3])
-                {
-                    // Do nothing
-                }
-                else
+                if (audioSource.clip != levelMusicChangeArray[3])
                 {
                     audioSource.volume = PlayerPrefsManager.GetMusicVolume();
                     audioSource.clip = levelMusicChangeArray[3];

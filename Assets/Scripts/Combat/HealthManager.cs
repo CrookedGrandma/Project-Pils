@@ -95,6 +95,10 @@ public class HealthManager : MonoBehaviour {
         return health;
     }
 
+    public float GetMaxHealth() {
+        return maxHealth;
+    }
+
     public float GetHealth_e() {
         return health_e;
     }

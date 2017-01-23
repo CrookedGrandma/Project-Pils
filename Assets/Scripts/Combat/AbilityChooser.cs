@@ -9,6 +9,7 @@ public class AbilityChooser : MonoBehaviour {
 
     public Text A1T, A2T, AHT;
     public Text H1T, H2T, H3T, H4T, H5T, H6T, H7T;
+    public HealthManager healthManager;
 
     private Ability[] UsableAbilities = new Ability[2];
     private List<Ability> AbilityDatabase = new List<Ability>();
@@ -39,7 +40,7 @@ public class AbilityChooser : MonoBehaviour {
             weapon[1] = database.FetchItemById(UsableAbilities[1].WeaponID);
         }
         catch (Exception e) { }
-        WhiteText();
+        WhiteText(true);
         selectedAbility = 1;
         SelectAbility(1);
     }
@@ -100,16 +101,23 @@ public class AbilityChooser : MonoBehaviour {
         numberHEAL = numberApJ + numberUMM + numberRad + numberCaP + numberBoP + numberNoP + numberMeP;
     }
 
-    public void WhiteText() {
-        Ability1Text = UsableAbilities[0].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[0].Title + "</color> (Damage: " + weapon[0].Damage + ")";
-        try {
-            Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + weapon[1].Damage + ")";
-        }
-        catch (Exception e) { }
-        if (numberHEAL != 0) {
-            AbilityHText = "Heal <color=#bbbbbb>with</color> <color=#cccccc>Drinks</color> <color=#bbbbbb>or</color> <color=#cccccc>Food</color>";
+    public void WhiteText(bool t) {
+        if (t) {
+            Ability1Text = UsableAbilities[0].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[0].Title + "</color> (Damage: " + weapon[0].Damage + ")";
+            try {
+                Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + weapon[1].Damage + ")";
+            }
+            catch (Exception e) { }
+            if (numberHEAL != 0) {
+                AbilityHText = "Heal <color=#bbbbbb>with</color> <color=#cccccc>Drinks</color> <color=#bbbbbb>or</color> <color=#cccccc>Food</color>";
+            }
+            else {
+                AbilityHText = "";
+            }
         }
         else {
+            Ability1Text = "";
+            Ability2Text = "";
             AbilityHText = "";
         }
     }
@@ -150,7 +158,7 @@ public class AbilityChooser : MonoBehaviour {
     }
 
     public void SelectAbility(int a) {
-        WhiteText();
+        WhiteText(true);
         if (a == -1) {
             selectedAbility = -1;
         }
@@ -183,11 +191,130 @@ public class AbilityChooser : MonoBehaviour {
         }
     }
 
-    public int GetLastDoneDamage() {
-        return weapon[selectedAbility - 1].Damage;
-    }
-
     public void SelectHealer(int h) {
         WhiteHealText(true);
+        switch (h) {
+            case (1): {
+                    if (numberApJ != 0) {
+                        Heal1Text = "<color=red>Apple Juice (" + numberApJ + "), heals " + database.FetchItemById(100).Heal + "%</color>";
+                        selectedHealer = 1;
+                    }
+                    else {
+                        selectedHealer = 1;
+                        SelectHealer(2);
+                    }
+                    break;
+                }
+            case (2): {
+                    if (numberUMM != 0) {
+                        Heal2Text = "<color=red>Unprepared Microwave Meal (" + numberUMM + "), heals " + database.FetchItemById(101).Heal + "%</color>";
+                        selectedHealer = 2;
+                    }
+                    else if (selectedHealer == 1) {
+                        selectedHealer = 2;
+                        SelectHealer(3);
+                    }
+                    else {
+                        selectedHealer = 2;
+                        SelectHealer(1);
+                    }
+                    break;
+                }
+            case (3): {
+                    if (numberRad != 0) {
+                        Heal3Text = "<color=red>Radler (" + numberRad + "), heals " + database.FetchItemById(102).Heal + "%</color>";
+                        selectedHealer = 3;
+                    }
+                    else if (selectedHealer == 2) {
+                        selectedHealer = 3;
+                        SelectHealer(4);
+                    }
+                    else {
+                        selectedHealer = 3;
+                        SelectHealer(2);
+                    }
+                    break;
+                }
+            case (4): {
+                    if (numberCaP != 0) {
+                        Heal4Text = "<color=red>Canned Pils (" + numberCaP + "), heals " + database.FetchItemById(103).Heal + "%</color>";
+                        selectedHealer = 4;
+                    }
+                    else if (selectedHealer == 3) {
+                        selectedHealer = 4;
+                        SelectHealer(5);
+                    }
+                    else {
+                        selectedHealer = 4;
+                        SelectHealer(3);
+                    }
+                    break;
+                }
+            case (5): {
+                    if (numberBoP != 0) {
+                        Heal5Text = "<color=red>Bottled Pils (" + numberBoP + "), heals " + database.FetchItemById(104).Heal + "%</color>";
+                        selectedHealer = 5;
+                    }
+                    else if (selectedHealer == 4) {
+                        selectedHealer = 5;
+                        SelectHealer(6);
+                    }
+                    else {
+                        selectedHealer = 5;
+                        SelectHealer(4);
+                    }
+                    break;
+                }
+            case (6): {
+                    if (numberNoP != 0) {
+                        Heal6Text = "<color=red>Noni's Pils (" + numberNoP + "), heals " + database.FetchItemById(105).Heal + "%</color>";
+                        selectedHealer = 6;
+                    }
+                    else if (selectedHealer == 5) {
+                        selectedHealer = 6;
+                        SelectHealer(7);
+                    }
+                    else {
+                        selectedHealer = 6;
+                        SelectHealer(5);
+                    }
+                    break;
+                }
+            case (7): {
+                    if (numberMeP != 0) {
+                        Heal7Text = "<color=red>Mega Pils (" + numberMeP + "), heals " + database.FetchItemById(106).Heal + "%</color>";
+                        selectedHealer = 7;
+                    }
+                    else {
+                        selectedHealer = 7;
+                        SelectHealer(6);
+                    }
+                    break;
+                }
+            default: {
+                    WhiteHealText(true);
+                    selectedHealer = -1;
+                    break;
+                }
+        }
+    }
+
+    public int GetLastDoneDamage() {
+        if (selectedAbility != 3) {
+            return weapon[selectedAbility - 1].Damage;
+        }
+        else {
+            float maxHealth = healthManager.GetMaxHealth();
+            switch (selectedHealer) {
+                case (1): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(100).Heal / 100f)) * -1;
+                case (2): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(101).Heal / 100f)) * -1;
+                case (3): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(102).Heal / 100f)) * -1;
+                case (4): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(103).Heal / 100f)) * -1;
+                case (5): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(104).Heal / 100f)) * -1;
+                case (6): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(105).Heal / 100f)) * -1;
+                case (7): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(106).Heal / 100f)) * -1;
+                default: return 0;
+            }
+        }
     }
 }

@@ -24,7 +24,7 @@ public class StateHandler : MonoBehaviour {
     private float timeW = -1;
     private float timeL = -1;
     private int attNum = 0;
-    private int damage;
+    private int actionValue;
 
     private States state;
     private Color enterKeyColor;
@@ -98,13 +98,19 @@ public class StateHandler : MonoBehaviour {
                 }
             }
             if (Input.GetKeyDown(KeyCode.Return)) {
-                abilityChooser.WhiteText();
                 print("Ability chosen: " + abilityChooser.selectedAbility);
                 if (abilityChooser.selectedAbility != 3) {
+                    abilityChooser.WhiteText(true);
                     NextState();
                 }
-                else {
+                else if (!healing) {
                     healing = true;
+                    abilityChooser.WhiteText(false);
+                    abilityChooser.SelectHealer(1);
+                }
+                else {
+                    abilityChooser.WhiteHealText(false);
+                    NextState();
                 }
             }
         }
@@ -114,9 +120,12 @@ public class StateHandler : MonoBehaviour {
             if (!PMRanOnce) {
                 timePM = Time.time;
                 // If player has not healed
-                if (abilityChooser.selectedAbility != 3) {
-                    damage = abilityChooser.GetLastDoneDamage();
-                    healthManager.EnemyLoseHealth(damage);
+                actionValue = abilityChooser.GetLastDoneDamage();
+                if (actionValue >= 0) {
+                    healthManager.EnemyLoseHealth(actionValue);
+                }
+                else {
+                    healthManager.LoseHealth(actionValue);
                 }
                 PMRanOnce = true;
             }

@@ -78,6 +78,16 @@ public class LoadLevel : MonoBehaviour
             }
         }
 
+        if (SceneManager.GetActiveScene().name == "Woonplaats" && levelName == "Market")
+        {
+            if (!GameManager.instance.questManager.questLog.ContainsKey("Quest004"))
+            {
+                Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "Meet up with Ian before going here!");
+                GameManager.instance.messageQueue.Add(m);
+                return;
+            }
+        }
+
         GameManager.instance.cutscene.SetText("");
         GameManager.instance.cutscene.FadeInPanel(true);
 

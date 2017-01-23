@@ -56,8 +56,16 @@ public class Quest : Entity {
     {
         hasBeenRewarded = true;
 
-        //ADD XP REWARDS
-        //ADD ITEM REWARDS
+        XPManager.xpmanager.addxp(xp);
+        foreach(string s in items)
+        {
+            int itemID;
+
+            if(int.TryParse(s, out itemID))
+            {
+                PersistentInventoryScript.instance.addItemToEnd(itemID);
+            }
+        }
     }
 
     public string CreateDescription()

@@ -6,6 +6,7 @@ using System.Collections;
 public class StateHandler : MonoBehaviour {
 
     private enum States { START, PLAYERCHOICE, PLAYERMOVE, ENEMYCHOICE, ENEMYMOVE }
+    private bool RanOnce = false;
     private bool SRanOnce = false;
     private bool PCRanOnce = false;
     private bool PMRanOnce = false;
@@ -195,8 +196,11 @@ public class StateHandler : MonoBehaviour {
     }
 
     void LateUpdate() {
-        if (state == States.ENEMYCHOICE && !ECRanOnce) {
+        if (!RanOnce) {
             e = enemyChooser.currentEnemy.linkedEnemy;
+            RanOnce = true;
+        }
+        if (state == States.ENEMYCHOICE && !ECRanOnce) {
             ECRanOnce = true;
             attNum = GetAttack();
         }

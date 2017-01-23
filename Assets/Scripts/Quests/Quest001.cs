@@ -11,8 +11,6 @@ public class Quest001 : MonoBehaviour {
         Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You found your phone in the closet!");
         GameManager.instance.messageQueue.Add(m);
 
-        //ADD PHONE TO INVENTORY
-
 
         GameManager.instance.questManager.AddQuestToLog("Quest002");
     }

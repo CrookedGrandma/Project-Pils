@@ -9,7 +9,8 @@
     "identifier": "Quest001",
     "title": "Rise and shine",
     "objectives": "Quest001FindPhone",
-    "dialogue": "A constant flow of notifications has woken you up. Find your phone to see what's going on."
+    "dialogue": "A constant flow of notifications has woken you up. Find your phone to see what's going on.",
+    "items": "1"
   },
   {
     "identifier": "Quest002",
@@ -28,5 +29,11 @@
     "title": "One more can't hurt, right?",
     "objectives": "Quest004GoToPub",
     "dialogue": "You've met up with Ian, now go to the pub"
+  },
+  {
+    "identifier": "Quest005",
+    "title": "Let's get fucked up!",
+    "objectives": "Quest005ConsumeMegaPils",
+    "dialogue": "You and your friends have met at the pub! Time to get wasted!"
   }
 ]

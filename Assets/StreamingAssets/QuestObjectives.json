@@ -34,5 +34,11 @@
     "type": "bool",
     "description": "Go to the pub",
     "goal": "0.0"
+  },
+  {
+    "identifier": "Quest005ConsumeMegaPils",
+    "type": "bool",
+    "description": "Consume Mega Pils",
+    "goal": "0.0"
   }
 ]

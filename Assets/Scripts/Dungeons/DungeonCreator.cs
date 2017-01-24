@@ -36,7 +36,6 @@ public class DungeonCreator : MonoBehaviour
             enemyHolder = new GameObject("EnemyHolder");
         }
 
-
         string scene = SceneManager.GetActiveScene().name;
         if (scene == "Dungeon_PiPi")
         {

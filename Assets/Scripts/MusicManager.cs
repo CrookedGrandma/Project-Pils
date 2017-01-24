@@ -50,7 +50,7 @@ public class MusicManager : MonoBehaviour
                     audioSource.Play();
                 }
             }
-            else if (level > 2 && level < 18)
+            else if (level > 2 && level < 19)
             {
                 // Normal ingame music has to be played here
 

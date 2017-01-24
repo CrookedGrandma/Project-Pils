@@ -36,6 +36,11 @@ public class PersistentInventoryScript : MonoBehaviour {
         itemList = new int[slotCount, 2];
         addEquipment(809, 1, 4);
         addItemToEnd(1);
+        addItemToEnd(100);
+        addItemToEnd(100);
+        addItemToEnd(105);
+        addItemToEnd(301);
+        addItemToEnd(301);
     }
 	
     public void addItem(int id, int slot)

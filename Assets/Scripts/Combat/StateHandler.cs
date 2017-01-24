@@ -100,13 +100,12 @@ public class StateHandler : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Return)) {
                 print("Ability chosen: " + abilityChooser.selectedAbility);
                 if (abilityChooser.selectedAbility != 3) {
-                    abilityChooser.WhiteText(true);
                     NextState();
                 }
                 else if (!healing) {
-                    healing = true;
                     abilityChooser.WhiteText(false);
                     abilityChooser.SelectHealer(1);
+                    healing = true;
                 }
                 else {
                     abilityChooser.WhiteHealText(false);
@@ -120,6 +119,7 @@ public class StateHandler : MonoBehaviour {
             if (!PMRanOnce) {
                 timePM = Time.time;
                 actionValue = abilityChooser.GetLastDoneDamage();
+                abilityChooser.WhiteText(true);
                 if (actionValue >= 0) {
                     healthManager.EnemyLoseHealth(actionValue);
                 }

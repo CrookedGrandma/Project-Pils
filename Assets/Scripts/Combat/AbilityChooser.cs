@@ -22,12 +22,13 @@ public class AbilityChooser : MonoBehaviour {
 
     private int numberApJ, numberUMM, numberRad, numberCaP, numberBoP, numberNoP, numberMeP, numberHEAL;
     private int numberAmmo = -1, numberThrow = -1;
-    private string secType;
 
     private bool started = false;
     private bool FoundPrimaryWeapon = false;
+
     public int selectedAbility = -1;
     public int selectedHealer = -1;
+    public string secType;
 
     // Use this for initialization, CALLED BY STATEHANDLER
     public void GetStarted () {
@@ -129,6 +130,9 @@ public class AbilityChooser : MonoBehaviour {
             else if (secType == "projectile" && numberThrow != -1) {
                 Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + weapon[1].Damage + ") (" + numberThrow + ")";
             }
+            else {
+                Ability2Text = "";
+            }
             if (numberHEAL != 0) {
                 AbilityHText = "Heal <color=#bbbbbb>with</color> <color=#cccccc>Drinks</color> <color=#bbbbbb>or</color> <color=#cccccc>Food</color>";
             }
@@ -193,16 +197,17 @@ public class AbilityChooser : MonoBehaviour {
             Ability1Text = "<color=red>" + UsableAbilities[0].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[0].Title + "</color> <color=red>(Damage: " + weapon[0].Damage + ")</color>";
         }
         if (a == 2) {
-            if (secType == "ranged" || secType == "projectile") {
-                if (numberAmmo != -1) {
+            if ((secType == "ranged" || secType == "projectile") && (numberAmmo != -1 || numberThrow != -1)) {
+                if (secType == "ranged") {
                     Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + weapon[1].Damage + ") (" + numberAmmo + ")</color>";
                 }
-                if (numberThrow != -1) {
+                else if (secType == "projectile") {
                     Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + weapon[1].Damage + ") (" + numberThrow + ")</color>";
                 }
                 selectedAbility = 2;
             }
             else {
+                Ability2Text = "";
                 if (selectedAbility == 1) {
                     SelectAbility(3);
                 }
@@ -331,6 +336,14 @@ public class AbilityChooser : MonoBehaviour {
     }
 
     public int GetLastDoneDamage() {
+        if (selectedAbility == 2) {
+            if (secType == "ranged") {
+                PersistentInventoryScript.instance.removeItemFromEnd(weapon[1].Linked);
+            }
+            else if (secType == "projectile") {
+                PersistentInventoryScript.instance.removeItemFromEnd(weapon[1].ID);
+            }
+        }
         if (selectedAbility != 3) {
             return weapon[selectedAbility - 1].Damage;
         }

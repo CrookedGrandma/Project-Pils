@@ -92,7 +92,7 @@ public class LoadLevel : MonoBehaviour
         {
             if (hasToBeAccepted)
             {
-                if (Input.GetButtonDown("Accept"))
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
                 {
                     LoadALevel(levelName);
                 }

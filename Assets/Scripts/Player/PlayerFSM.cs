@@ -115,6 +115,15 @@ public class PlayerFSM : Entity
             SceneManager.LoadScene("Combat");
         }
 
+        string scene = SceneManager.GetActiveScene().name;
+        // Go to the pause menu, if you are not in one of the levels
+        if (Input.GetKeyDown(KeyCode.Escape) && scene != "Pause" && scene != "Inventory" && scene != "Shop" && scene != "MainMenu" && scene != "Options" && scene != "Combat")
+        {
+            PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
+            PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, playerObj);
+            SceneManager.LoadScene("Pause");
+        }
+
         //Animations
         if (PlayerRB.velocity.z > 0)
         {

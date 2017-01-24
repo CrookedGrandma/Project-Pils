@@ -5,28 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class PauseScene : MonoBehaviour
 {
-    public bool inPauseMenu = false;
     public GameObject confirmationPanel;
+    public bool inPauseMenu;
 
+    private bool confirmationpanelVisible;
     private GameObject player;
 
     private void Start()
     {
         player = GameObject.Find("Player");
+        SetConfirmationScreenInvisible();
+        inPauseMenu = true;
     }
 
-    public void EnterPauseMenu()
+    private void Update()
     {
-        PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
-        PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
-        SceneManager.LoadScene("Pause");
-        SetConfirmationScreenInvisible();
+        if (Input.GetKeyDown(KeyCode.Escape) && !confirmationpanelVisible && inPauseMenu)
+        {
+            ExitPauseMenu();
+        }
     }
 
     public void ExitPauseMenu()
     {
         SceneManager.LoadScene(PlayerPrefsManager.GetCurrentScene());
         player.transform.position = PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player);
+        inPauseMenu = false;
     }
 
     public void Continue()
@@ -71,10 +75,12 @@ public class PauseScene : MonoBehaviour
     private void SetConfirmationScreenInvisible()
     {
         confirmationPanel.SetActive(false);
+        confirmationpanelVisible = false;
     }
 
     private void SetConfirmationScreenVisible()
     {
         confirmationPanel.SetActive(true);
+        confirmationpanelVisible = true;
     }
 }

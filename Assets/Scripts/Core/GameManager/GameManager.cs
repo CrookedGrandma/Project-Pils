@@ -33,23 +33,8 @@ public class GameManager : Entity {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (IsPaused)
-            {
-                Time.timeScale = 1;
-                IsPaused = false;
-            }
-            else
-            {
-                Time.timeScale = 0;
-                IsPaused = true;
-            }
-        }
-
         //Process the MessageQueue
         messageQueue.Dispatch();
-
     }
 
     void InitGame()

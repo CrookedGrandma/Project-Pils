@@ -22,11 +22,8 @@ public class CamMovement : MonoBehaviour
         ForcedZoomOut = true;
         //When colliding, the camera moves up and back from the player object          
         transform.position += new Vector3(0, 0.2f, -0.2f);
-        print("Zooming Out");
         CurrCollider = other;
-
     }
-
   
     void Update()
     {
@@ -47,7 +44,6 @@ public class CamMovement : MonoBehaviour
             ForcedZoomOut = false;
         }
 
-
         //makes sure the camera always looks at the player object   
         transform.LookAt(Parent.transform);
 
@@ -55,7 +51,6 @@ public class CamMovement : MonoBehaviour
         if (transform.localPosition.y > 11f && !ForcedZoomOut && !IsMoving)
         {
             transform.position += new Vector3(0, Time.deltaTime * -4f, Time.deltaTime * 4f);
-            print("Zooming back in");
         }
     }
 }

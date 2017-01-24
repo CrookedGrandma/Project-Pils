@@ -280,6 +280,7 @@ public class StateHandler : MonoBehaviour {
         if (!WRanOnce) {
             timeW = Time.time;
             XPManager.xpmanager.addxp(xpgain());
+            PlayerPrefsManager.SetPlayerHealth((int)healthManager.GetHealth());
             WRanOnce = true;
         }
         if (Time.time - timeW >= 1f && timeW != -1) {

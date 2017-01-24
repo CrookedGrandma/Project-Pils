@@ -6,7 +6,7 @@ public class XPManager : MonoBehaviour {
 
     public static XPManager xpmanager;
 
-    public double xpscaler = 0.25;
+    public double xpscaler = 1.10;
     public double hpscaler = 0.10;
     private int playerxp = 0; // waarde wordt in Start() uit save gehaald
     public double startxpbound = 100; // level 1 => XP van 0-100

@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Dungeon_Enemy : MonoBehaviour
 {
-    private bool canBeFought = true;
+    public bool canBeFought;
+
     private GameObject player;
     private PlayerFSM playerFSM;
     private DungeonCreator dungeonCreator;

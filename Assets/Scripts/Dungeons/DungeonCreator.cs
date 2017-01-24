@@ -18,7 +18,6 @@ public class DungeonCreator : MonoBehaviour
     private Vector3 endPointPos;
     private Dungeon_Room[] rooms;
     private Dungeon_Corridor[] corridors;
-    private Dungeon_Enemy[] enemyArray;
     private GameObject dungeonHolder, enemyHolder;
     private int numberOfEnemies, spawnedEnemies, amountOfWallsInSave, amountOfEnemiesInSave;
     private bool firstTimeCreatingDungeon, maySpawnAtPosition;
@@ -67,13 +66,6 @@ public class DungeonCreator : MonoBehaviour
             SpawnEnemies(numberOfEnemies);
             SaveLayoutOfWallsAndEndpoint();
             SaveLayoutOfEnemies();
-
-            // Fill the enemyarray with all the enemies and set their can be fought to true
-            enemyArray = GameObject.FindObjectsOfType<Dungeon_Enemy>();
-            foreach (Dungeon_Enemy enemy in enemyArray)
-            {
-                enemy.canBeFought = true;
-            }
 
             // Store that the dungeon has been created once
             if (scene == "Dungeon_PiPi")

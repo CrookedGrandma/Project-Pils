@@ -64,7 +64,8 @@ public class DungeonCreator : MonoBehaviour
             InstantiateTiles();
             SpawnEndpoint();
             SpawnEnemies(numberOfEnemies);
-            SaveLayout();
+            SaveLayoutOfWallsAndEndpoint();
+            SaveLayoutOfEnemies();
 
             if (scene == "Dungeon_PiPi")
             {
@@ -618,48 +619,75 @@ public class DungeonCreator : MonoBehaviour
     }
     #endregion
 
-    private void SaveLayout()
+    // Saves the positions of the walls and the endpoint in a scene
+    private void SaveLayoutOfWallsAndEndpoint()
     {
+        // Set the active scene to a string
         string scene = SceneManager.GetActiveScene().name;
 
         // Store the position of each wall
         int indexOfWalls = 0;
         foreach (Transform wall in dungeonHolder.transform)
         {
+            // Loop through all the walls in the dungeonHolder and store the X and Z coordinates. The Y has a constant value, so we don't save this
             PlayerPrefs.SetFloat(scene + "_wall_" + indexOfWalls + "_x", wall.position.x);
             PlayerPrefs.SetFloat(scene + "_wall_" + indexOfWalls + "_z", wall.position.z);
             indexOfWalls++;
             amountOfWallsInSave++;
         }
 
+        // Depending on the scene, store the values on another location
+        if (scene == "Dungeon_PiPi")
+        {
+            // Store the position of the endpoint and the amount of walls in the scene
+            PlayerPrefsManager.SetEndPointPosPiPiDungeon(endPointPos);
+            PlayerPrefsManager.SetAmountOfWallsInPiPiDungeon(amountOfWallsInSave);
+        }
+        else if (scene == "Dungeon_FaceBeer")
+        {
+            // Store the position of the endpoint and the amount of walls in the walls
+            PlayerPrefsManager.SetEndPointPosFaceBeerDungeon(endPointPos);
+            PlayerPrefsManager.SetAmountOfWallsInFaceBeerDungeon(amountOfWallsInSave);
+        }
+    }
+
+    // Saves the locations of the enemies. Different method, because it will probably be used in another script
+    private void SaveLayoutOfEnemies()
+    {
+        // Store the active scene in a string
+        string scene = SceneManager.GetActiveScene().name;
+
         // Store the position of each enemy
         int indexOfEnemies = 0;
         foreach (Transform enemy in enemyHolder.transform)
         {
+            // Loop through each enemy in enemyHolder and store its X and Z coordinates. The Y has a constant value, so we don't store this.
             PlayerPrefs.SetFloat(scene + "_enemy_" + indexOfEnemies + "_x", enemy.position.x);
             PlayerPrefs.SetFloat(scene + "_enemy_" + indexOfEnemies + "_z", enemy.position.z);
             indexOfEnemies++;
             amountOfEnemiesInSave++;
         }
 
+        // Depending on the scene, store the value on another location
         if (scene == "Dungeon_PiPi")
         {
-            PlayerPrefsManager.SetEndPointPosPiPiDungeon(endPointPos);
+            // Store the amount of enemies
             PlayerPrefsManager.SetAmountOfEnemiesInPiPiDungeon(amountOfEnemiesInSave);
-            PlayerPrefsManager.SetAmountOfWallsInPiPiDungeon(amountOfWallsInSave);
         }
         else if (scene == "Dungeon_FaceBeer")
         {
-            PlayerPrefsManager.SetEndPointPosFaceBeerDungeon(endPointPos);
+            // Store the amount of enemies
             PlayerPrefsManager.SetAmountOfEnemiesInFaceBeerDungeon(amountOfEnemiesInSave);
-            PlayerPrefsManager.SetAmountOfWallsInFaceBeerDungeon(amountOfWallsInSave);
         }
     }
 
+    // Load the dungeon again in the same layout
     private void LoadLayout()
     {
+        // Store the active scene in a string
         string scene = SceneManager.GetActiveScene().name;
 
+        // Loop through all the walls and get their coordinates back. Then instantiate it.
         for (int w = 0; w < amountOfWallsInSave; w++)
         {
             float x = PlayerPrefs.GetFloat(scene + "_wall_" + w + "_x");
@@ -671,6 +699,7 @@ public class DungeonCreator : MonoBehaviour
             wallClone.transform.parent = dungeonHolder.transform;
         }
 
+        // Loop through all the enemies and get their coordinates. Then instantiatie it.
         for (int e = 0; e < amountOfEnemiesInSave; e++)
         {
             float x = PlayerPrefs.GetFloat(scene + "_enemy_" + e + "_x");
@@ -682,6 +711,7 @@ public class DungeonCreator : MonoBehaviour
             enemyClone.transform.parent = enemyHolder.transform;
         }
 
+        // Get the position of the endpoint and instantiate it
         Vector3 _pos = Vector3.zero;
         if (scene == "Dungeon_PiPi")
         {

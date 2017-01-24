@@ -257,8 +257,8 @@ public class StateHandler : MonoBehaviour {
 
     private void LoadLastScene() {
         string scene = PlayerPrefsManager.GetCurrentScene();
-        player.transform.position = PlayerPrefsManager.GetPositionInLevel(scene, player);
         SceneManager.LoadScene(scene);
+        player.transform.position = PlayerPrefsManager.GetPositionInLevel(scene, player);
     }
 
     private int moneygain() {

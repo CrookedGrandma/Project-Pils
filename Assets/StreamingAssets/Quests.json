@@ -16,7 +16,7 @@
     "identifier": "Quest002",
     "title": "Gotta go, and fast!",
     "objectives": "Quest002LeaveHouse",
-    "dialogue": "Go to the door to leave your house"
+    "dialogue": "You found your phone in the closet! Go to the door to leave your house"
   },
   {
     "identifier": "Quest003",

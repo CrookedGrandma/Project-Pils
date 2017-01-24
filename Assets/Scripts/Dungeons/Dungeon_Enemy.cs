@@ -22,6 +22,11 @@ public class Dungeon_Enemy : MonoBehaviour
             PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
             SceneManager.LoadScene("Combat");
             player.transform.position = PlayerPrefsManager.GetPositionInLevel("Combat", player);
+
+            // DEBUG
+            SceneManager.LoadScene(PlayerPrefsManager.GetCurrentScene());
+            player.transform.position = PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player);
+            // END DEBUG
         }
     }
 }

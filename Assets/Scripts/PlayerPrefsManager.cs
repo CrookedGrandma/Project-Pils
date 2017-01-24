@@ -24,8 +24,8 @@ public class PlayerPrefsManager : MonoBehaviour
     const string FIRST_TIME_DUNEGON_FACEBEER_KEY = "first_time_dungeon_facebeer";
     const string AMOUNT_OF_WALLS_IN_DUNGEON_PIPI_KEY = "amount_of_walls_in_dungeon_pipi";
     const string AMOUNT_OF_WALLS_IN_DUNGEON_FACEBEER_KEY = "amount_of_walls_in_dungeon_facebeer";
-    const string AMOUNT_OF_ENEMIES_IN_DUNGEON_PIPI_KEY = "amount_of_walls_in_dungeon_pipi";
-    const string AMOUNT_OF_ENEMIES_IN_DUNGEON_FACEBEER_KEY = "amount_of_walls_in_dungeon_facebeer";
+    const string AMOUNT_OF_ENEMIES_IN_DUNGEON_PIPI_KEY = "amount_of_enemies_in_dungeon_pipi";
+    const string AMOUNT_OF_ENEMIES_IN_DUNGEON_FACEBEER_KEY = "amount_of_enemies_in_dungeon_facebeer";
     const string ENDPOINTPOS_DUNGEON_PIPI_KEY = "endpointpos_dungeon_pipi_";
     const string ENDPOINTPOS_DUNGEON_FACEBEER_KEY = "endpointpos_dungeon_facebeer_";
 

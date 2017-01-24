@@ -36,8 +36,6 @@ public class DungeonCreator : MonoBehaviour
             enemyHolder = new GameObject("EnemyHolder");
         }
 
-        Debug.Log("Start #enemies: " + amountOfEnemiesInSave);
-
         string scene = SceneManager.GetActiveScene().name;
         if (scene == "Dungeon_PiPi")
         {
@@ -49,10 +47,8 @@ public class DungeonCreator : MonoBehaviour
         {
             firstTimeCreatingDungeon = PlayerPrefsManager.GetFirstTimeFaceBeerDungeon();
             amountOfEnemiesInSave = PlayerPrefsManager.GetAmountOfEnemiesInFaceBeerDungeon();
-            amountOfWallsInSave = PlayerPrefsManager.GetAmountOfEnemiesInPiPiDungeon();
+            amountOfWallsInSave = PlayerPrefsManager.GetAmountOfWallsInFaceBeerDungeon();
         }
-
-        Debug.Log("Start #enemies na pp: " + amountOfEnemiesInSave);
 
         if (firstTimeCreatingDungeon)
         {
@@ -626,8 +622,6 @@ public class DungeonCreator : MonoBehaviour
     {
         string scene = SceneManager.GetActiveScene().name;
 
-        Debug.Log("Before #enemies: " + amountOfEnemiesInSave);
-
         // Store the position of each wall
         int indexOfWalls = 0;
         foreach (Transform wall in dungeonHolder.transform)
@@ -642,15 +636,11 @@ public class DungeonCreator : MonoBehaviour
         int indexOfEnemies = 0;
         foreach (Transform enemy in enemyHolder.transform)
         {
-            PlayerPrefs.SetFloat(scene + "_enemy_" + indexOfWalls + "_x", enemy.position.x);
-            PlayerPrefs.SetFloat(scene + "_enemy_" + indexOfWalls + "_z", enemy.position.z);
+            PlayerPrefs.SetFloat(scene + "_enemy_" + indexOfEnemies + "_x", enemy.position.x);
+            PlayerPrefs.SetFloat(scene + "_enemy_" + indexOfEnemies + "_z", enemy.position.z);
             indexOfEnemies++;
             amountOfEnemiesInSave++;
         }
-
-        Debug.Log("Number of enemies: " + numberOfEnemies);
-        Debug.Log("Saving #walls: " + amountOfWallsInSave);
-        Debug.Log("Saving #enemies: " + amountOfEnemiesInSave);
 
         if (scene == "Dungeon_PiPi")
         {
@@ -669,9 +659,6 @@ public class DungeonCreator : MonoBehaviour
     private void LoadLayout()
     {
         string scene = SceneManager.GetActiveScene().name;
-
-        Debug.Log("#Walls: " + amountOfWallsInSave);
-        Debug.Log("#Enemies: " + amountOfEnemiesInSave);
 
         for (int w = 0; w < amountOfWallsInSave; w++)
         {
@@ -692,7 +679,7 @@ public class DungeonCreator : MonoBehaviour
             Vector3 pos = new Vector3(x, y, z);
             GameObject enemyClone = Instantiate(enemy, pos, Quaternion.identity) as GameObject;
 
-            enemyClone.transform.parent = dungeonHolder.transform;
+            enemyClone.transform.parent = enemyHolder.transform;
         }
 
         Vector3 _pos = Vector3.zero;

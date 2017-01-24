@@ -124,7 +124,7 @@ public class LoadLevel : MonoBehaviour
             }
         }
 
-        if (SceneManager.GetActiveScene().name == "Woonplaats" && levelName == "Market")
+       /* if (SceneManager.GetActiveScene().name == "Woonplaats" && levelName == "Market")
         {
             if (!GameManager.instance.questManager.questLog.ContainsKey("Quest004"))
             {
@@ -132,7 +132,7 @@ public class LoadLevel : MonoBehaviour
                 GameManager.instance.messageQueue.Add(m);
                 return;
             }
-        }
+        }*/
 
         GameManager.instance.cutscene.SetText("");
         GameManager.instance.cutscene.FadeInPanel(true);

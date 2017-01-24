@@ -95,6 +95,7 @@ public class PauseMenuManager : MonoBehaviour {
     /// Will load Inventory when button is pressed
     public void LoadInventory()
     {
+        
         gameManager.IsPaused = false;
         print("Pause is loading Inventory");
         TogglePauseMenuOff();

@@ -13,8 +13,9 @@ public class PauseMenuManager : MonoBehaviour {
     /// Makes sure The confirmation panel isn't visible when launching the game.
     void Awake()
     {
-        ConfirmationPanel.SetActive(false);
-        canvas.alpha = 0;
+        TogglePauseMenuOff();
+        //ConfirmationPanel.SetActive(false);
+        //canvas.alpha = 0;
     }
 
     void Update ()
@@ -38,16 +39,18 @@ public class PauseMenuManager : MonoBehaviour {
     public void TogglePauseMenuOn()
     {
         print("Pause Menu Visible");
+        PauseMenu.SetActive(true);
         //Components.SetActive(true);
         SetConfInvisible();
-        canvas.alpha = 1;
+        //canvas.alpha = 1;
     }
     public void TogglePauseMenuOff()
     {
         print("Pause Menu Invisible");
+        PauseMenu.SetActive(false);
         //Components.SetActive(false);
         SetConfInvisible();
-        canvas.alpha = 0;
+        //canvas.alpha = 0;
     }
 
     public void QuitButton()
@@ -69,9 +72,11 @@ public class PauseMenuManager : MonoBehaviour {
 
     public void ContinueButton()
     {
-        gameManager.IsPaused = false;
+        //PauseMenu.SetActive(false);
         //canvas.alpha = 0;
         TogglePauseMenuOff();
+        SetConfInvisible();
+        gameManager.IsPaused = false;
     }
 
     public void SetConfVisible()
@@ -90,8 +95,9 @@ public class PauseMenuManager : MonoBehaviour {
     /// Will load Inventory when button is pressed
     public void LoadInventory()
     {
+        gameManager.IsPaused = false;
         print("Pause is loading Inventory");
-        TogglePauseMenuOff();
+        //TogglePauseMenuOff();
         PersistentInventoryScript.instance.InShop = false;
         GameObject player = GameObject.Find("Player");
         PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);

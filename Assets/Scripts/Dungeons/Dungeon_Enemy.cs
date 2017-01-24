@@ -23,7 +23,6 @@ public class Dungeon_Enemy : MonoBehaviour
         {
             // Enter combat scene
             canBeFought = false;
-            dungeonCreator.SaveLayoutOfEnemies();
             PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
             PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
             SceneManager.LoadScene("Combat");

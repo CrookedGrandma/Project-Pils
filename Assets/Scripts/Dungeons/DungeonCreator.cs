@@ -14,13 +14,14 @@ public class DungeonCreator : MonoBehaviour
     public GameObject endPoint, enemy, wallTile;                            // Normal gameobjects for the endpoint and enemies and walltile
 
     private TileType[][] tiles;
-    private Vector3 playerPos = new Vector3(0.5f, 0.5f, 0.5f);             // Used to check the spawnpositions of other objects 
+    private Vector3 playerPos = new Vector3(0.5f, 0.5f, 0.5f);              // Used to check the spawnpositions of other objects 
     private Vector3 endPointPos;
     private Dungeon_Room[] rooms;
     private Dungeon_Corridor[] corridors;
     private GameObject dungeonHolder, enemyHolder;
     private int numberOfEnemies, spawnedEnemies;
     private bool maySpawnAtPosition;
+    private bool firstTimeCreatingDungeon;
     #endregion
 
     private void Start()
@@ -48,6 +49,22 @@ public class DungeonCreator : MonoBehaviour
         InstantiateTiles();
         SpawnEndpoint();
         SpawnEnemies(numberOfEnemies);
+        SaveLayout();
+    }
+
+    private void Update()
+    {
+        Debug.Log(firstTimeCreatingDungeon);
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            Reset();
+        }
+    }
+
+    private void Reset()
+    {
+        SceneManager.LoadScene("Dungeon_FaceBeer");
     }
 
     #region Creating the Dungeon
@@ -570,6 +587,36 @@ public class DungeonCreator : MonoBehaviour
     private void SpawnEndPoint(Vector3 pos)
     {
         Instantiate(endPoint, pos, Quaternion.identity);
+    }
+    #endregion
+
+    #region Saving the layout
+    private void SaveLayout()
+    {
+        // Store the position of each wall
+        int indexOfWalls = 0;
+        foreach (Transform wall in dungeonHolder.transform)
+        {
+            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_wall_" + indexOfWalls + "_x", wall.position.x);
+            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_wall_" + indexOfWalls + "_y", wall.position.y);
+            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_wall_" + indexOfWalls + "_z", wall.position.z);
+            indexOfWalls++;
+        }
+
+        // Store the position of each enemy
+        int indexOfEnemies = 0;
+        foreach (Transform enemy in enemyHolder.transform)
+        {
+            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_enemy_" + indexOfWalls + "_x", enemy.position.x);
+            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_enemy_" + indexOfWalls + "_y", enemy.position.y);
+            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_enemy_" + indexOfWalls + "_z", enemy.position.z);
+            indexOfEnemies++;
+        }
+
+        // Store the position of the endpoint
+        PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_endpoint_x", endPoint.transform.position.x);
+        PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_endpoint_y", endPoint.transform.position.y);
+        PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_endpoint_z", endPoint.transform.position.z);
     }
     #endregion
 }

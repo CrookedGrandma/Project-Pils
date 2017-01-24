@@ -218,7 +218,7 @@ public class DungeonCreator : MonoBehaviour
     private void InstantiateFromArray(GameObject prefab, float xCoordinate, float zCoordinate)
     {
         // Get the position for the object
-        Vector3 position = new Vector3(3 * xCoordinate + 1.5f, -1.5f, 3 * zCoordinate + 1.5f);
+        Vector3 position = new Vector3(3 * xCoordinate + 1.5f, -2.0f, 3 * zCoordinate + 1.5f);
 
         // Create an instance of the object
         GameObject instance = Instantiate(prefab, position, Quaternion.identity) as GameObject;
@@ -691,7 +691,7 @@ public class DungeonCreator : MonoBehaviour
         for (int w = 0; w < amountOfWallsInSave; w++)
         {
             float x = PlayerPrefs.GetFloat(scene + "_wall_" + w + "_x");
-            float y = -1.5f;
+            float y = -2.0f;
             float z = PlayerPrefs.GetFloat(scene + "_wall_" + w + "_z");
             Vector3 pos = new Vector3(x, y, z);
             GameObject wallClone = Instantiate(wallTile, pos, Quaternion.identity) as GameObject;

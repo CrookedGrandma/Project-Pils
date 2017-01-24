@@ -20,6 +20,7 @@ public class PlayerPrefsManager : MonoBehaviour
     const string NOISE_AND_GRAIN_TOGGLE_KEY = "noise_and_grain";
     const string BLOOM_TOGGLE_KEY = "bloom";
     const string ANTI_ALIASING_DROPDOWN_KEY = "anti-aliasing";
+    const string TARGET_FRAMERATE_KEY = "target_framerate";
     const string FIRST_TIME_DUNGEON_PIPI_KEY = "first_time_dungeon_pipi";
     const string FIRST_TIME_DUNEGON_FACEBEER_KEY = "first_time_dungeon_facebeer";
     const string AMOUNT_OF_WALLS_IN_DUNGEON_PIPI_KEY = "amount_of_walls_in_dungeon_pipi";
@@ -418,6 +419,18 @@ public class PlayerPrefsManager : MonoBehaviour
     public static int GetAntiAliasing()
     {
         return PlayerPrefs.GetInt(ANTI_ALIASING_DROPDOWN_KEY);
+    }
+
+    // Set the target framerate
+    public static void SetTargetFramerate(int value)
+    {
+        PlayerPrefs.SetInt(TARGET_FRAMERATE_KEY, value);
+    }
+
+    // Gets the target framerate
+    public static int GetTargetFramerate()
+    {
+        return PlayerPrefs.GetInt(TARGET_FRAMERATE_KEY);
     }
     #endregion
 }

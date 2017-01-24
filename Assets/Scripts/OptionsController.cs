@@ -15,6 +15,7 @@ public class OptionsController : MonoBehaviour
     public Toggle noiseAndGrainToggle;
     public Toggle bloomToggle;
     public Dropdown antiAliasingDropdown;
+    public Dropdown targetFrameRateDropdown;
     public LevelManager levelManager;
 
     private MusicManager musicManager;
@@ -25,6 +26,7 @@ public class OptionsController : MonoBehaviour
     private NoiseAndGrain noiseAndGrain;
     private Bloom bloom;
     private Antialiasing antiAliasing;
+    private FPS_Cap fpsCap;
 
     private void Start()
     {
@@ -36,6 +38,7 @@ public class OptionsController : MonoBehaviour
         noiseAndGrain = camera.GetComponent<NoiseAndGrain>();
         bloom = camera.GetComponent<Bloom>();
         antiAliasing = camera.GetComponent<Antialiasing>();
+        fpsCap = GameObject.FindObjectOfType<FPS_Cap>();
 
         musicScrollbar.value = PlayerPrefsManager.GetMusicVolume();
         soundFXScrollbar.value = PlayerPrefsManager.GetSoundFXVolume();
@@ -45,6 +48,7 @@ public class OptionsController : MonoBehaviour
         noiseAndGrainToggle.isOn = PlayerPrefsManager.GetNoiseAndGrain();
         bloomToggle.isOn = PlayerPrefsManager.GetBloom();
         antiAliasingDropdown.value = PlayerPrefsManager.GetAntiAliasing();
+        targetFrameRateDropdown.value = PlayerPrefsManager.GetTargetFramerate();
     }
 
     private void Update()
@@ -57,6 +61,19 @@ public class OptionsController : MonoBehaviour
         noiseAndGrain.enabled = noiseAndGrainToggle.isOn;
         bloom.enabled = bloomToggle.isOn;
         antiAliasing.mode = (AAMode)(antiAliasingDropdown.value + 4);
+
+        if (targetFrameRateDropdown.value == 0)
+        {
+            fpsCap.maxFPS = 30;
+        }
+        else if (targetFrameRateDropdown.value == 1)
+        {
+            fpsCap.maxFPS = 60;
+        }
+        else if (targetFrameRateDropdown.value == 2)
+        {
+            fpsCap.maxFPS = 120;
+        }
     }
 
     public void SaveAndExit()
@@ -86,6 +103,7 @@ public class OptionsController : MonoBehaviour
         }
 
         PlayerPrefsManager.SetAntiAliasing(antiAliasingDropdown.value);
+        PlayerPrefsManager.SetTargetFramerate(targetFrameRateDropdown.value);
  
         levelManager.Loadlevel("MainMenu");
     }

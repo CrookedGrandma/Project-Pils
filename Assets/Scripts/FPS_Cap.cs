@@ -19,7 +19,10 @@ public class FPS_Cap : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+    }
 
+    private void Update()
+    {
         Application.targetFrameRate = maxFPS;
     }
 }

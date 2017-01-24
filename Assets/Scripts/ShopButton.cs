@@ -11,6 +11,7 @@ public class ShopButton : MonoBehaviour
     PersistentInventoryScript persistentInventory;
     private GameObject player;
 
+
     private void Start()
     {
         persistentInventoryObject = GameObject.Find("PersistentInventory");
@@ -35,6 +36,7 @@ public class ShopButton : MonoBehaviour
     public void GoToShop()
     {
         SceneManager.LoadScene("Shop");
+
     }
     public void ReturnToGame()
     {

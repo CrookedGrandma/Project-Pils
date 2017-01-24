@@ -97,7 +97,7 @@ public class PauseMenuManager : MonoBehaviour {
     {
         gameManager.IsPaused = false;
         print("Pause is loading Inventory");
-        //TogglePauseMenuOff();
+        TogglePauseMenuOff();
         PersistentInventoryScript.instance.InShop = false;
         GameObject player = GameObject.Find("Player");
         PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);

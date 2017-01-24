@@ -7,13 +7,16 @@ public class ShopButton : MonoBehaviour
 {
     public GameObject knopInventoryShop;
     public GameObject KnopGame;
-    GameObject persistentInventoryObject;
-    PersistentInventoryScript persistentInventory;
+
+    private GameManager gameManager;
+    private GameObject persistentInventoryObject;
+    private PersistentInventoryScript persistentInventory;
     private GameObject player;
 
 
     private void Start()
     {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
         persistentInventoryObject = GameObject.Find("PersistentInventory");
         persistentInventory = persistentInventoryObject.GetComponent<PersistentInventoryScript>();
         if (persistentInventory.InShop == false)
@@ -43,5 +46,6 @@ public class ShopButton : MonoBehaviour
         SceneManager.LoadScene(PlayerPrefsManager.GetCurrentScene());
         Vector3 playerPos = PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player);
         player.transform.position = playerPos;
+        gameManager.IsPaused = false;
     }
 }

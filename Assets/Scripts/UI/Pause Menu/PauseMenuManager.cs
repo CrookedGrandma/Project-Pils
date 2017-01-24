@@ -95,10 +95,9 @@ public class PauseMenuManager : MonoBehaviour {
     /// Will load Inventory when button is pressed
     public void LoadInventory()
     {
-        
-        gameManager.IsPaused = false;
         print("Pause is loading Inventory");
         TogglePauseMenuOff();
+        gameManager.IsPaused = false;
         PersistentInventoryScript.instance.InShop = false;
         GameObject player = GameObject.Find("Player");
         PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
@@ -106,5 +105,4 @@ public class PauseMenuManager : MonoBehaviour {
         SceneManager.LoadScene("Inventory");
         player.transform.position = PlayerPrefsManager.GetPositionInLevel("Inventory", player);
     }
-
 }

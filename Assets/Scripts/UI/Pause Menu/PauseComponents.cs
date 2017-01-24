@@ -4,26 +4,23 @@ using UnityEngine;
 
 public class PauseComponents : MonoBehaviour
 {
-
-    public PauseComponents Pause;
+    public static PauseComponents Pause;
     public PauseMenuManager Manager;
     public int Count;
 
     void Awake()
     {
-       
-
-
-    }
-    private void Update()
-    {
-        if (Pause == null)
-            Pause = this;
-        else if (Pause != this)
+        if (Pause != null)
+        {
+            Debug.Log("destroying");
             Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Debug.Log("not destroying");
+            Pause = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
-
 }
 

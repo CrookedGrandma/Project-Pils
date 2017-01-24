@@ -55,7 +55,7 @@
 		"id": 4,
 		"title": "Tech Support",
 		"type": "2attack",
-    "hp": 80,
+    "hp": 100,
     "strength": 50,
 		"attack1title": "Talk non-understandably",
 		"attack1damage": 10,

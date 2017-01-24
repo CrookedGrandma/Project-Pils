@@ -41,8 +41,12 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
         PlayerPrefsManager.SetPlayerXP(0);
         PlayerPrefsManager.SetPlayerLevel(1);
 
-        // Set start values for the music and soundeffects volume
-        PlayerPrefsManager.SetMusicVolume(1f);
-        PlayerPrefsManager.SetSoundFXVolume(1f);
+        // Set the starting values for the dungeons
+        PlayerPrefsManager.SetFirstTimeFaceBeerDungeon(1);
+        PlayerPrefsManager.SetFirstTimePiPiDungeon(1);
+        PlayerPrefsManager.SetAmountOfEnemiesInPiPiDungeon(0);
+        PlayerPrefsManager.SetAmountOfEnemiesInFaceBeerDungeon(0);
+        PlayerPrefsManager.SetAmountOfWallsInPiPiDungeon(0);
+        PlayerPrefsManager.SetAmountOfWallsInFaceBeerDungeon(0);
     }
 }

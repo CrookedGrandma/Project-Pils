@@ -19,9 +19,8 @@ public class DungeonCreator : MonoBehaviour
     private Dungeon_Room[] rooms;
     private Dungeon_Corridor[] corridors;
     private GameObject dungeonHolder, enemyHolder;
-    private int numberOfEnemies, spawnedEnemies;
-    private bool maySpawnAtPosition;
-    private bool firstTimeCreatingDungeon;
+    private int numberOfEnemies, spawnedEnemies, amountOfWallsInSave, amountOfEnemiesInSave;
+    private bool firstTimeCreatingDungeon, maySpawnAtPosition;
     #endregion
 
     private void Start()
@@ -37,25 +36,58 @@ public class DungeonCreator : MonoBehaviour
             enemyHolder = new GameObject("EnemyHolder");
         }
 
-        // Setup the maximum amount of enemies
-        numberOfEnemies = Random.Range(minNumberOfEnemies, maxNumberOfEnemies + 1);
-        spawnedEnemies = 0;
+        Debug.Log("Start #enemies: " + amountOfEnemiesInSave);
 
-        // Make the dungeon
-        SetupTilesArray();
-        CreateRoomsAndCorridors();
-        SetTilesInRooms();
-        SetTilesInCorridors();
-        InstantiateTiles();
-        SpawnEndpoint();
-        SpawnEnemies(numberOfEnemies);
-        SaveLayout();
+        string scene = SceneManager.GetActiveScene().name;
+        if (scene == "Dungeon_PiPi")
+        {
+            firstTimeCreatingDungeon = PlayerPrefsManager.GetFirstTimePiPiDungeon();
+            amountOfEnemiesInSave = PlayerPrefsManager.GetAmountOfEnemiesInPiPiDungeon();
+            amountOfWallsInSave = PlayerPrefsManager.GetAmountOfWallsInPiPiDungeon();
+        }
+        else if (scene == "Dungeon_FaceBeer")
+        {
+            firstTimeCreatingDungeon = PlayerPrefsManager.GetFirstTimeFaceBeerDungeon();
+            amountOfEnemiesInSave = PlayerPrefsManager.GetAmountOfEnemiesInFaceBeerDungeon();
+            amountOfWallsInSave = PlayerPrefsManager.GetAmountOfEnemiesInPiPiDungeon();
+        }
+
+        Debug.Log("Start #enemies na pp: " + amountOfEnemiesInSave);
+
+        if (firstTimeCreatingDungeon)
+        {
+            // Setup the maximum amount of enemies
+            numberOfEnemies = Random.Range(minNumberOfEnemies, maxNumberOfEnemies + 1);
+            spawnedEnemies = 0;
+
+            // Make the dungeon
+            SetupTilesArray();
+            CreateRoomsAndCorridors();
+            SetTilesInRooms();
+            SetTilesInCorridors();
+            InstantiateTiles();
+            SpawnEndpoint();
+            SpawnEnemies(numberOfEnemies);
+            SaveLayout();
+
+            if (scene == "Dungeon_PiPi")
+            {
+                PlayerPrefsManager.SetFirstTimePiPiDungeon(0);
+            }
+            else if (scene == "Dungeon_FaceBeer")
+            {
+                PlayerPrefsManager.SetFirstTimeFaceBeerDungeon(0);
+            }
+        }
+        else
+        {
+            // This is not the first time loading this dungeon, so we have to load the one we saved when we created it
+            LoadLayout();
+        }
     }
 
     private void Update()
     {
-        Debug.Log(firstTimeCreatingDungeon);
-
         if (Input.GetKey(KeyCode.R))
         {
             Reset();
@@ -590,33 +622,88 @@ public class DungeonCreator : MonoBehaviour
     }
     #endregion
 
-    #region Saving the layout
     private void SaveLayout()
     {
+        string scene = SceneManager.GetActiveScene().name;
+
+        Debug.Log("Before #enemies: " + amountOfEnemiesInSave);
+
         // Store the position of each wall
         int indexOfWalls = 0;
         foreach (Transform wall in dungeonHolder.transform)
         {
-            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_wall_" + indexOfWalls + "_x", wall.position.x);
-            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_wall_" + indexOfWalls + "_y", wall.position.y);
-            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_wall_" + indexOfWalls + "_z", wall.position.z);
+            PlayerPrefs.SetFloat(scene + "_wall_" + indexOfWalls + "_x", wall.position.x);
+            PlayerPrefs.SetFloat(scene + "_wall_" + indexOfWalls + "_z", wall.position.z);
             indexOfWalls++;
+            amountOfWallsInSave++;
         }
 
         // Store the position of each enemy
         int indexOfEnemies = 0;
         foreach (Transform enemy in enemyHolder.transform)
         {
-            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_enemy_" + indexOfWalls + "_x", enemy.position.x);
-            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_enemy_" + indexOfWalls + "_y", enemy.position.y);
-            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_enemy_" + indexOfWalls + "_z", enemy.position.z);
+            PlayerPrefs.SetFloat(scene + "_enemy_" + indexOfWalls + "_x", enemy.position.x);
+            PlayerPrefs.SetFloat(scene + "_enemy_" + indexOfWalls + "_z", enemy.position.z);
             indexOfEnemies++;
+            amountOfEnemiesInSave++;
         }
 
-        // Store the position of the endpoint
-        PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_endpoint_x", endPoint.transform.position.x);
-        PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_endpoint_y", endPoint.transform.position.y);
-        PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_endpoint_z", endPoint.transform.position.z);
+        Debug.Log("Number of enemies: " + numberOfEnemies);
+        Debug.Log("Saving #walls: " + amountOfWallsInSave);
+        Debug.Log("Saving #enemies: " + amountOfEnemiesInSave);
+
+        if (scene == "Dungeon_PiPi")
+        {
+            PlayerPrefsManager.SetEndPointPosPiPiDungeon(endPointPos);
+            PlayerPrefsManager.SetAmountOfEnemiesInPiPiDungeon(amountOfEnemiesInSave);
+            PlayerPrefsManager.SetAmountOfWallsInPiPiDungeon(amountOfWallsInSave);
+        }
+        else if (scene == "Dungeon_FaceBeer")
+        {
+            PlayerPrefsManager.SetEndPointPosFaceBeerDungeon(endPointPos);
+            PlayerPrefsManager.SetAmountOfEnemiesInFaceBeerDungeon(amountOfEnemiesInSave);
+            PlayerPrefsManager.SetAmountOfWallsInFaceBeerDungeon(amountOfWallsInSave);
+        }
     }
-    #endregion
+
+    private void LoadLayout()
+    {
+        string scene = SceneManager.GetActiveScene().name;
+
+        Debug.Log("#Walls: " + amountOfWallsInSave);
+        Debug.Log("#Enemies: " + amountOfEnemiesInSave);
+
+        for (int w = 0; w < amountOfWallsInSave; w++)
+        {
+            float x = PlayerPrefs.GetFloat(scene + "_wall_" + w + "_x");
+            float y = -2.0f;
+            float z = PlayerPrefs.GetFloat(scene + "_wall_" + w + "_z");
+            Vector3 pos = new Vector3(x, y, z);
+            GameObject wallClone = Instantiate(wallTile, pos, Quaternion.identity) as GameObject;
+
+            wallClone.transform.parent = dungeonHolder.transform;
+        }
+
+        for (int e = 0; e < amountOfEnemiesInSave; e++)
+        {
+            float x = PlayerPrefs.GetFloat(scene + "_enemy_" + e + "_x");
+            float y = 0.5f;
+            float z = PlayerPrefs.GetFloat(scene + "_enemy_" + e + "_z");
+            Vector3 pos = new Vector3(x, y, z);
+            GameObject enemyClone = Instantiate(enemy, pos, Quaternion.identity) as GameObject;
+
+            enemyClone.transform.parent = dungeonHolder.transform;
+        }
+
+        Vector3 _pos = Vector3.zero;
+        if (scene == "Dungeon_PiPi")
+        {
+            _pos = PlayerPrefsManager.GetEndPointPosPiPiDungeon();
+        }
+        else if (scene == "Dungeon_FaceBeer")
+        {
+            _pos = PlayerPrefsManager.GetEndPointPosFaceBeerDungeon();
+        }
+        Instantiate(endPoint, _pos, Quaternion.identity);
+    }
 }

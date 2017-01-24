@@ -20,6 +20,14 @@ public class PlayerPrefsManager : MonoBehaviour
     const string NOISE_AND_GRAIN_TOGGLE_KEY = "noise_and_grain";
     const string BLOOM_TOGGLE_KEY = "bloom";
     const string ANTI_ALIASING_DROPDOWN_KEY = "anti-aliasing";
+    const string FIRST_TIME_DUNGEON_PIPI_KEY = "first_time_dungeon_pipi";
+    const string FIRST_TIME_DUNEGON_FACEBEER_KEY = "first_time_dungeon_facebeer";
+    const string AMOUNT_OF_WALLS_IN_DUNGEON_PIPI_KEY = "amount_of_walls_in_dungeon_pipi";
+    const string AMOUNT_OF_WALLS_IN_DUNGEON_FACEBEER_KEY = "amount_of_walls_in_dungeon_facebeer";
+    const string AMOUNT_OF_ENEMIES_IN_DUNGEON_PIPI_KEY = "amount_of_walls_in_dungeon_pipi";
+    const string AMOUNT_OF_ENEMIES_IN_DUNGEON_FACEBEER_KEY = "amount_of_walls_in_dungeon_facebeer";
+    const string ENDPOINTPOS_DUNGEON_PIPI_KEY = "endpointpos_dungeon_pipi_";
+    const string ENDPOINTPOS_DUNGEON_FACEBEER_KEY = "endpointpos_dungeon_facebeer_";
 
     // Sets the music volume to the float given
     public static void SetMusicVolume(float volume)
@@ -141,6 +149,153 @@ public class PlayerPrefsManager : MonoBehaviour
         return PlayerPrefs.GetString(CURRENT_SCENE_KEY);
     }
 
+    #region Dungeons
+    // States if the facebeer dungeon has been made once
+    public static void SetFirstTimeFaceBeerDungeon(int TrueIs1FalseIs0)
+    {
+        if (TrueIs1FalseIs0 == 1 || TrueIs1FalseIs0 == 0)
+        {
+            PlayerPrefs.SetInt(FIRST_TIME_DUNEGON_FACEBEER_KEY, TrueIs1FalseIs0);
+        }
+        else
+        {
+            Debug.LogError("Value must be 0 or 1");
+        }
+    }
+
+    // Gets if the facebeer dungeon has been made once
+    public static bool GetFirstTimeFaceBeerDungeon()
+    {
+        int value = PlayerPrefs.GetInt(FIRST_TIME_DUNEGON_FACEBEER_KEY);
+        if (value == 1)
+        {
+            return true;
+        }
+        else if (value == 0)
+        {
+            return false;
+        }
+        else
+        {
+            throw new UnityException("Value is not 0 or 1");
+        }
+    }
+
+    // States if the facebeer dungeon has been made once
+    public static void SetFirstTimePiPiDungeon(int TrueIs1FalseIs0)
+    {
+        if (TrueIs1FalseIs0 == 1 || TrueIs1FalseIs0 == 0)
+        {
+            PlayerPrefs.SetInt(FIRST_TIME_DUNGEON_PIPI_KEY, TrueIs1FalseIs0);
+        }
+        else
+        {
+            Debug.LogError("Value must be 0 or 1");
+        }
+    }
+
+    // Gets if the facebeer dungeon has been made once
+    public static bool GetFirstTimePiPiDungeon()
+    {
+        int value = PlayerPrefs.GetInt(FIRST_TIME_DUNGEON_PIPI_KEY);
+        if (value == 1)
+        {
+            return true;
+        }
+        else if (value == 0)
+        {
+            return false;
+        }
+        else
+        {
+            throw new UnityException("Value is not 0 or 1");
+        }
+    }
+
+    // Sets the amount of walls in the pipi dungeon
+    public static void SetAmountOfWallsInPiPiDungeon(int value)
+    {
+        PlayerPrefs.SetInt(AMOUNT_OF_WALLS_IN_DUNGEON_PIPI_KEY, value);
+    }
+
+    // Gets the amount of walls in the pipi dungeon
+    public static int GetAmountOfWallsInPiPiDungeon()
+    {
+        return PlayerPrefs.GetInt(AMOUNT_OF_WALLS_IN_DUNGEON_PIPI_KEY);
+    }
+
+    // Sets the amount of walls in the facebeer dungeon
+    public static void SetAmountOfWallsInFaceBeerDungeon(int value)
+    {
+        PlayerPrefs.SetInt(AMOUNT_OF_WALLS_IN_DUNGEON_FACEBEER_KEY, value);
+    }
+
+    // Gets the amount of walls in the facebeer dungeon
+    public static int GetAmountOfWallsInFaceBeerDungeon()
+    {
+        return PlayerPrefs.GetInt(AMOUNT_OF_WALLS_IN_DUNGEON_FACEBEER_KEY);
+    }
+
+    // Sets the amount of enemies in the pipi dungeon
+    public static void SetAmountOfEnemiesInPiPiDungeon(int value)
+    {
+        PlayerPrefs.SetInt(AMOUNT_OF_ENEMIES_IN_DUNGEON_PIPI_KEY, value);
+    }
+
+    // Gets the amount of enemies in the pipi dungeon
+    public static int GetAmountOfEnemiesInPiPiDungeon()
+    {
+        return PlayerPrefs.GetInt(AMOUNT_OF_ENEMIES_IN_DUNGEON_PIPI_KEY);
+    }
+
+    // Sets the amount of enemies in the facebeer dungeon
+    public static void SetAmountOfEnemiesInFaceBeerDungeon(int value)
+    {
+        PlayerPrefs.SetInt(AMOUNT_OF_ENEMIES_IN_DUNGEON_FACEBEER_KEY, value);
+    }
+
+    // Gets the amount of enemies in the facebeer dungeon
+    public static int GetAmountOfEnemiesInFaceBeerDungeon()
+    {
+        return PlayerPrefs.GetInt(AMOUNT_OF_ENEMIES_IN_DUNGEON_FACEBEER_KEY);
+    }
+
+    // Stores the position of the endpoint in the pipi dungeon
+    public static void SetEndPointPosPiPiDungeon(Vector3 pos)
+    {
+        PlayerPrefs.SetFloat(ENDPOINTPOS_DUNGEON_PIPI_KEY + "x", pos.x);
+        PlayerPrefs.SetFloat(ENDPOINTPOS_DUNGEON_PIPI_KEY + "y", pos.y);
+        PlayerPrefs.SetFloat(ENDPOINTPOS_DUNGEON_PIPI_KEY + "z", pos.z);
+    }
+
+    // Get the position of the endpoint in the pipi dungeon
+    public static Vector3 GetEndPointPosPiPiDungeon()
+    {
+        float x = PlayerPrefs.GetFloat(ENDPOINTPOS_DUNGEON_PIPI_KEY + "x");
+        float y = PlayerPrefs.GetFloat(ENDPOINTPOS_DUNGEON_PIPI_KEY + "y");
+        float z = PlayerPrefs.GetFloat(ENDPOINTPOS_DUNGEON_PIPI_KEY + "z");
+        return new Vector3(x, y, z);
+    }
+
+    // Stores the position of the endpoint in the facebeer dungeon
+    public static void SetEndPointPosFaceBeerDungeon(Vector3 pos)
+    {
+        PlayerPrefs.SetFloat(ENDPOINTPOS_DUNGEON_FACEBEER_KEY + "x", pos.x);
+        PlayerPrefs.SetFloat(ENDPOINTPOS_DUNGEON_FACEBEER_KEY + "y", pos.y);
+        PlayerPrefs.SetFloat(ENDPOINTPOS_DUNGEON_FACEBEER_KEY + "z", pos.z);
+    }
+
+    // Get the position of the endpoint in the facebeer dungeon
+    public static Vector3 GetEndPointPosFaceBeerDungeon()
+    {
+        float x = PlayerPrefs.GetFloat(ENDPOINTPOS_DUNGEON_FACEBEER_KEY + "x");
+        float y = PlayerPrefs.GetFloat(ENDPOINTPOS_DUNGEON_FACEBEER_KEY + "y");
+        float z = PlayerPrefs.GetFloat(ENDPOINTPOS_DUNGEON_FACEBEER_KEY + "z");
+        return new Vector3(x, y, z);
+    }
+    #endregion
+
+    #region Graphicssettings
     // Set the motion blur value
     public static void SetMotionBlur(float value)
     {
@@ -264,4 +419,5 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         return PlayerPrefs.GetInt(ANTI_ALIASING_DROPDOWN_KEY);
     }
+    #endregion
 }

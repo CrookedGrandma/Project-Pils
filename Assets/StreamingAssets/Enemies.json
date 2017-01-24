@@ -37,5 +37,31 @@
 		"attack2title": "Be a fat kutamsterdammer",
 		"attack2damage": 8,
 		"attack2scaling": 0.69
+	},
+	{
+		"id": 3,
+		"title": "Pi Pi Member",
+		"type": "2attack",
+    "hp": 75,
+    "strength": 50,
+		"attack1title": "Pii on you",
+		"attack1damage": 7,
+		"attack1scaling": 0.35,
+		"attack2title": "Pull rank",
+		"attack2damage": 10,
+		"attack2scaling": 0.4
+	},
+	{
+		"id": 4,
+		"title": "Tech Support",
+		"type": "2attack",
+    "hp": 80,
+    "strength": 50,
+		"attack1title": "Talk non-understandably",
+		"attack1damage": 10,
+		"attack1scaling": 0.4,
+		"attack2title": "Ask for a rating",
+		"attack2damage": 15,
+		"attack2scaling": 0.5
 	}
 ]

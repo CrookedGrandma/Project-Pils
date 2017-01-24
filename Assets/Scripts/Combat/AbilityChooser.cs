@@ -21,6 +21,8 @@ public class AbilityChooser : MonoBehaviour {
     private string Heal1Text, Heal2Text, Heal3Text, Heal4Text, Heal5Text, Heal6Text, Heal7Text;
 
     private int numberApJ, numberUMM, numberRad, numberCaP, numberBoP, numberNoP, numberMeP, numberHEAL;
+    private int numberAmmo = -1, numberThrow = -1;
+    private string secType;
 
     private bool started = false;
     private bool FoundPrimaryWeapon = false;
@@ -38,8 +40,10 @@ public class AbilityChooser : MonoBehaviour {
         weapon[0] = database.FetchItemById(UsableAbilities[0].WeaponID);
         try {
             weapon[1] = database.FetchItemById(UsableAbilities[1].WeaponID);
+            secType = weapon[1].Subtype;
         }
         catch (Exception e) { }
+        GetAmmo();
         WhiteText(true);
         selectedAbility = 1;
         SelectAbility(1);
@@ -90,6 +94,19 @@ public class AbilityChooser : MonoBehaviour {
         }
     }
 
+    private void GetAmmo() {
+        if (secType == "ranged") {
+            numberAmmo = PersistentInventoryScript.instance.returnNumberOfItems(weapon[1].Linked);
+        }
+        else if (secType == "projectile") {
+            numberThrow = PersistentInventoryScript.instance.returnNumberOfItems(weapon[1].ID);
+        }
+        if (numberAmmo <= 0 && numberThrow <= 0) {
+            numberAmmo = -1;
+            numberThrow = -1;
+        }
+    }
+
     private void GetNumberOfHealers() {
         numberApJ = PersistentInventoryScript.instance.returnNumberOfItems(100);
         numberUMM = PersistentInventoryScript.instance.returnNumberOfItems(101);
@@ -102,12 +119,16 @@ public class AbilityChooser : MonoBehaviour {
     }
 
     public void WhiteText(bool t) {
+        GetAmmo();
+        GetNumberOfHealers();
         if (t) {
             Ability1Text = UsableAbilities[0].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[0].Title + "</color> (Damage: " + weapon[0].Damage + ")";
-            try {
-                Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + weapon[1].Damage + ")";
+            if (secType == "ranged" && numberAmmo != -1) {
+                Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + weapon[1].Damage + ") (" + numberAmmo + ")";
             }
-            catch (Exception e) { }
+            else if (secType == "projectile" && numberThrow != -1) {
+                Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + weapon[1].Damage + ") (" + numberThrow + ")";
+            }
             if (numberHEAL != 0) {
                 AbilityHText = "Heal <color=#bbbbbb>with</color> <color=#cccccc>Drinks</color> <color=#bbbbbb>or</color> <color=#cccccc>Food</color>";
             }
@@ -118,7 +139,12 @@ public class AbilityChooser : MonoBehaviour {
         else {
             Ability1Text = "";
             Ability2Text = "";
-            AbilityHText = "";
+            if (numberHEAL != 0) {
+                AbilityHText = "Heal <color=#bbbbbb>with</color> <color=#cccccc>Drinks</color> <color=#bbbbbb>or</color> <color=#cccccc>Food</color>";
+            }
+            else {
+                AbilityHText = "";
+            }
         }
     }
 
@@ -167,11 +193,16 @@ public class AbilityChooser : MonoBehaviour {
             Ability1Text = "<color=red>" + UsableAbilities[0].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[0].Title + "</color> <color=red>(Damage: " + weapon[0].Damage + ")</color>";
         }
         if (a == 2) {
-            try {
-                Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + weapon[1].Damage + ")</color>";
+            if (secType == "ranged" || secType == "projectile") {
+                if (numberAmmo != -1) {
+                    Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + weapon[1].Damage + ") (" + numberAmmo + ")</color>";
+                }
+                if (numberThrow != -1) {
+                    Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + weapon[1].Damage + ") (" + numberThrow + ")</color>";
+                }
                 selectedAbility = 2;
             }
-            catch (Exception e) {
+            else {
                 if (selectedAbility == 1) {
                     SelectAbility(3);
                 }
@@ -306,15 +337,19 @@ public class AbilityChooser : MonoBehaviour {
         else {
             float maxHealth = healthManager.GetMaxHealth();
             switch (selectedHealer) {
-                case (1): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(100).Heal / 100f)) * -1;
-                case (2): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(101).Heal / 100f)) * -1;
-                case (3): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(102).Heal / 100f)) * -1;
-                case (4): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(103).Heal / 100f)) * -1;
-                case (5): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(104).Heal / 100f)) * -1;
-                case (6): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(105).Heal / 100f)) * -1;
-                case (7): return Mathf.CeilToInt(maxHealth * (database.FetchItemById(106).Heal / 100f)) * -1;
+                case (1): PersistentInventoryScript.instance.removeItemFromEnd(100); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(100).Heal / 100f)) * -1;
+                case (2): PersistentInventoryScript.instance.removeItemFromEnd(101); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(101).Heal / 100f)) * -1;
+                case (3): PersistentInventoryScript.instance.removeItemFromEnd(102); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(102).Heal / 100f)) * -1;
+                case (4): PersistentInventoryScript.instance.removeItemFromEnd(103); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(103).Heal / 100f)) * -1;
+                case (5): PersistentInventoryScript.instance.removeItemFromEnd(104); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(104).Heal / 100f)) * -1;
+                case (6): PersistentInventoryScript.instance.removeItemFromEnd(105); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(105).Heal / 100f)) * -1;
+                case (7): PersistentInventoryScript.instance.removeItemFromEnd(106); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(106).Heal / 100f)) * -1;
                 default: return 0;
             }
         }
+    }
+
+    public Item GetWeaponUsed() {
+        return weapon[selectedAbility - 1];
     }
 }

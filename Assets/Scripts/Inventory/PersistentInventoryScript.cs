@@ -82,9 +82,9 @@ public class PersistentInventoryScript : MonoBehaviour {
         }
     }
 
-    public void removeItemToEnd(int id)
+    public void removeItemFromEnd(int id)
     {
-        Debug.Log("RemoveItemToEnd");
+        Debug.Log("RemoveItemFromEnd");
 
         for (int i = 0; i < itemList.GetLength(0); i++)
         {

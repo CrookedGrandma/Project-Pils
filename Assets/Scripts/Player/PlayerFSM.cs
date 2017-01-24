@@ -80,28 +80,33 @@ public class PlayerFSM : Entity
         }
         if (enemyID != -1)
         {
-            Debug.Log("Enemy Plate: " + enemyID);
+            Debug.Log("Enemy: " + enemyID);
         }
         if (envID != -1)
         {
-            Debug.Log("Environment Plate: " + envID);
+            Debug.Log("Environment: " + envID);
         }
 
         // Go to combat scene, purely for developing {
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            PlayerFSM.player.Enemy = 0;
-            PlayerFSM.player.Envi = 3;
+            Enemy = 0;
+            Envi = 3;
         }
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            PlayerFSM.player.Enemy = 1;
-            PlayerFSM.player.Envi = 2;
+            Enemy = 1;
+            Envi = 2;
         }
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
-            PlayerFSM.player.Enemy = 2;
-            PlayerFSM.player.Envi = 0;
+            Enemy = 2;
+            Envi = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad4)) 
+        {
+            Enemy = 4;
+            Envi = 1;
         }
         if (Input.GetKeyDown(KeyCode.I))
         {

@@ -119,7 +119,6 @@ public class StateHandler : MonoBehaviour {
             PCRanOnce = false; healing = false;
             if (!PMRanOnce) {
                 timePM = Time.time;
-                // If player has not healed
                 actionValue = abilityChooser.GetLastDoneDamage();
                 if (actionValue >= 0) {
                     healthManager.EnemyLoseHealth(actionValue);

@@ -6,7 +6,10 @@ public class Quest001 : MonoBehaviour {
 
 	void OnTriggerEnter()
     {
-        GameManager.instance.questManager.CompleteObjective("Quest001FindPhone");
-        GameManager.instance.questManager.AddQuestToLog("Quest002");
+        if (!GameManager.instance.questManager.questLog["Quest001"].QuestCompleted())
+        {
+            GameManager.instance.questManager.CompleteObjective("Quest001FindPhone");
+            GameManager.instance.questManager.AddQuestToLog("Quest002");
+        }
     }
 }

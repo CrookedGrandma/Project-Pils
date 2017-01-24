@@ -74,6 +74,7 @@ public class DungeonCreator : MonoBehaviour
             {
                 enemy.canBeFought = true;
             }
+            Debug.Log(enemyArray.Length);
 
             // Store that the dungeon has been created once
             if (scene == "Dungeon_PiPi")
@@ -89,6 +90,13 @@ public class DungeonCreator : MonoBehaviour
         {
             // This is not the first time loading this dungeon, so we have to load the one we saved when we created it
             LoadLayout();
+
+            enemyArray = GameObject.FindObjectsOfType<Dungeon_Enemy>();
+            foreach (Dungeon_Enemy enemy in enemyArray)
+            {
+                enemy.canBeFought = true;
+            }
+            Debug.Log(enemyArray.Length);
         }
     }
 

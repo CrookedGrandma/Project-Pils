@@ -109,26 +109,21 @@ public class LoadLevel : MonoBehaviour
 
     private void LoadALevel(string levelName)
     {
-        //dirty hotfix
-        if(SceneManager.GetActiveScene().name == "Woonplaats" && levelName == "Home")
+        if (!GameManager.instance.questManager.questLog.ContainsKey("Quest003"))
         {
-            Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You should be going on an adventure! Don't go back home!");
-            GameManager.instance.messageQueue.Add(m);
-            return;
-        }
-
-        if(SceneManager.GetActiveScene().name == "Home" && levelName == "Woonplaats")
-        {
-            if (GameManager.instance.questManager.questLog.ContainsKey("Quest002"))
+            if (SceneManager.GetActiveScene().name == "Home" && levelName == "Woonplaats")
             {
-                GameManager.instance.questManager.CompleteObjective("Quest002LeaveHouse");
-                GameManager.instance.questManager.AddQuestToLog("Quest003");
+                if (GameManager.instance.questManager.questLog.ContainsKey("Quest002"))
+                {
+                    GameManager.instance.questManager.CompleteObjective("Quest002LeaveHouse");
+                    GameManager.instance.questManager.AddQuestToLog("Quest003");
 
-            } else
-            {
-                Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You need to find your phone before you can leave your house!");
-                GameManager.instance.messageQueue.Add(m);
-                return;
+                } else
+                {
+                    Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You need to find your phone before you can leave your house!");
+                    GameManager.instance.messageQueue.Add(m);
+                    return;
+                }
             }
         }
 

@@ -54,10 +54,6 @@ public class Quest : Entity {
 
     public void GiveRewards()
     {
-        hasBeenRewarded = true;
-
-
-
         if (!hasBeenRewarded)
         {
             XPManager.xpmanager.addxp(xp);
@@ -71,6 +67,8 @@ public class Quest : Entity {
                 }
             }
         }
+
+        hasBeenRewarded = true;
     }
 
     public string CreateDescription()

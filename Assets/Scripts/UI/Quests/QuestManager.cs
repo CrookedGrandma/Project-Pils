@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 
 public class QuestManager : Entity {
-
     public Text questTextBox;
 
     private JsonData QuestData;
@@ -20,7 +19,7 @@ public class QuestManager : Entity {
 
     public void Awake()
     {
-        DontDestroyOnLoad(transform.gameObject);
+        DontDestroyOnLoad(this);
 
         QuestData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Quests.json"));
         QuestObjectiveData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/QuestObjectives.json"));

@@ -56,14 +56,19 @@ public class Quest : Entity {
     {
         hasBeenRewarded = true;
 
-        XPManager.xpmanager.addxp(xp);
-        foreach(string s in items)
-        {
-            int itemID;
 
-            if(int.TryParse(s, out itemID))
+
+        if (!hasBeenRewarded)
+        {
+            XPManager.xpmanager.addxp(xp);
+            foreach (string s in items)
             {
-                PersistentInventoryScript.instance.addItemToEnd(itemID);
+                int itemID;
+
+                if (int.TryParse(s, out itemID))
+                {
+                    PersistentInventoryScript.instance.addItemToEnd(itemID);
+                }
             }
         }
     }

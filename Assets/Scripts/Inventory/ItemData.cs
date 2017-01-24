@@ -112,7 +112,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             }
             else if (sellConfirm)
             {
-                    persistentInventory.removeItem(item.ID, slot);
+                persistentInventory.removeItem(item.ID, slot);
                 tooltip.sellActivate(item, sellConfirm);
                 System.Threading.Timer timer = null;
                 timer = new System.Threading.Timer((obj) =>

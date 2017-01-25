@@ -3,12 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class DungeonCreator : MonoBehaviour
 {
-    #region Variable Declaration
-    // The tiletypes used
-    public enum TileType
-    {
-        Wall, Floor
-    }
+    public enum TileType { Wall, Floor }
     public int columns = 30, rows = 30, minNumRooms = 10, maxNumRooms = 12, minRoomWidth = 4, maxRoomWidth = 8, minRoomHeight = 4, maxRoomHeight = 8,
                minCorridorLength = 8, maxCorridorLength = 14, minNumberOfEnemies = 2, maxNumberOfEnemies = 6, endPointMinimumDistanceToPlayer = 25;
     public GameObject endPoint, enemy, wallTile;                            // Normal gameobjects for the endpoint and enemies and walltile
@@ -22,10 +17,13 @@ public class DungeonCreator : MonoBehaviour
     private GameObject dungeonHolder, enemyHolder;
     private int numberOfEnemies, spawnedEnemies, amountOfWallsInSave, amountOfEnemiesInSave;
     private bool firstTimeCreatingDungeon, maySpawnAtPosition;
-    #endregion
+    private string scene;
 
     private void Start()
     {
+        // Set string scene to the current scene
+        scene = SceneManager.GetActiveScene().name;
+
         // Create the dungeonHolder and enemyHolder GameObjects if they not exist
         if (!dungeonHolder)
         {
@@ -37,7 +35,6 @@ public class DungeonCreator : MonoBehaviour
             enemyHolder = new GameObject("EnemyHolder");
         }
 
-        string scene = SceneManager.GetActiveScene().name;
         if (scene == "Dungeon_PiPi")
         {
             firstTimeCreatingDungeon = PlayerPrefsManager.GetFirstTimePiPiDungeon();
@@ -74,7 +71,6 @@ public class DungeonCreator : MonoBehaviour
             {
                 enemy.canBeFought = true;
             }
-            Debug.Log(enemyArray.Length);
 
             // Store that the dungeon has been created once
             if (scene == "Dungeon_PiPi")
@@ -96,21 +92,21 @@ public class DungeonCreator : MonoBehaviour
             {
                 enemy.canBeFought = true;
             }
-            Debug.Log(enemyArray.Length);
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.R))
-        {
-            Reset();
         }
     }
 
     private void Reset()
     {
-        SceneManager.LoadScene("Dungeon_FaceBeer");
+        if (scene == "Dungeon_FaceBeer")
+        {
+            PlayerPrefsManager.SetFirstTimeFaceBeerDungeon(1);
+            SceneManager.LoadScene(scene);
+        }
+        else if (scene == "Dungeon_PiPi")
+        {
+            PlayerPrefsManager.SetFirstTimePiPiDungeon(1);
+            SceneManager.LoadScene(scene);
+        }
     }
 
     #region Creating the Dungeon
@@ -297,8 +293,18 @@ public class DungeonCreator : MonoBehaviour
     // Mehtod that spawns the endpoint
     private void SpawnEndpoint()
     {
+        /*int timesTriedToSpawn = 0;
+
         // Jump here if spawning the endpoint failed
-        TrySpawningEndPointAgain:
+        //TrySpawningEndPointAgain:
+
+        timesTriedToSpawn++;
+
+        if (timesTriedToSpawn == 20)
+        {
+            // RESET THE LEVEL
+            Reset();
+        }*/
 
         maySpawnAtPosition = true;
         float endPointXPos, endPointZPos;
@@ -337,7 +343,7 @@ public class DungeonCreator : MonoBehaviour
         {
             CheckSpecialCases(endPointPos);
         }
-        // The distance to the player and the endpoint does not have to be checked.
+        // The distances to the player and the endpoint do not have to be checked.
         // This is because the position is defined at a great distance to the player, and we are trying to spawn the endpoint.
 
         if (maySpawnAtPosition)
@@ -347,7 +353,8 @@ public class DungeonCreator : MonoBehaviour
         }
         else
         {
-            goto TrySpawningEndPointAgain;
+            Reset();
+            //goto TrySpawningEndPointAgain;
         }
     }
 
@@ -639,9 +646,6 @@ public class DungeonCreator : MonoBehaviour
     // Saves the positions of the walls and the endpoint in a scene
     private void SaveLayoutOfWallsAndEndpoint()
     {
-        // Set the active scene to a string
-        string scene = SceneManager.GetActiveScene().name;
-
         // Store the position of each wall
         int indexOfWalls = 0;
         foreach (Transform wall in dungeonHolder.transform)
@@ -671,9 +675,6 @@ public class DungeonCreator : MonoBehaviour
     // Saves the locations of the enemies. Different method, because it will probably be used in another script
     private void SaveLayoutOfEnemies()
     {
-        // Store the active scene in a string
-        string scene = SceneManager.GetActiveScene().name;
-
         // Store the position of each enemy
         int indexOfEnemies = 0;
         foreach (Transform enemy in enemyHolder.transform)
@@ -701,9 +702,6 @@ public class DungeonCreator : MonoBehaviour
     // Load the dungeon again in the same layout
     private void LoadLayout()
     {
-        // Store the active scene in a string
-        string scene = SceneManager.GetActiveScene().name;
-
         // Loop through all the walls and get their coordinates back. Then instantiate it.
         for (int w = 0; w < amountOfWallsInSave; w++)
         {

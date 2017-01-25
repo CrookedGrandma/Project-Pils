@@ -36,8 +36,8 @@ public class Dungeon_Enemy : MonoBehaviour
             }
             else if (SceneManager.GetActiveScene().name == "Dungeon_PiPi")
             {
-                /*playerFSM.Enemy = ;
-                playerFSM.Envi = ;*/
+                playerFSM.Enemy = 4;
+                playerFSM.Envi = 2;
             }
         }
     }

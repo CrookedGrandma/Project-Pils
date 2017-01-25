@@ -186,6 +186,19 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                     persistentInventory.addEquipment(item.ID, amount, 5);
                 }
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
+            } else if(item.Type == "consumable")
+            {
+                switch (item.ID)
+                {
+                    case 106:
+                        if (!GameManager.instance.questManager.questLog.ContainsKey("Quest006"))
+                        {
+                            GameManager.instance.questManager.CompleteObjective("Quest005ConsumeMegaPils");
+                            GameManager.instance.questManager.AddQuestToLog("Quest006");
+                        }
+                        persistentInventory.removeItem(item.ID, slot);
+                        break;
+                }
             }
         }
     }

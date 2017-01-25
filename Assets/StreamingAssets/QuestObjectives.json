@@ -40,5 +40,11 @@
     "type": "bool",
     "description": "Consume Mega Pils",
     "goal": "0.0"
+  },
+  {
+    "identifier": "Quest006DefeatNoni",
+    "type": "bool",
+    "description": "Defeat Noni",
+    "goal": "0.0"
   }
 ]

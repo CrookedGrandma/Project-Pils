@@ -34,6 +34,13 @@
     "identifier": "Quest005",
     "title": "Let's get fucked up!",
     "objectives": "Quest005ConsumeMegaPils",
-    "dialogue": "You and your friends have met at the pub! Time to get wasted!"
+    "dialogue": "You and your friends have met at the pub! Time to get wasted!",
+    "item": "200"
+  },
+  {
+    "identifier": "Quest006",
+    "title": "Noni's Drunk Adventure",
+    "objectives": "Quest006DefeatNoni",
+    "dialogue": "Noni is bragging about being cooler than you. Hell no. Kick his ass with this broken beer bottle."
   }
 ]

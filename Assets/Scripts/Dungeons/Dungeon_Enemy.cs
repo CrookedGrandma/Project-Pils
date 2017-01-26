@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Dungeon_Enemy : MonoBehaviour
 {
     public float velocity = 750f;
+    public Animator animator;
 
     private enum WalkDirection { Up, Down, Left, Right }
     private Rigidbody enemyRB;
@@ -50,7 +51,27 @@ public class Dungeon_Enemy : MonoBehaviour
 
         enemyRB.velocity = new Vector3(xVelocity * Time.deltaTime, 0, zVelocity * Time.deltaTime);
 
-        Debug.Log("vel: " + enemyRB.velocity);
+        // Animations
+        if (enemyRB.velocity.z > 0)
+        {
+            animator.Play("EnemyUp");
+        }
+        else if (enemyRB.velocity.z < 0)
+        {
+            animator.Play("EnemyDown");
+        }
+        else if (enemyRB.velocity.x > 0)
+        {
+            animator.Play("EnemyRight");
+        }
+        else if (enemyRB.velocity.x < 0)
+        {
+            animator.Play("EnemyLeft");
+        }
+        else
+        {
+            animator.Play("EnemyIdle");
+        }
     }
 
     private void OnCollisionStay(Collision collision)

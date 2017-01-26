@@ -256,19 +256,8 @@ public class DungeonCreator : MonoBehaviour
 
             // Methods which checks the position of the enemy
             CheckForWallTiles(enemyPos);
+            // The other methods that check positions (see SpawnEndPoint()) do not have to be checked. This would be pointless, because the enemies move
             // If we can't spawn at this position, do not execute the rest of the methods
-            if (maySpawnAtPosition)
-            {
-                CheckCorridors(enemyPos);
-            }
-            if (maySpawnAtPosition)
-            {
-                CheckBlockingOfCorridors(enemyPos);
-            }
-            if (maySpawnAtPosition)
-            {
-                CheckSpecialCases(enemyPos);
-            }
             if (maySpawnAtPosition)
             {
                 CheckDistanceToPlayer(enemyPos);
@@ -572,9 +561,9 @@ public class DungeonCreator : MonoBehaviour
     private void CheckDistanceToPlayer(Vector3 pos)
     {
         // Loop through all the positions in a 3 × 3 grid around the given position
-        for (int x = -9; x <= 9; x++)
+        for (float x = -15; x <= 15; x += 1.5f)
         {
-            for (int z = -9; z <= 9; z++)
+            for (float z = -15; z <= 15; z += 1.5f)
             {
                 Vector3 position = new Vector3(pos.x + x, playerPos.y, pos.z + z);
 

@@ -51,6 +51,16 @@ public class DungeonCreator : MonoBehaviour
 
         if (firstTimeCreatingDungeon)
         {
+            // Store that the dungeon has been created once
+            if (scene == "Dungeon_PiPi")
+            {
+                PlayerPrefsManager.SetFirstTimePiPiDungeon(0);
+            }
+            else if (scene == "Dungeon_FaceBeer")
+            {
+                PlayerPrefsManager.SetFirstTimeFaceBeerDungeon(0);
+            }
+
             // Setup the maximum amount of enemies
             numberOfEnemies = Random.Range(minNumberOfEnemies, maxNumberOfEnemies + 1);
             spawnedEnemies = 0;
@@ -65,18 +75,8 @@ public class DungeonCreator : MonoBehaviour
             SpawnEnemies(numberOfEnemies);
             SaveLayoutOfWallsAndEndpoint();
             SaveLayoutOfEnemies();
-
-            // Store that the dungeon has been created once
-            if (scene == "Dungeon_PiPi")
-            {
-                PlayerPrefsManager.SetFirstTimePiPiDungeon(0);
-            }
-            else if (scene == "Dungeon_FaceBeer")
-            {
-                PlayerPrefsManager.SetFirstTimeFaceBeerDungeon(0);
-            }
         }
-        else
+        else if (!firstTimeCreatingDungeon)
         {
             // This is not the first time loading this dungeon, so we have to load the one we saved when we created it
             LoadLayout();
@@ -289,19 +289,6 @@ public class DungeonCreator : MonoBehaviour
     // Mehtod that spawns the endpoint
     private void SpawnEndpoint()
     {
-        /*int timesTriedToSpawn = 0;
-
-        // Jump here if spawning the endpoint failed
-        //TrySpawningEndPointAgain:
-
-        timesTriedToSpawn++;
-
-        if (timesTriedToSpawn == 20)
-        {
-            // RESET THE LEVEL
-            Reset();
-        }*/
-
         maySpawnAtPosition = true;
         float endPointXPos, endPointZPos;
 
@@ -357,8 +344,6 @@ public class DungeonCreator : MonoBehaviour
     // Checks if something will be spawned inside a wall
     private void CheckForWallTiles(Vector3 pos)
     {
-        Debug.Log("Trying to spawn something at position: " + pos);
-        Debug.Log("Tiletype is here (" + ((int)(pos.x)) + ", " + ((int)(pos.z)) + "): " + (TileType)tiles[(int)(pos.x / 3)][(int)(pos.z / 3)]);
         if (tiles[(int)(pos.x / 3)][(int)(pos.z / 3)] == TileType.Wall)
         {
             // Position is inside a wall

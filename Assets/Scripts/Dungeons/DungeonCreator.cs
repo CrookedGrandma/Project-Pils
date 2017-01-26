@@ -337,7 +337,6 @@ public class DungeonCreator : MonoBehaviour
         else
         {
             Reset();
-            //goto TrySpawningEndPointAgain;
         }
     }
 

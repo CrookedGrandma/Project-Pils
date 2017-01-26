@@ -299,7 +299,7 @@ public class StateHandler : MonoBehaviour {
             LRanOnce = true;
         }
         if (Time.time - timeL >= 1f && timeL != -1) {
-            EndText.text = "You were defeated by <i><color=#ffff66>" + e.Title + "</color></i>and dropped <i><color=#ffff66>" + moneylost() + " currency</color></i>." + "You didn't gain any <i><color=#ffff66>experience.</color></i>" + "\nCurrent Level: <i><color=#ffff66>" + XPManager.xpmanager.playerlvl_() + "</color></i>\nExperience till level-up: <i><color=#ffff66>" + XPManager.xpmanager.xptonext_() + "XP</color></i>";
+            EndText.text = "You were defeated by <i><color=#ffff66>" + e.Title + "</color></i> and dropped <i><color=#ffff66>" + moneylost() + " currency</color></i>." + "You didn't gain any <i><color=#ffff66>experience.</color></i>" + "\nCurrent Level: <i><color=#ffff66>" + XPManager.xpmanager.playerlvl_() + "</color></i>\nExperience till level-up: <i><color=#ffff66>" + XPManager.xpmanager.xptonext_() + "XP</color></i>";
             showEnterKey = true;
             if (Input.GetKeyDown(KeyCode.Return)) {
                 LoadLastScene();

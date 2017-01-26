@@ -28,6 +28,7 @@ public class Dungeon_Enemy : MonoBehaviour
 
     private void Update()
     {
+        //walk speed
         if (direction == WalkDirection.Up)
         {
             xVelocity = 0;

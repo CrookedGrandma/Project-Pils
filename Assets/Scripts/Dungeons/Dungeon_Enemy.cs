@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Dungeon_Enemy : MonoBehaviour
 {
-    public bool canBeFought = true;
-
     private GameObject player;
     private PlayerFSM playerFSM;
     private DungeonCreator dungeonCreator;
@@ -20,10 +18,11 @@ public class Dungeon_Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Player" && canBeFought)
+        if (other.name == "Player")
         {
             // Enter combat scene
-            canBeFought = false;
+            Destroy(gameObject);
+            dungeonCreator.SaveLayoutOfEnemies();
             PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
             PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
             SceneManager.LoadScene("Combat");
@@ -36,7 +35,8 @@ public class Dungeon_Enemy : MonoBehaviour
             }
             else if (SceneManager.GetActiveScene().name == "Dungeon_PiPi")
             {
-                playerFSM.Enemy = 4;
+                // playerFSM.Enemy = 3;         <-- Dit is degene die het moet worden als ie een sprite heeft
+                playerFSM.Enemy = 4;            // <-- Deze is van FaceBeer
                 playerFSM.Envi = 2;
             }
         }

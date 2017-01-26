@@ -9,11 +9,10 @@ public class DungeonCreator : MonoBehaviour
     public GameObject endPoint, enemy, wallTile;                            // Normal gameobjects for the endpoint and enemies and walltile
 
     private TileType[][] tiles;
-    private Vector3 playerPos = new Vector3(0.5f, 0.5f, 0.5f);              // Used to check the spawnpositions of other objects 
+    private Vector3 playerPos = new Vector3(1.5f, 1.5f, 1.5f);              // Used to check the spawnpositions of other objects 
     private Vector3 endPointPos;
     private Dungeon_Room[] rooms;
     private Dungeon_Corridor[] corridors;
-    private Dungeon_Enemy[] enemyArray;
     private GameObject dungeonHolder, enemyHolder;
     private int numberOfEnemies, spawnedEnemies, amountOfWallsInSave, amountOfEnemiesInSave;
     private bool firstTimeCreatingDungeon, maySpawnAtPosition;
@@ -25,15 +24,17 @@ public class DungeonCreator : MonoBehaviour
         scene = SceneManager.GetActiveScene().name;
 
         // Create the dungeonHolder and enemyHolder GameObjects if they not exist
-        if (!dungeonHolder)
+        if (dungeonHolder)
         {
-            dungeonHolder = new GameObject("DungeonHolder");
+            Destroy(dungeonHolder.gameObject);
         }
+        dungeonHolder = new GameObject("DungeonHolder");
 
-        if (!enemyHolder)
+        if (enemyHolder)
         {
-            enemyHolder = new GameObject("EnemyHolder");
+            Destroy(enemyHolder.gameObject);
         }
+        enemyHolder = new GameObject("EnemyHolder");
 
         if (scene == "Dungeon_PiPi")
         {
@@ -65,13 +66,6 @@ public class DungeonCreator : MonoBehaviour
             SaveLayoutOfWallsAndEndpoint();
             SaveLayoutOfEnemies();
 
-            // Fill the enemyarray with enemies and set their CanBeFought bool to true
-            enemyArray = GameObject.FindObjectsOfType<Dungeon_Enemy>();
-            foreach (Dungeon_Enemy enemy in enemyArray)
-            {
-                enemy.canBeFought = true;
-            }
-
             // Store that the dungeon has been created once
             if (scene == "Dungeon_PiPi")
             {
@@ -86,12 +80,14 @@ public class DungeonCreator : MonoBehaviour
         {
             // This is not the first time loading this dungeon, so we have to load the one we saved when we created it
             LoadLayout();
+        }
+    }
 
-            enemyArray = GameObject.FindObjectsOfType<Dungeon_Enemy>();
-            foreach (Dungeon_Enemy enemy in enemyArray)
-            {
-                enemy.canBeFought = true;
-            }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reset();
         }
     }
 
@@ -361,6 +357,8 @@ public class DungeonCreator : MonoBehaviour
     // Checks if something will be spawned inside a wall
     private void CheckForWallTiles(Vector3 pos)
     {
+        Debug.Log("Trying to spawn something at position: " + pos);
+        Debug.Log("Tiletype is here (" + ((int)(pos.x)) + ", " + ((int)(pos.z)) + "): " + (TileType)tiles[(int)(pos.x / 3)][(int)(pos.z / 3)]);
         if (tiles[(int)(pos.x / 3)][(int)(pos.z / 3)] == TileType.Wall)
         {
             // Position is inside a wall
@@ -648,6 +646,8 @@ public class DungeonCreator : MonoBehaviour
     {
         // Store the position of each wall
         int indexOfWalls = 0;
+        amountOfWallsInSave = 0;
+
         foreach (Transform wall in dungeonHolder.transform)
         {
             // Loop through all the walls in the dungeonHolder and store the X and Z coordinates. The Y has a constant value, so we don't save this
@@ -672,11 +672,13 @@ public class DungeonCreator : MonoBehaviour
         }
     }
 
-    // Saves the locations of the enemies. Different method, because it will probably be used in another script
-    private void SaveLayoutOfEnemies()
+    // Saves the locations of the enemies. Different method, because it is used in Dungeon_Enemy.cs
+    public void SaveLayoutOfEnemies()
     {
         // Store the position of each enemy
         int indexOfEnemies = 0;
+        amountOfEnemiesInSave = 0;
+
         foreach (Transform enemy in enemyHolder.transform)
         {
             // Loop through each enemy in enemyHolder and store its X and Z coordinates. The Y has a constant value, so we don't store this.

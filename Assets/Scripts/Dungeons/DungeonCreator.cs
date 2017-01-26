@@ -582,9 +582,9 @@ public class DungeonCreator : MonoBehaviour
     private void CheckDistanceToEndPoint(Vector3 pos)
     {
         // Loop through all the positions in a 2 × 2 grid around the given position
-        for (int x = -6; x <= 6; x++)
+        for (float x = -6; x <= 6; x += 1.5f)
         {
-            for (int z = -6; z <= 6; z++)
+            for (float z = -6; z <= 6; z += 1.5f)
             {
                 Vector3 position = new Vector3(pos.x + x, endPointPos.y, pos.z + z);
 

@@ -26,4 +26,13 @@ public class LevelManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+
+    ///<summary>
+    /// Method that loads the saved game
+    public void LoadSavedGame()
+    {
+        SceneManager.LoadScene(PlayerPrefsManager.GetSavedScene());
+        GameObject player = GameObject.Find("Player");
+        player.transform.position = PlayerPrefsManager.GetSavedPosition();
+    }
 }

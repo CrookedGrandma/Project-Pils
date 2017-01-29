@@ -48,12 +48,14 @@ public class PauseScene : MonoBehaviour
 
     public void SaveGame()
     {
-        // SAVES THE GAME, DOES NOTHING AT THE MOMENT
+        PlayerPrefsManager.SetSavedScene(PlayerPrefsManager.GetCurrentScene());
+        PlayerPrefsManager.SetSavedPosition(PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player));
     }
 
     public void LoadGame()
     {
-        // LOADS THE GAME, DOES NOTHING AT THE MOMENT
+        SceneManager.LoadScene(PlayerPrefsManager.GetSavedScene());
+        player.transform.position = PlayerPrefsManager.GetSavedPosition();
     }
 
     public void ExitToMainMenu()

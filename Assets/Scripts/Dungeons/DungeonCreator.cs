@@ -18,6 +18,9 @@ public class DungeonCreator : MonoBehaviour
     private bool firstTimeCreatingDungeon, maySpawnAtPosition;
     private string scene;
 
+
+    private bool EndpointPlaced;
+
     private void Start()
     {
         // Set string scene to the current scene
@@ -70,24 +73,19 @@ public class DungeonCreator : MonoBehaviour
             CreateRoomsAndCorridors();
             SetTilesInRooms();
             SetTilesInCorridors();
-            InstantiateTiles();
             SpawnEndpoint();
-            SpawnEnemies(numberOfEnemies);
-            SaveLayoutOfWallsAndEndpoint();
-            SaveLayoutOfEnemies();
+            if (EndpointPlaced)
+            {
+                InstantiateTiles();
+                SpawnEnemies(numberOfEnemies);
+                SaveLayoutOfWallsAndEndpoint();
+                SaveLayoutOfEnemies();
+            }
         }
         else if (!firstTimeCreatingDungeon)
         {
             // This is not the first time loading this dungeon, so we have to load the one we saved when we created it
             LoadLayout();
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Reset();
         }
     }
 
@@ -611,6 +609,7 @@ public class DungeonCreator : MonoBehaviour
     private void SpawnEndPoint(Vector3 pos)
     {
         Instantiate(endPoint, pos, Quaternion.identity);
+        EndpointPlaced = true;
     }
     #endregion
 

@@ -29,6 +29,8 @@ public class PlayerPrefsManager : MonoBehaviour
     const string AMOUNT_OF_ENEMIES_IN_DUNGEON_FACEBEER_KEY = "amount_of_enemies_in_dungeon_facebeer";
     const string ENDPOINTPOS_DUNGEON_PIPI_KEY = "endpointpos_dungeon_pipi_";
     const string ENDPOINTPOS_DUNGEON_FACEBEER_KEY = "endpointpos_dungeon_facebeer_";
+    const string SAVE_GAME_CURRENT_SCENE_KEY = "save_game_current_scene";
+    const string SAVE_GAME_CURRENT_POSITION_KEY = "save_game_current_position_";
 
     // Sets the music volume to the float given
     public static void SetMusicVolume(float volume)
@@ -148,6 +150,35 @@ public class PlayerPrefsManager : MonoBehaviour
     public static string GetCurrentScene()
     {
         return PlayerPrefs.GetString(CURRENT_SCENE_KEY);
+    }
+
+    // Saves the current scene for the ingame save button
+    public static void SetSavedScene(string scene)
+    {
+        PlayerPrefs.SetString(SAVE_GAME_CURRENT_SCENE_KEY, scene);
+    }
+
+    // Gets the saved scene for the ingame load button
+    public static string GetSavedScene()
+    {
+        return PlayerPrefs.GetString(SAVE_GAME_CURRENT_SCENE_KEY);
+    }
+    
+    // Saves the current playerposition for the ingame save button
+    public static void SetSavedPosition(Vector3 position)
+    {
+        PlayerPrefs.SetFloat(SAVE_GAME_CURRENT_POSITION_KEY + "x", position.x);
+        PlayerPrefs.SetFloat(SAVE_GAME_CURRENT_POSITION_KEY + "y", position.y);
+        PlayerPrefs.SetFloat(SAVE_GAME_CURRENT_POSITION_KEY + "z", position.z);
+    }
+
+    // Gets te saved position for the ingame load button
+    public static Vector3 GetSavedPosition()
+    {
+        float x = PlayerPrefs.GetFloat(SAVE_GAME_CURRENT_POSITION_KEY + "x");
+        float y = PlayerPrefs.GetFloat(SAVE_GAME_CURRENT_POSITION_KEY + "y");
+        float z = PlayerPrefs.GetFloat(SAVE_GAME_CURRENT_POSITION_KEY + "z");
+        return new Vector3(x, y, z);
     }
 
     #region Dungeons

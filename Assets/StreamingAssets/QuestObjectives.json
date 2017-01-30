@@ -82,5 +82,17 @@
     "type": "bool",
     "description": "Find the server room",
     "goal": "0.0"
+  },
+  {
+    "identifier": "Quest013KillServer",
+    "type": "bool",
+    "description": "Kill the server",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest014FuckAbout",
+    "type": "bool",
+    "description": "Fuck about",
+    "goal": "0.0"
   }
 ]

@@ -182,6 +182,18 @@ public class StateHandler : MonoBehaviour {
                         }
                     }
 
+                    if(e.ID == 7)
+                    {
+                        if (GameManager.instance.questManager.questLog.ContainsKey("Quest013"))
+                        {
+                            if (!GameManager.instance.questManager.questLog["Quest013"].QuestCompleted())
+                            {
+                                GameManager.instance.questManager.CompleteObjective("Quest013KillServer");
+                                GameManager.instance.questManager.AddQuestToLog("Quest014");
+                            }
+                        }
+                    }
+
                     Win();
                 }
             }

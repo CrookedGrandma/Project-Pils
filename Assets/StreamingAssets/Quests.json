@@ -82,5 +82,17 @@
     "title": "Hackerman",
     "objectives": "Quest012FindServerRoom",
     "dialogue": "He said no. He doesn't seem to be paying attention though. Just try and walk in."
+  },
+  {
+    "identifier": "Quest013",
+    "title": "FaceToFaceTM",
+    "objectives": "Quest013KillServer",
+    "dialogue": "You found the server. Time for some quality destruction."
+  },
+  {
+    "identifier": "Quest014",
+    "title": "The End",
+    "objectives": "Quest014FuckAbout",
+    "dialogue": "You destroyed the server and completed your objective! Thanks for playing!"
   }
 ]

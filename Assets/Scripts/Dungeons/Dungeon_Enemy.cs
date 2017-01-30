@@ -91,7 +91,7 @@ public class Dungeon_Enemy : MonoBehaviour
         {
             // Enter combat scene
             Destroy(gameObject);
-            dungeonCreator.SaveLayoutOfEnemies();
+            if (SceneManager.GetActiveScene().name != "TheVergeInn" && SceneManager.GetActiveScene().name != "PiPi") { dungeonCreator.SaveLayoutOfEnemies(); }
             PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
             PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
             SceneManager.LoadScene("Combat");
@@ -106,6 +106,17 @@ public class Dungeon_Enemy : MonoBehaviour
             {
                 playerFSM.Enemy = 3;
                 playerFSM.Envi = 2;
+            } else if(SceneManager.GetActiveScene().name == "TheVergeInn" || SceneManager.GetActiveScene().name == "PiPi")
+            {
+                if (GameManager.instance.questManager.questLog.ContainsKey("Quest009") && SceneManager.GetActiveScene().name == "PiPi")
+                {
+                    playerFSM.Enemy = 6;
+                    playerFSM.Envi = 2;
+                } else
+                {
+                    playerFSM.Enemy = 5;
+                    playerFSM.Envi = 2;
+                }
             }
         }
     }

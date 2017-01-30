@@ -46,5 +46,41 @@
     "type": "bool",
     "description": "Defeat Noni",
     "goal": "0.0"
+  },
+  {
+    "identifier": "Quest007GoToPiPiHQ",
+    "type": "bool",
+    "description": "Go to Pi Pi HQ",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest008DefeatNoni",
+    "type": "bool",
+    "description": "Defeat Noni (again)",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest009FindDefeatMeemstar",
+    "type": "bool",
+    "description": "Find and defeat Meemstar",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest010FindFacebeer",
+    "type": "bool",
+    "description": "Find the FaceBeer building",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest011TalkToLobby",
+    "type": "bool",
+    "description": "Talk to the lobby guy",
+    "goal": "0.0"
+  },
+  {
+    "identifier": "Quest012FindServerRoom",
+    "type": "bool",
+    "description": "Find the server room",
+    "goal": "0.0"
   }
 ]

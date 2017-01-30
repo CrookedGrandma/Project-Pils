@@ -147,6 +147,41 @@ public class StateHandler : MonoBehaviour {
                     NextState();
                 }
                 else if (healthManager.GetHealth_e() <= 0) {
+
+                    if(e.ID == 5)
+                    {
+
+                        if (GameManager.instance.questManager.questLog.ContainsKey("Quest006"))
+                        {
+                            if (!GameManager.instance.questManager.questLog["Quest006"].QuestCompleted())
+                            {
+                                GameManager.instance.questManager.CompleteObjective("Quest006DefeatNoni");
+                                GameManager.instance.questManager.AddQuestToLog("Quest007");
+                            }
+                        }
+
+                        if (GameManager.instance.questManager.questLog.ContainsKey("Quest008"))
+                        {
+                            if (!GameManager.instance.questManager.questLog["Quest008"].QuestCompleted())
+                            {
+                                GameManager.instance.questManager.CompleteObjective("Quest008DefeatNoni");
+                                GameManager.instance.questManager.AddQuestToLog("Quest009");
+                            }
+                        }
+                    }
+
+                    if(e.ID == 6)
+                    {
+                        if (GameManager.instance.questManager.questLog.ContainsKey("Quest009"))
+                        {
+                            if (!GameManager.instance.questManager.questLog["Quest009"].QuestCompleted())
+                            {
+                                GameManager.instance.questManager.CompleteObjective("Quest009FindDefeatMeemstar");
+                                GameManager.instance.questManager.AddQuestToLog("Quest010");
+                            }
+                        }
+                    }
+
                     Win();
                 }
             }

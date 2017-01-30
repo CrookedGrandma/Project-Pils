@@ -15,7 +15,7 @@
     "completesQuest": "Quest003SpeakWithIan",
     "owner": "Ian"
   },
-   {
+  {
     "identifier": "Quest003IanResponseTwo",
     "text": "...",
     "response": "Yeah that's what I thought",
@@ -23,5 +23,21 @@
     "triggersQuest": "Quest004",
     "completesQuest": "Quest003SpeakWithIan",
     "owner": "Ian"
+  },
+  {
+    "identifier": "Quest011LobbyDialogue",
+    "text": "Hi there",
+    "response": "Hi, how can I help you?",
+    "responses": "Quest011LobbyResponseOne",
+    "owner": "Lobby Guy"
+  },
+  {
+    "identifier": "Quest011LobbyResponseOne",
+    "text": "I'd like to take a look in the server room",
+    "response": "No, sorry, not allowed.",
+    "responses": "",
+    "owner": "Lobby Guy",
+    "completesQuest": "Quest011TalkToLobby",
+    "triggersQuest": "Quest012"
   }
 ]

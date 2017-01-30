@@ -127,6 +127,49 @@ public class LoadLevel : MonoBehaviour
             }
         }
 
+        if(SceneManager.GetActiveScene().name == "Market" && levelName == "PiPiOutside")
+        {
+            if (!GameManager.instance.questManager.questLog.ContainsKey("Quest007"))
+            {
+                Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You can't go here yet!");
+                GameManager.instance.messageQueue.Add(m);
+                return;
+            }
+        }
+
+        if (SceneManager.GetActiveScene().name == "Market" && levelName == "FaceBeerOutside")
+        {
+            if (!GameManager.instance.questManager.questLog.ContainsKey("Quest010"))
+            {
+                Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You can't go here yet!");
+                GameManager.instance.messageQueue.Add(m);
+                return;
+            }
+        }
+
+        if (SceneManager.GetActiveScene().name == "FaceBeerLobby" && levelName == "Dungeon_FaceBeer")
+        {
+            if (!GameManager.instance.questManager.questLog.ContainsKey("Quest012"))
+            {
+                Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You can't go here yet!");
+                GameManager.instance.messageQueue.Add(m);
+                return;
+            }
+        }
+
+        if (SceneManager.GetActiveScene().name == "Woonplaats" && levelName == "Market")
+        {
+            if (!GameManager.instance.questManager.questLog.ContainsKey("Quest004"))
+            {
+                Message m = new Message(GameManager.instance.questManager, GameManager.instance.dialogueManager, MsgType.Dialogue, "You can't go here yet!");
+                GameManager.instance.messageQueue.Add(m);
+                return;
+            }
+        }
+
+
+
+
         GameManager.instance.cutscene.SetText("");
         GameManager.instance.cutscene.FadeInPanel(true);
 

@@ -68,7 +68,7 @@
 		"id": 5,
 		"title": "Noni",
 		"type": "2attack",
-    "hp": 35,
+    "hp": 15,
     "strength": 50,
 		"attack1title": "Be drunk",
 		"attack1damage": 1,
@@ -94,13 +94,13 @@
 		"id": 7,
 		"title": "FaceBeer Main Server",
 		"type": "server",
-    "hp": 200,
+    "hp": 350,
     "strength": 50,
 		"attack1title": "Do a meme",
-		"attack1damage": 15,
+		"attack1damage": 25,
 		"attack1scaling": 0.4,
 		"attack2title": "Hack firewall",
-		"attack2damage": 18,
+		"attack2damage": 30,
 		"attack2scaling": 0.5
 	}
 ]

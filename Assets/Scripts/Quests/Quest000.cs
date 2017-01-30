@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Quest000 : MonoBehaviour {
 
-    void OnTriggerEnter()
+    private void OnTriggerEnter(Collider other)
     {
-        GameManager.instance.questManager.CompleteObjective("Quest000GetUp");
+        if (other.name == "Player")
+        {
+            GameManager.instance.questManager.CompleteObjective("Quest000GetUp");
 
-        GameManager.instance.questManager.AddQuestToLog("Quest001");
+            GameManager.instance.questManager.AddQuestToLog("Quest001");
+        }
     }
-
 }

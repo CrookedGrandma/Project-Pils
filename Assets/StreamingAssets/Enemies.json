@@ -92,7 +92,7 @@
 	},
 	{
 		"id": 7,
-		"title": "FaceBeer™ Main Server",
+		"title": "FaceBeer Main Server",
 		"type": "server",
     "hp": 200,
     "strength": 50,

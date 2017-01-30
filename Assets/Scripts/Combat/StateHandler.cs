@@ -38,6 +38,7 @@ public class StateHandler : MonoBehaviour {
     public AbilityChooser abilityChooser;
     public GameObject enterKey;
     public Text EndText;
+    public Sprite[] listOfSprites = new Sprite[9];
 
 	// Use this for initialization
 	void Start () {
@@ -317,9 +318,7 @@ public class StateHandler : MonoBehaviour {
     }
 
     private void ChangeServerSprite() {
-        int rndSprite = Random.Range(1, 9);
-        string spriteToLoad = "/Sprites/Server/Meme" + rndSprite;
-        Sprite sprite = Resources.Load(spriteToLoad, typeof(Sprite)) as Sprite;
+        Sprite sprite = listOfSprites[Random.Range(0, listOfSprites.Length)];
         server.GetComponent<Image>().overrideSprite = sprite;
     }
 

@@ -180,7 +180,7 @@ public class Inventory : MonoBehaviour {
                     damage += itemData.item.Attack;
                     defence += itemData.item.Defence;
                     health += itemData.item.Health;
-                    equipDamage += ItemData.item.Attack;
+                    equipDamage += itemData.item.Attack;
                     setCounter[i] = itemData.item.Set;
                 }
             }

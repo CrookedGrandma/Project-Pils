@@ -6,9 +6,12 @@ using UnityEngine.SceneManagement;
 public class PauseScene : MonoBehaviour
 {
     public GameObject confirmationPanel;
+    public GameObject gameSavedPanel;
     public bool inPauseMenu;
 
     private bool confirmationpanelVisible;
+    private bool savedGamePanelVisible;
+    private float countDown = -1;
     private GameObject player;
     private PersistentInventoryScript inventory;
 
@@ -17,6 +20,7 @@ public class PauseScene : MonoBehaviour
         player = GameObject.Find("Player");
         inventory = GameObject.FindObjectOfType<PersistentInventoryScript>();
         SetConfirmationScreenInvisible();
+        SetSavedGamePanelInvisible();
         inPauseMenu = true;
     }
 
@@ -25,6 +29,18 @@ public class PauseScene : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && !confirmationpanelVisible && inPauseMenu)
         {
             ExitPauseMenu();
+        }
+
+        if (savedGamePanelVisible)
+        {
+            if (countDown > 0)
+            {
+                countDown -= Time.deltaTime;
+            }
+            if (countDown <= 0)
+            {
+                SetSavedGamePanelInvisible();
+            }
         }
     }
 
@@ -54,7 +70,11 @@ public class PauseScene : MonoBehaviour
         PlayerPrefsManager.SetSavedPosition(PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player));
         PlayerPrefsManager.SetSavedPlayerXP(XPManager.xpmanager.playerxp);
         PlayerPrefsManager.SetSavedCurrency(PersistentInventoryScript.instance.Currency);
+        PlayerPrefsManager.SetSavedCurrentHealth((int)PlayerPrefsManager.GetPlayerHealth());
         SaveInventoryItems();
+
+        SetSavedGamePanelVisible();
+        countDown = 1;
     }
 
     public void LoadGame()
@@ -63,6 +83,7 @@ public class PauseScene : MonoBehaviour
         player.transform.position = PlayerPrefsManager.GetSavedPosition();
         XPManager.xpmanager.playerxp = PlayerPrefsManager.GetSavedPlayerXP();
         PersistentInventoryScript.instance.Currency = PlayerPrefsManager.GetSavedCurrency();
+        PlayerPrefsManager.SetPlayerHealth(PlayerPrefsManager.GetSavedCurrentHealth());
         LoadInventoryItems();
     }
 
@@ -92,6 +113,18 @@ public class PauseScene : MonoBehaviour
     {
         confirmationPanel.SetActive(true);
         confirmationpanelVisible = true;
+    }
+
+    private void SetSavedGamePanelInvisible()
+    {
+        gameSavedPanel.SetActive(false);
+        savedGamePanelVisible = false;
+    }
+
+    private void SetSavedGamePanelVisible()
+    {
+        gameSavedPanel.SetActive(true);
+        savedGamePanelVisible = true;
     }
 
     private void SaveInventoryItems()

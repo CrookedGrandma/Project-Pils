@@ -68,13 +68,13 @@
 		"id": 5,
 		"title": "Noni",
 		"type": "2attack",
-    "hp": 60,
+    "hp": 35,
     "strength": 50,
 		"attack1title": "Be drunk",
-		"attack1damage": 2,
+		"attack1damage": 1,
 		"attack1scaling": 0.1,
 		"attack2title": "Be drunk and try to hit you",
-		"attack2damage": 4,
+		"attack2damage": 2,
 		"attack2scaling": 0.25
 	},
 	{

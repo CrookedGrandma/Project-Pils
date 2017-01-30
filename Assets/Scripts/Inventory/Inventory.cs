@@ -31,6 +31,7 @@ public class Inventory : MonoBehaviour {
     private int damage;
     private int defence;
     private int health;
+    private int equipDamage;
     //volgorde : dumpster, medieval, gentleman, arabic, mexican, chinese, sports,
     private int[] setArray = new int[7];
 
@@ -179,6 +180,7 @@ public class Inventory : MonoBehaviour {
                     damage += itemData.item.Attack;
                     defence += itemData.item.Defence;
                     health += itemData.item.Health;
+                    equipDamage += ItemData.item.Attack;
                     setCounter[i] = itemData.item.Set;
                 }
             }
@@ -210,6 +212,7 @@ public class Inventory : MonoBehaviour {
         }
         CreateSets();
         persistentInventory.itemDamage = damage;
+        persistentInventory.EquipmentDamage = equipDamage;
         persistentInventory.itemDefense = defence;
         persistentInventory.itemHealth = health;
         stats = "Attack: " + damage + "\nDefense: " + defence + "\nHealth from items: " + health + "\nBase health: " + XPManager.xpmanager.Health() + "\nTotal health: " + (XPManager.xpmanager.Health() + health) + "\nCurrent Level: " + XPManager.xpmanager.playerlvl_() + "\nXP to next level: " + XPManager.xpmanager.xptonext_();
@@ -242,16 +245,19 @@ public class Inventory : MonoBehaviour {
                 sets += "<color=#FFFFFF>Bonus: 10 Defence, 10 Damage</color>";
                 defence += 10;
                 damage += 10;
+                equipDamage += 10;
             }
             if (setArray[0] == 5) {
                 sets += "<color=#FFFFFF>Bonus: 20 Defence, 20 Damage</color>";
                 defence += 20;
                 damage += 20;
+                equipDamage += 20;
             }
             if (setArray[0] == 6) {
                 sets += "<color=#FFFFFF>Bonus: 50 Defence, 20 Damage</color";
                 defence += 50;
                 damage += 20;
+                equipDamage += 20;
             }
         }
         //Medieval set
@@ -265,24 +271,28 @@ public class Inventory : MonoBehaviour {
                 sets += "<color=#FFFFFF>Bonus: 20 Defence, -5 Damage </color>";
                 defence += 10;
                 damage -= 5;
+                equipDamage -= 5;
             }
             if (setArray[1] == 4) {
                 sets += "<color=#FFFFFF>Bonus: 30 Defence, 30 Health, -10 Damage</color>";
                 defence += 30;
                 health += 30;
                 damage -= 10;
+                equipDamage -= 10;
             }
             if (setArray[1] == 5) {
                 sets += "<color=#FFFFFF>Bonus: 50 Defence, 50 Health, -20 Damage</color>";
                 defence += 50;
                 health += 50;
                 damage -= 20;
+                equipDamage -= 20;
             }
             if (setArray[1] == 6) {
                 sets += "<color=#FFFFFF>Bonus: 100 Defence, 50 Health, -30 Damage</color>";
                 defence += 100;
                 health += 50;
                 damage -= 30;
+                equipDamage -= 30;
             }
         }
         //Gentleman
@@ -293,30 +303,35 @@ public class Inventory : MonoBehaviour {
                 defence += 5;
                 damage += 5;
                 health += 5;
+                equipDamage += 5;
             }
             if (setArray[2] == 3) {
                 sets += "<color=#FFFFFF>Bonus: 10 Damage, 10 Defence, 10 Health</color>";
                 defence += 10;
                 damage += 10;
                 health += 10;
+                equipDamage += 10;
             }
             if (setArray[2] == 4) {
                 sets += "<color=#FFFFFF>Bonus: 15 Damage, 15 Defence, 15 Health</color>";
                 defence += 15;
                 damage += 15;
                 health += 15;
+                equipDamage += 15;
             }
             if (setArray[2] == 5) {
                 sets += "<color=#FFFFFF>Bonus: 20 Damage, 20 Defence, 20 Health</color>";
                 defence += 20;
                 damage += 20;
                 health += 20;
+                equipDamage += 20;
             }
             if (setArray[2] == 6) {
                 sets += "<color=#FFFFFF>Bonus: 30 Damage, 30 Defence, 30 Health</color>";
                 defence += 30;
                 damage += 30;
                 health += 30;
+                equipDamage += 30;
             }
         }
         //Arabic
@@ -326,24 +341,28 @@ public class Inventory : MonoBehaviour {
                 sets += "<color=#FFFFFF>Bonus: 5 Damage, 5 Health</color>";
                 damage += 15;
                 health += 5;
+                equipDamage += 15;
             }
             if (setArray[3] == 4) {
                 sets += "<color=#FFFFFF>Bonus: 20 Damage, 15 Health, 10 Defence</color>";
                 defence += 10;
                 damage += 20;
                 health += 15;
+                equipDamage += 20;
             }
             if (setArray[3] == 5) {
                 sets += "<color=#FFFFFF>Bonus: 25 Damage, 20 Health, 15 Defence</color>";
                 defence += 15;
                 damage += 25;
                 health += 20;
+                equipDamage += 25;
             }
             if (setArray[3] == 6) {
                 sets += "<color=#FFFFFF>Bonus: 30 Damage, 25 Health, 20 Defence</color>";
                 defence += 20;
                 damage += 30;
                 health += 25;
+                equipDamage += 30;
             }
         }
         //Mexican
@@ -360,6 +379,7 @@ public class Inventory : MonoBehaviour {
             if (setArray[4] == 4) {
                 sets += "<color=#FFFFFF>Bonus: 40 Health, -10 Damage</color>";
                 damage -= 10;
+                equipDamage -= 10;
                 health += 40;
             }
             if (setArray[4] == 5) {
@@ -367,12 +387,14 @@ public class Inventory : MonoBehaviour {
                 defence -= 5;
                 damage -= 10;
                 health += 60;
+                equipDamage -= 10;
             }
             if (setArray[4] == 6) {
                 sets += "<color=#FFFFFF>Bonus: 100 Health, -20 Damage, -10 Defense</color>";
                 defence -= 10;
                 damage -= 20;
                 health += 100;
+                equipDamage -= 10;
             }
         }
         //Chinese
@@ -381,25 +403,30 @@ public class Inventory : MonoBehaviour {
             if (setArray[5] == 2) {
                 sets += "<color=#FFFFFF>Bonus: 10 Damage</color>";
                 damage += 10;
+                equipDamage += 10;
             }
             if (setArray[5] == 3) {
                 sets += "<color=#FFFFFF>Bonus: 20 Damage</color>";
                 damage += 20;
+                equipDamage += 20;
             }
             if (setArray[5] == 4) {
                 sets += "<color=#FFFFFF>Bonus: 40 Damage, -5 Health</color>";
                 damage += 40;
                 health -= 5;
+                equipDamage += 40;
             }
             if (setArray[5] == 5) {
                 sets += "<color=#FFFFFF>Bonus: 70 Damage, , -15 Health, -15 Defense</color>";
                 defence -= 15;
                 damage += 70;
                 health -= 15;
+                equipDamage += 70;
             }
             if (setArray[5] == 6) {
                 sets += "<color=#FFFFFF>Bonus: 70 Damage</color>";
                 damage += 70;
+                equipDamage += 70;
             }
         }
         //Sports
@@ -413,21 +440,25 @@ public class Inventory : MonoBehaviour {
                 sets += "<color=#FFFFFF>Bonus: 20 Health, 5 Damage</color>";
                 health += 20;
                 damage += 5;
+                equipDamage += 5;
             }
             if (setArray[6] == 4) {
                 sets += "<color=#FFFFFF>Bonus: 30 Health, 10 Damage</color>";
                 damage += 10;
                 health += 30;
+                equipDamage += 10;
             }
             if (setArray[6] == 5) {
                 sets += "<color=#FFFFFF>Bonus: 50 Health, 10 Damage</color>";
                 health += 50;
                 damage += 10;
+                equipDamage += 10;
             }
             if (setArray[6] == 6) {
                 sets += "<color=#FFFFFF>Bonus: 80 Health, 10 Damage</color>";
                 health += 80;
                 damage += 10;
+                equipDamage += 10;
             }
         }
         InventorySets.GetComponent<Text>().supportRichText = true;

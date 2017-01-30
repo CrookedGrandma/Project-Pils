@@ -14,6 +14,7 @@ public class PersistentInventoryScript : MonoBehaviour {
     public bool InShop;
     public string shopType;
     public int itemDamage { get; set; }
+    public int EquipmentDamage { get; set; }
     public int itemDefense { get; set; }
     public int itemHealth { get; set; }
     public int Currency { get; set; }

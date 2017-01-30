@@ -124,6 +124,12 @@ public class PlayerFSM : Entity
         // Go to the pause menu, if you are not in one of the levels
         if (Input.GetKeyDown(KeyCode.Escape) && scene != "Pause" && scene != "Inventory" && scene != "Shop" && scene != "MainMenu" && scene != "Options" && scene != "Combat")
         {
+            if (scene == "Dungeon_PiPi" || scene == "Dungeon_FaceBeer")
+            {
+                DungeonCreator dungeonCreator = GameObject.FindObjectOfType<DungeonCreator>();
+                dungeonCreator.SaveLayoutOfEnemies();
+            }
+
             PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);
             PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, playerObj);
             SceneManager.LoadScene("Pause");

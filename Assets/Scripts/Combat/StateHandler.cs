@@ -30,6 +30,7 @@ public class StateHandler : MonoBehaviour {
     private Color enterKeyColor;
     private Enemy e;
     private GameObject player;
+    private EnemySprite server;
 
     public EnemyChooser enemyChooser;
     public HealthManager healthManager;
@@ -37,6 +38,7 @@ public class StateHandler : MonoBehaviour {
     public AbilityChooser abilityChooser;
     public GameObject enterKey;
     public Text EndText;
+    public Sprite[] listOfSprites = new Sprite[9];
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +47,12 @@ public class StateHandler : MonoBehaviour {
         enterKeyColor.a = 0f;
         enterKey.GetComponent<Image>().color = enterKeyColor;
         player = GameObject.Find("Player");
+        EnemySprite[] listOfEnemies = FindObjectsOfType<EnemySprite>();
+        foreach (EnemySprite i in listOfEnemies) {
+            if (i.ID == 7) {
+                server = i;
+            }
+        }
     }
 	
 	// Update is called once per frame
@@ -112,6 +120,11 @@ public class StateHandler : MonoBehaviour {
                     NextState();
                 }
             }
+            if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.LeftArrow)) && healing) {
+                healing = false;
+                abilityChooser.WhiteHealText(false);
+                abilityChooser.SelectAbility(3);
+            }
         }
 
         if (state == States.PLAYERMOVE) {
@@ -148,16 +161,32 @@ public class StateHandler : MonoBehaviour {
             else {
                 if (flashTimer >= 0.9) {
                     if (attNum == 1) {
-                        enemyChooser.enemyStat.text = "<color=red>Attack 1: " + e.Attack1Title + "\n" +
-                                                      "Damage: " + e.Attack1Damage + "</color>\n" +
-                                                      "Attack 2: " + e.Attack2Title + "\n" +
-                                                      "Damage: " + e.Attack2Damage;
+                        if (e.Type != "server") {
+                            enemyChooser.enemyStat.text = "<color=red>Attack 1: " + e.Attack1Title + "\n" +
+                                                          "Damage: " + e.Attack1Damage + "</color>\n" +
+                                                          "Attack 2: " + e.Attack2Title + "\n" +
+                                                          "Damage: " + e.Attack2Damage;
+                        }
+                        else {
+                            enemyChooser.enemyStat.text = "<color=red>Attack 1: " + e.Attack1Title + "\n" +
+                                                          "Damage: ???</color>\n" +
+                                                          "Attack 2: " + e.Attack2Title + "\n" +
+                                                          "Damage: " + e.Attack2Damage;
+                        }
                     }
                     if (attNum == 2) {
-                        enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
-                                                      "Damage: " + e.Attack1Damage + "\n" +
-                                                      "<color=red>Attack 2: " + e.Attack2Title + "\n" +
-                                                      "Damage: " + e.Attack2Damage + "</color>";
+                        if (e.Type != "server") {
+                            enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
+                                                          "Damage: " + e.Attack1Damage + "\n" +
+                                                          "<color=red>Attack 2: " + e.Attack2Title + "\n" +
+                                                          "Damage: " + e.Attack2Damage + "</color>";
+                        }
+                        else {
+                            enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
+                                                          "Damage: ???\n" +
+                                                          "<color=red>Attack 2: " + e.Attack2Title + "\n" +
+                                                          "Damage: " + e.Attack2Damage + "</color>";
+                        }
                     }
                 }
                 if (flashTimer <= 0.1) {
@@ -178,7 +207,13 @@ public class StateHandler : MonoBehaviour {
             WhiteText();
             if (!EMRanOnce) {
                 if (attNum == 1) {
-                    healthManager.LoseHealth(e.Attack1Damage);
+                    if (e.Type != "server") {
+                        healthManager.LoseHealth(e.Attack1Damage);
+                    }
+                    else {
+                        healthManager.LoseHealth(e.Attack1Damage + Random.Range(-10, 10));
+                        ChangeServerSprite();
+                    }
                 }
                 if (attNum == 2) {
                     healthManager.LoseHealth(e.Attack2Damage);
@@ -195,8 +230,6 @@ public class StateHandler : MonoBehaviour {
                 }
             }
         }
-
-
 
         if (showEnterKey) {
             if (enterKeyColor.a < 1f) {
@@ -230,8 +263,8 @@ public class StateHandler : MonoBehaviour {
         int attackNum = 0;
         int a1d = e.Attack1Damage;
         int a2d = e.Attack2Damage;
-        int a3d = e.Attack3Damage;
-        int totalDam = a1d + a2d + a3d;
+        //int a3d = e.Attack3Damage;
+        int totalDam = a1d + a2d/* + a3d*/;
 
         int rndAtt = Random.Range(0, totalDam);
         if (rndAtt <= a1d) { attackNum = 1; }
@@ -242,10 +275,18 @@ public class StateHandler : MonoBehaviour {
     }
 
     private void WhiteText() {
-        enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
-                                      "Damage: " + e.Attack1Damage + "\n" +
-                                      "Attack 2: " + e.Attack2Title + "\n" +
-                                      "Damage: " + e.Attack2Damage;
+        if (e.Type != "server") {
+            enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
+                                          "Damage: " + e.Attack1Damage + "\n" +
+                                          "Attack 2: " + e.Attack2Title + "\n" +
+                                          "Damage: " + e.Attack2Damage;
+        }
+        else {
+            enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
+                                          "Damage: ???\n" +
+                                          "Attack 2: " + e.Attack2Title + "\n" +
+                                          "Damage: " + e.Attack2Damage;
+        }
     }
 
     private void NextState() {
@@ -274,6 +315,11 @@ public class StateHandler : MonoBehaviour {
     private int moneylost() {
         float moneylost_ = PersistentInventoryScript.instance.Currency - PersistentInventoryScript.instance.Currency * 0.15f;
         return (int)moneylost_;
+    }
+
+    private void ChangeServerSprite() {
+        Sprite sprite = listOfSprites[Random.Range(0, listOfSprites.Length)];
+        server.GetComponent<Image>().overrideSprite = sprite;
     }
 
     private void Win() {

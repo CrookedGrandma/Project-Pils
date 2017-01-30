@@ -164,21 +164,5 @@ public class LoadLevel : MonoBehaviour
 
         GameManager.instance.cutscene.FadeOutPanel();
     }
-
-    public void LoadStartLevel()
-    {
-        // Store the playerposition in the current level
-        PlayerPrefsManager.SetPositionInLevel(SceneManager.GetActiveScene().name, player);
-
-        // Load Woonplaats
-        SceneManager.LoadScene("Home");
-
-        // Create a new position from the saved position of the new level in Unity's PlayerPrefs and set the player's position to this value
-        Vector3 newPosition = PlayerPrefsManager.GetPositionInLevel("Home", player);
-        player.transform.position = newPosition;
-    }
-
-    //Special method for the pausescreen to load the main menu
-
 }
 

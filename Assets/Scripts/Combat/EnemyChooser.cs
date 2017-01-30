@@ -55,10 +55,18 @@ public class EnemyChooser : MonoBehaviour {
                     currentEnemy = e;
                     enemyFound = true;
                     announce.text = "You're up against: " + currentEnemy.linkedEnemy.Title;
-                    enemyStat.text = "Attack 1: " + currentEnemy.linkedEnemy.Attack1Title + "\n" +
-                                     "Damage: " + currentEnemy.linkedEnemy.Attack1Damage + "\n" +
-                                     "Attack 2: " + currentEnemy.linkedEnemy.Attack2Title + "\n" +
-                                     "Damage: " + currentEnemy.linkedEnemy.Attack2Damage;
+                    if (currentEnemy.linkedEnemy.Type != "server") {
+                        enemyStat.text = "Attack 1: " + currentEnemy.linkedEnemy.Attack1Title + "\n" +
+                                         "Damage: " + currentEnemy.linkedEnemy.Attack1Damage + "\n" +
+                                         "Attack 2: " + currentEnemy.linkedEnemy.Attack2Title + "\n" +
+                                         "Damage: " + currentEnemy.linkedEnemy.Attack2Damage;
+                    }
+                    else {
+                        enemyStat.text = "Attack 1: " + currentEnemy.linkedEnemy.Attack1Title + "\n" +
+                                         "Damage: ???\n" +
+                                         "Attack 2: " + currentEnemy.linkedEnemy.Attack2Title + "\n" +
+                                         "Damage: " + currentEnemy.linkedEnemy.Attack2Damage;
+                    }
                     e.opacity(1f);
                 }
             }
@@ -84,7 +92,7 @@ public class EnemyChooser : MonoBehaviour {
 
     private void ConstructEnemyDatabase() {
         for (int i = 0; i < EnemyStats.Count; i++) {
-            if (EnemyStats[i]["type"].ToString() == "2attack") {
+            if (EnemyStats[i]["type"].ToString() == "2attack" || EnemyStats[i]["type"].ToString() == "server") {
                 EnemyDatabase.Add(new Enemy((int)EnemyStats[i]["id"], EnemyStats[i]["title"].ToString(),
                     EnemyStats[i]["type"].ToString(), (int)EnemyStats[i]["hp"], (int)EnemyStats[i]["strength"],
                     EnemyStats[i]["attack1title"].ToString(), (int)EnemyStats[i]["attack1damage"],

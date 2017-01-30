@@ -39,15 +39,43 @@ public class PersistentInventoryScript : MonoBehaviour {
 	
     public void addItem(int id, int slot)
     {
-        Debug.Log("AddItem");
-        if (id == itemList[slot, 0])
+        bool placed = false;
+        if (slot == -1)
         {
-            itemList[slot, 1] += 1;
+            for (int i = 0; i < itemList.Length / 2; i++)
+            {
+                if (itemList[i, 0] == id)
+                {
+                    itemList[i, 1] += 1;
+                    placed = true;
+                    break;
+                }
+            }
+            if (!placed)
+            {
+                for (int i = 0; i < itemList.Length / 2; i++)
+                {
+                    if (itemList[i, 0] == 0)
+                    {
+                        itemList[i, 0] = id;
+                        itemList[i, 1] += 1;
+                        placed = true;
+                        break;
+                    }
+                }
+            }
         }
         else
         {
-            itemList[slot, 0] = id;
-            itemList[slot, 1] = 1;
+            if (id == itemList[slot, 0])
+            {
+                itemList[slot, 1] += 1;
+            }
+            else
+            {
+                itemList[slot, 0] = id;
+                itemList[slot, 1] = 1;
+            }
         }
     }
 

@@ -168,6 +168,7 @@ public class Inventory : MonoBehaviour {
         damage = 0;
         defence = 0;
         health = 0;
+        equipDamage = 0;
         string[] setCounter = new string[6];
         for (int i = 0; i < equipmentList.Length; i++) {
             if (equipmentList[i].transform.childCount > 0) {
@@ -219,6 +220,8 @@ public class Inventory : MonoBehaviour {
         InventoryData.GetComponent<Text>().supportRichText = true;
         InventoryData.GetComponent<Text>().text = stats;
     }
+
+    //habier
 
     public void UpdateInventoryMoney() {
         string currency = "CURRENCY: " + persistentInventory.Currency.ToString();

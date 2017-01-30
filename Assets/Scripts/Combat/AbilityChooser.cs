@@ -344,7 +344,7 @@ public class AbilityChooser : MonoBehaviour {
                 PersistentInventoryScript.instance.removeItemFromEnd(weapon[1].ID);
             }
         }
-        if (selectedAbility != 3) {
+        if (selectedAbility == 1) {
             return weapon[selectedAbility - 1].Damage;
         }
         else {

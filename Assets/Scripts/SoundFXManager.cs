@@ -7,10 +7,19 @@ public class SoundFXManager : MonoBehaviour
     public AudioClip[] soundEffectsArray;
 
     private AudioSource audioSource;
+    private static SoundFXManager instance;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     private void Start()

@@ -206,17 +206,29 @@ public class StateHandler : MonoBehaviour {
             showEnterKey = false;
             WhiteText();
             if (!EMRanOnce) {
+                int damage;
                 if (attNum == 1) {
                     if (e.Type != "server") {
-                        healthManager.LoseHealth(e.Attack1Damage);
+                        damage = e.Attack1Damage - PersistentInventoryScript.instance.itemDefense / 5;
+                        if (damage < 1) {
+                            damage = 1;
+                        }
+                        healthManager.LoseHealth(damage);
                     }
                     else {
-                        healthManager.LoseHealth(e.Attack1Damage + Random.Range(-10, 10));
+                        damage = (e.Attack1Damage + Random.Range(-10, 10)) - PersistentInventoryScript.instance.itemDefense / 5;
+                        if (damage < 1) {
+                            damage = 1;
+                        }
+                        healthManager.LoseHealth(damage);
                         ChangeServerSprite();
                     }
                 }
                 if (attNum == 2) {
-                    healthManager.LoseHealth(e.Attack2Damage);
+                    damage = e.Attack2Damage - PersistentInventoryScript.instance.itemDefense / 5;
+                    if (damage < 1) {
+                        damage = 1;
+                    }
                 }
                 EMRanOnce = true;
                 timeEM = Time.time;

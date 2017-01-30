@@ -345,7 +345,7 @@ public class AbilityChooser : MonoBehaviour {
             }
         }
         if (selectedAbility != 3) {
-            return weapon[selectedAbility - 1].Damage;
+            return weapon[selectedAbility - 1].Damage + PersistentInventoryScript.instance.EquipmentDamage;
         }
         else {
             float maxHealth = healthManager.GetMaxHealth();

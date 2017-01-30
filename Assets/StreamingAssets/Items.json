@@ -131,9 +131,9 @@
     "subtype": "healing",
     "heal": 75,
     "description": "A good and healthy way to start the day",
-    "stackable": false,
-    "quest-related": true,
-    "sellable": false,
+    "stackable": true,
+    "quest-related": false,
+    "sellable": true,
     "slug": "mega_pils"
   },
   //Melee weapons
@@ -283,7 +283,7 @@
     "value": 40,
     "type": "weapon",
     "subtype": "melee",
-    "set": "medieval",
+    "set": "chinese",
     "damage": 60,
     "description": "In the right hands, a powerful and swift weapon. In the wrong hands, well...",
     "stackable": false,

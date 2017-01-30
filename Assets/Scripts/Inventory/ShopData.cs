@@ -46,7 +46,14 @@ public class ShopData : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     }
                 else
                     {
-                persistentInventory.addItem(item.ID,i);
+                        if (item.Stackable)
+                        {
+                            persistentInventory.addItem(item.ID, -1);
+                        }
+                        else
+                        {
+                        persistentInventory.addItem(item.ID,i);
+                        }
                     }
                     persistentInventory.Currency -= item.Value;
                     break;

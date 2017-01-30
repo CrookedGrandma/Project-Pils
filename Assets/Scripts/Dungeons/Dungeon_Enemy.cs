@@ -78,10 +78,10 @@ public class Dungeon_Enemy : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         var normal = collision.contacts[0].normal;
-        if (collision.gameObject.name != "Player" && normal.y <= 0)
+        if (normal.y <= 0)
         {
             // This only happens when the enemy does not collide with the player and not with the floor.
-            direction = (WalkDirection)((int)(direction + Random.Range(1, 4)) % 4); 
+            direction = (WalkDirection)((int)(direction + Random.Range(1, 4)) % 4);
         }
     }
 
@@ -104,8 +104,7 @@ public class Dungeon_Enemy : MonoBehaviour
             }
             else if (SceneManager.GetActiveScene().name == "Dungeon_PiPi")
             {
-                // playerFSM.Enemy = 3;         <-- Dit is degene die het moet worden als ie een sprite heeft
-                playerFSM.Enemy = 4;            // <-- Deze is van FaceBeer
+                playerFSM.Enemy = 3;
                 playerFSM.Envi = 2;
             }
         }

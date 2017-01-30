@@ -10,10 +10,12 @@ public class PauseScene : MonoBehaviour
 
     private bool confirmationpanelVisible;
     private GameObject player;
+    private PersistentInventoryScript inventory;
 
     private void Start()
     {
         player = GameObject.Find("Player");
+        inventory = GameObject.FindObjectOfType<PersistentInventoryScript>();
         SetConfirmationScreenInvisible();
         inPauseMenu = true;
     }
@@ -50,12 +52,14 @@ public class PauseScene : MonoBehaviour
     {
         PlayerPrefsManager.SetSavedScene(PlayerPrefsManager.GetCurrentScene());
         PlayerPrefsManager.SetSavedPosition(PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player));
+        SaveInventoryItems();
     }
 
     public void LoadGame()
     {
         SceneManager.LoadScene(PlayerPrefsManager.GetSavedScene());
         player.transform.position = PlayerPrefsManager.GetSavedPosition();
+        LoadInventoryItems();
     }
 
     public void ExitToMainMenu()
@@ -84,5 +88,51 @@ public class PauseScene : MonoBehaviour
     {
         confirmationPanel.SetActive(true);
         confirmationpanelVisible = true;
+    }
+
+    private void SaveInventoryItems()
+    {
+        for (int i = 0; i < inventory.equipmentList.GetLength(0); i++)
+        {
+            PlayerPrefs.SetInt("save_inventory_equipment_" + i + "_slot", i);
+            PlayerPrefs.SetInt("save_inventory_equipment_" + i + "_id", inventory.equipmentList[i, 0]);
+            PlayerPrefs.SetInt("save_inventory_equipment_" + i + "_number", inventory.equipmentList[i, 1]);
+        }
+
+        for (int j = 0; j < inventory.itemList.GetLength(0); j++)
+        {
+            PlayerPrefs.SetInt("save_inventory_items_" + j + "_slot", j);
+            PlayerPrefs.SetInt("save_inventory_items_" + j + "_id", inventory.itemList[j, 0]);
+            PlayerPrefs.SetInt("save_inventory_items_" + j + "_number", inventory.itemList[j, 1]);
+        }
+    }
+
+    private void LoadInventoryItems()
+    {
+        for (int i = 0; i < inventory.equipmentList.GetLength(0); i++)
+        {
+            for (int inventorySlot = 0; inventorySlot < inventory.equipmentList.GetLength(1); inventorySlot++)
+            {
+                inventory.removeEquipment(inventorySlot, 0);
+            }
+
+            int slot = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_slot");
+            int id = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_id");
+            int number = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_number");
+            inventory.addEquipment(id, number, slot);
+        }
+
+        for (int j = 0; j < inventory.itemList.GetLength(0); j++)
+        {
+            int slot = PlayerPrefs.GetInt("save_inventory_items_" + j + "_slot");
+            int id = PlayerPrefs.GetInt("save_inventory_items_" + j + "_id");
+            int number = PlayerPrefs.GetInt("save_inventory_items_" + j + "_number");
+
+            for (int num = 0; num <= number; num++)
+            {
+                inventory.removeItem(0, j);
+                inventory.addItem(id, slot);
+            }
+        }
     }
 }

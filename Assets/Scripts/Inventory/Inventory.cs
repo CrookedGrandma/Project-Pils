@@ -59,6 +59,7 @@ public class Inventory : MonoBehaviour {
         //Zet items van PersistentInventory in normale inventory
         for (int i = 0; i < persistentInventory.itemList.Length / 2; i++) {
             if (persistentInventory.itemList[i, 0] != 0) {
+                for (int x = 0; x < persistentInventory.itemList[i,1]; x++)
                 AddItem(persistentInventory.itemList[i, 0]);
             }
         }

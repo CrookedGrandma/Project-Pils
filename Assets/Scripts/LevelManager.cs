@@ -34,5 +34,38 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(PlayerPrefsManager.GetSavedScene());
         GameObject player = GameObject.Find("Player");
         player.transform.position = PlayerPrefsManager.GetSavedPosition();
+        LoadInventory();
+    }
+
+    ///<summary>
+    /// Loads te inventory including the saved items
+    private void LoadInventory()
+    {
+        PersistentInventoryScript inventory = GameObject.FindObjectOfType<PersistentInventoryScript>();
+        for (int i = 0; i < inventory.equipmentList.GetLength(0); i++)
+        {
+            for (int inventorySlot = 0; inventorySlot < inventory.equipmentList.GetLength(1); inventorySlot++)
+            {
+                inventory.removeEquipment(inventorySlot, 0);
+            }
+
+            int slot = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_slot");
+            int id = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_id");
+            int number = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_number");
+            inventory.addEquipment(id, number, slot);
+        }
+
+        for (int j = 0; j < inventory.itemList.GetLength(0); j++)
+        {
+            int slot = PlayerPrefs.GetInt("save_inventory_items_" + j + "_slot");
+            int id = PlayerPrefs.GetInt("save_inventory_items_" + j + "_id");
+            int number = PlayerPrefs.GetInt("save_inventory_items_" + j + "_number");
+
+            for (int num = 0; num <= number; num++)
+            {
+                inventory.removeItem(0, j);
+                inventory.addItem(id, slot);
+            }
+        }
     }
 }

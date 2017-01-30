@@ -186,7 +186,8 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                     persistentInventory.addEquipment(item.ID, amount, 5);
                 }
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
-            } else if(item.Type == "consumable")
+            }
+            else if(item.Type == "consumable")
             {
                 switch (item.ID)
                 {
@@ -196,10 +197,15 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                             GameManager.instance.questManager.CompleteObjective("Quest005ConsumeMegaPils");
                             GameManager.instance.questManager.AddQuestToLog("Quest006");
                         }
-                        persistentInventory.removeItem(item.ID, slot);
                         break;
                 }
+                Debug.Log("healthold" + (int)PlayerPrefsManager.GetPlayerHealth());
+                Debug.Log("healthnew" + (int)((float)item.Heal / 100 * PlayerPrefsManager.GetPlayerHealth()));
+                PlayerPrefsManager.SetPlayerHealth((int)PlayerPrefsManager.GetPlayerHealth() + (int)((float)item.Heal / 100 * PlayerPrefsManager.GetPlayerHealth()));
+                inv.RemoveItem(item, this);
+                persistentInventory.removeItem(item.ID, slot);
             }
+
         }
     }
 }

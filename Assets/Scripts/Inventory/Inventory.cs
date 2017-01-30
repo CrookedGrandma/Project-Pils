@@ -216,12 +216,10 @@ public class Inventory : MonoBehaviour {
         persistentInventory.EquipmentDamage = equipDamage;
         persistentInventory.itemDefense = defence;
         persistentInventory.itemHealth = health;
-        stats = "Attack: " + damage + "\nDefense: " + defence + "\nHealth from items: " + health + "\nBase health: " + XPManager.xpmanager.Health() + "\nTotal health: " + (XPManager.xpmanager.Health() + health) + "\nCurrent Level: " + XPManager.xpmanager.playerlvl_() + "\nXP to next level: " + XPManager.xpmanager.xptonext_();
+        stats = "Attack: " + damage + "\nDefense: " + defence + "\nHealth from items: " + health + "\nBase health: " + XPManager.xpmanager.Health() + "\nTotal health: " + (XPManager.xpmanager.Health() + health) + "\nCurrent health: " + PlayerPrefsManager.GetPlayerHealth() + "\nCurrent Level: " + XPManager.xpmanager.playerlvl_() + "\nXP to next level: " + XPManager.xpmanager.xptonext_();
         InventoryData.GetComponent<Text>().supportRichText = true;
         InventoryData.GetComponent<Text>().text = stats;
     }
-
-    //habier
 
     public void UpdateInventoryMoney() {
         string currency = "CURRENCY: " + persistentInventory.Currency.ToString();

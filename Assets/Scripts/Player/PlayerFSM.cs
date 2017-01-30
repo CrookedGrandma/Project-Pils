@@ -177,25 +177,21 @@ public class PlayerFSM : Entity
         }
         if (normal.x > 0)
         {
-            Debug.Log("Object you hit is to your left");
             //Hit Left
             moveAction.ableToMoveLeft = false;
         }
         if (normal.x < 0)
         {
-            Debug.Log("Object you hit is to your right");
             //Hit Right
             moveAction.ableToMoveRight = false;
         }
         if (normal.z < 0)
         {
-            Debug.Log("Object you hit is in front of you");
             //Hit Front
             moveAction.ableToMoveForward = false;
         }
         if (normal.z > 0)
         {
-            Debug.Log("Object you hit is behind you");
             //Hit Back
             moveAction.ableToMoveBackward = false;
         }

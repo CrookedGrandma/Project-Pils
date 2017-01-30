@@ -31,8 +31,6 @@ public class PlayerPrefsManager : MonoBehaviour
     const string ENDPOINTPOS_DUNGEON_FACEBEER_KEY = "endpointpos_dungeon_facebeer_";
     const string SAVE_GAME_CURRENT_SCENE_KEY = "save_game_current_scene";
     const string SAVE_GAME_CURRENT_POSITION_KEY = "save_game_current_position_";
-    const string SAVE_GAME_CURRENT_HEALTH_KEY = "save_game_current_health";
-    const string SAVE_GAME_CURRENT_PLAYER_LEVEL_KEY = "save_game_current_player_level";
     const string SAVE_GAME_CURRENT_PLAYER_XP_KEY = "save_game_current_player_xp";
 
     // Sets the music volume to the float given
@@ -184,38 +182,14 @@ public class PlayerPrefsManager : MonoBehaviour
         return new Vector3(x, y, z);
     }
 
-    // Store the playerhealth for the ingame save button
-    public void SetSavedHealth(int value)
-    {
-        PlayerPrefs.SetInt(SAVE_GAME_CURRENT_HEALTH_KEY, value);
-    }
-
-    // Get the saved playerhealth for the ingame load button
-    public int GetSavedHealth()
-    {
-        return PlayerPrefs.GetInt(SAVE_GAME_CURRENT_HEALTH_KEY);
-    }
-
-    // Store the playerlevel fot the ingame save button
-    public void SetSavedPlayerLevel(int value)
-    {
-        PlayerPrefs.SetInt(SAVE_GAME_CURRENT_PLAYER_LEVEL_KEY, value);
-    }
-
-    // Get the saved playerlevel for the ingame load button
-    public int GetSavedPlayerLevel()
-    {
-        return PlayerPrefs.GetInt(SAVE_GAME_CURRENT_PLAYER_LEVEL_KEY);
-    }
-
     // Set the saved playerxp for the ingame save button
-    public void SetSavedPlayerXP(int value)
+    public static void SetSavedPlayerXP(int value)
     {
         PlayerPrefs.SetInt(SAVE_GAME_CURRENT_PLAYER_XP_KEY, value);
     }
 
     // Get the saved playerxp for the ingame load button
-    public int GetSavedPlayerXP()
+    public static int GetSavedPlayerXP()
     {
         return PlayerPrefs.GetInt(SAVE_GAME_CURRENT_PLAYER_XP_KEY);
     }

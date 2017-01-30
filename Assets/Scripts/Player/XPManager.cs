@@ -8,7 +8,7 @@ public class XPManager : MonoBehaviour {
 
     public double xpscaler = 1.25;
     public double hpscaler = 0.10;
-    private int playerxp = 0; // waarde wordt in Start() uit save gehaald
+    public int playerxp = 0; // waarde wordt in Start() uit save gehaald
     public double startxpbound = 100; // level 1 => XP van 0-100
     private int playerlvl = 1;
     private int xptonext = 0;
@@ -26,6 +26,7 @@ public class XPManager : MonoBehaviour {
 
     void Start() {
         playerxp = PlayerPrefsManager.GetPlayerXP();
+        Level();
         Health();
     }
 

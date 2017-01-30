@@ -34,6 +34,7 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(PlayerPrefsManager.GetSavedScene());
         GameObject player = GameObject.Find("Player");
         player.transform.position = PlayerPrefsManager.GetSavedPosition();
+        XPManager.xpmanager.playerxp = PlayerPrefsManager.GetSavedPlayerXP();
         LoadInventory();
     }
 

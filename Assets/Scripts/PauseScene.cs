@@ -52,6 +52,7 @@ public class PauseScene : MonoBehaviour
     {
         PlayerPrefsManager.SetSavedScene(PlayerPrefsManager.GetCurrentScene());
         PlayerPrefsManager.SetSavedPosition(PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player));
+        PlayerPrefsManager.SetSavedPlayerXP(XPManager.xpmanager.playerxp);
         SaveInventoryItems();
     }
 
@@ -59,6 +60,7 @@ public class PauseScene : MonoBehaviour
     {
         SceneManager.LoadScene(PlayerPrefsManager.GetSavedScene());
         player.transform.position = PlayerPrefsManager.GetSavedPosition();
+        XPManager.xpmanager.playerxp = PlayerPrefsManager.GetSavedPlayerXP();
         LoadInventoryItems();
     }
 

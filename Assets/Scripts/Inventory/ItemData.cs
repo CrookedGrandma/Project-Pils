@@ -145,7 +145,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 }
                 Debug.Log("healthold" + (int)PlayerPrefsManager.GetPlayerHealth());
                 Debug.Log("healthnew" + (int)((float)item.Heal / 100 * PlayerPrefsManager.GetPlayerHealth()));
-                PlayerPrefsManager.SetPlayerHealth((int)PlayerPrefsManager.GetPlayerHealth() + (int)((float)item.Heal / 100 * PlayerPrefsManager.GetPlayerHealth()));
+                PlayerPrefsManager.SetPlayerHealth((XPManager.xpmanager.Health() + PersistentInventoryScript.instance.itemHealth) + (int)((float)item.Heal / 100 * PlayerPrefsManager.GetPlayerHealth()));
                 inv.RemoveItem(item, this);
                 persistentInventory.removeItem(item.ID, slot);
             }

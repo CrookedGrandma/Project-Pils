@@ -199,29 +199,29 @@ public class StateHandler : MonoBehaviour {
                     if (attNum == 1) {
                         if (e.Type != "server") {
                             enemyChooser.enemyStat.text = "<color=red>Attack 1: " + e.Attack1Title + "\n" +
-                                                          "Damage: " + e.Attack1Damage + "</color>\n" +
+                                                          "Damage: " + (e.Attack1Damage - PersistentInventoryScript.instance.itemDefense / 5) + "</color>\n" +
                                                           "Attack 2: " + e.Attack2Title + "\n" +
-                                                          "Damage: " + e.Attack2Damage;
+                                                          "Damage: " + (e.Attack2Damage - PersistentInventoryScript.instance.itemDefense / 5);
                         }
                         else {
                             enemyChooser.enemyStat.text = "<color=red>Attack 1: " + e.Attack1Title + "\n" +
                                                           "Damage: ???</color>\n" +
                                                           "Attack 2: " + e.Attack2Title + "\n" +
-                                                          "Damage: " + e.Attack2Damage;
+                                                          "Damage: " + (e.Attack2Damage - PersistentInventoryScript.instance.itemDefense / 5);
                         }
                     }
                     if (attNum == 2) {
                         if (e.Type != "server") {
                             enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
-                                                          "Damage: " + e.Attack1Damage + "\n" +
+                                                          "Damage: " + (e.Attack1Damage - PersistentInventoryScript.instance.itemDefense / 5) + "\n" +
                                                           "<color=red>Attack 2: " + e.Attack2Title + "\n" +
-                                                          "Damage: " + e.Attack2Damage + "</color>";
+                                                          "Damage: " + (e.Attack2Damage - PersistentInventoryScript.instance.itemDefense / 5) + "</color>";
                         }
                         else {
                             enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
                                                           "Damage: ???\n" +
                                                           "<color=red>Attack 2: " + e.Attack2Title + "\n" +
-                                                          "Damage: " + e.Attack2Damage + "</color>";
+                                                          "Damage: " + (e.Attack2Damage - PersistentInventoryScript.instance.itemDefense / 5) + "</color>";
                         }
                     }
                 }
@@ -265,6 +265,7 @@ public class StateHandler : MonoBehaviour {
                     if (damage < 1) {
                         damage = 1;
                     }
+                    healthManager.LoseHealth(damage);
                 }
                 EMRanOnce = true;
                 timeEM = Time.time;
@@ -325,15 +326,15 @@ public class StateHandler : MonoBehaviour {
     private void WhiteText() {
         if (e.Type != "server") {
             enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
-                                          "Damage: " + e.Attack1Damage + "\n" +
+                                          "Damage: " + (e.Attack1Damage - PersistentInventoryScript.instance.itemDefense / 5) + "\n" +
                                           "Attack 2: " + e.Attack2Title + "\n" +
-                                          "Damage: " + e.Attack2Damage;
+                                          "Damage: " + (e.Attack2Damage - PersistentInventoryScript.instance.itemDefense / 5);
         }
         else {
             enemyChooser.enemyStat.text = "Attack 1: " + e.Attack1Title + "\n" +
                                           "Damage: ???\n" +
                                           "Attack 2: " + e.Attack2Title + "\n" +
-                                          "Damage: " + e.Attack2Damage;
+                                          "Damage: " + (e.Attack2Damage - PersistentInventoryScript.instance.itemDefense / 5);
         }
     }
 

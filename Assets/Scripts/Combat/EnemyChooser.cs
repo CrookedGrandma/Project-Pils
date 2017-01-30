@@ -57,15 +57,15 @@ public class EnemyChooser : MonoBehaviour {
                     announce.text = "You're up against: " + currentEnemy.linkedEnemy.Title;
                     if (currentEnemy.linkedEnemy.Type != "server") {
                         enemyStat.text = "Attack 1: " + currentEnemy.linkedEnemy.Attack1Title + "\n" +
-                                         "Damage: " + currentEnemy.linkedEnemy.Attack1Damage + "\n" +
+                                         "Damage: " + (currentEnemy.linkedEnemy.Attack1Damage - PersistentInventoryScript.instance.itemDefense / 5) + "\n" +
                                          "Attack 2: " + currentEnemy.linkedEnemy.Attack2Title + "\n" +
-                                         "Damage: " + currentEnemy.linkedEnemy.Attack2Damage;
+                                         "Damage: " + (currentEnemy.linkedEnemy.Attack2Damage - PersistentInventoryScript.instance.itemDefense / 5);
                     }
                     else {
                         enemyStat.text = "Attack 1: " + currentEnemy.linkedEnemy.Attack1Title + "\n" +
                                          "Damage: ???\n" +
                                          "Attack 2: " + currentEnemy.linkedEnemy.Attack2Title + "\n" +
-                                         "Damage: " + currentEnemy.linkedEnemy.Attack2Damage;
+                                         "Damage: " + (currentEnemy.linkedEnemy.Attack2Damage - PersistentInventoryScript.instance.itemDefense / 5);
                     }
                     e.opacity(1f);
                 }

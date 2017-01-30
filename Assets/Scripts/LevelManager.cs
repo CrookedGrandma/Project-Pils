@@ -35,6 +35,7 @@ public class LevelManager : MonoBehaviour
         GameObject player = GameObject.Find("Player");
         player.transform.position = PlayerPrefsManager.GetSavedPosition();
         XPManager.xpmanager.playerxp = PlayerPrefsManager.GetSavedPlayerXP();
+        PersistentInventoryScript.instance.Currency = PlayerPrefsManager.GetSavedCurrency();
         LoadInventory();
     }
 

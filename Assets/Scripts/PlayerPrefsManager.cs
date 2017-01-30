@@ -32,6 +32,7 @@ public class PlayerPrefsManager : MonoBehaviour
     const string SAVE_GAME_CURRENT_SCENE_KEY = "save_game_current_scene";
     const string SAVE_GAME_CURRENT_POSITION_KEY = "save_game_current_position_";
     const string SAVE_GAME_CURRENT_PLAYER_XP_KEY = "save_game_current_player_xp";
+    const string SAVE_GAME_CURRENCY_KEY = "save_game_currency";
 
     // Sets the music volume to the float given
     public static void SetMusicVolume(float volume)
@@ -192,6 +193,18 @@ public class PlayerPrefsManager : MonoBehaviour
     public static int GetSavedPlayerXP()
     {
         return PlayerPrefs.GetInt(SAVE_GAME_CURRENT_PLAYER_XP_KEY);
+    }
+
+    // Store the currency for the ingame save button
+    public static void SetSavedCurrency(int value)
+    {
+        PlayerPrefs.SetInt(SAVE_GAME_CURRENCY_KEY, value);
+    }
+
+    // Get the stored currency for the load button
+    public static int GetSavedCurrency()
+    {
+        return PlayerPrefs.GetInt(SAVE_GAME_CURRENCY_KEY);
     }
 
     #region Dungeons

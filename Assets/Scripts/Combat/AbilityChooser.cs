@@ -123,12 +123,12 @@ public class AbilityChooser : MonoBehaviour {
         GetAmmo();
         GetNumberOfHealers();
         if (t) {
-            Ability1Text = UsableAbilities[0].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[0].Title + "</color> (Damage: " + (weapon[0].Damage + PersistentInventoryScript.instance.EquipmentDamage / 4) + ")";
+            Ability1Text = UsableAbilities[0].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[0].Title + "</color> (Damage: " + (weapon[0].Damage + PersistentInventoryScript.instance.EquipmentDamage) + ")";
             if (secType == "ranged" && numberAmmo != -1) {
-                Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + (weapon[1].Damage + PersistentInventoryScript.instance.EquipmentDamage / 4) + ") (" + numberAmmo + ")";
+                Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + (weapon[1].Damage + PersistentInventoryScript.instance.EquipmentDamage) + ") (" + numberAmmo + ")";
             }
             else if (secType == "projectile" && numberThrow != -1) {
-                Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + (weapon[1].Damage + PersistentInventoryScript.instance.EquipmentDamage / 4) + ") (" + numberThrow + ")";
+                Ability2Text = UsableAbilities[1].Title + " <color=#bbbbbb>using your</color> <color=#cccccc>" + weapon[1].Title + "</color> (Damage: " + (weapon[1].Damage + PersistentInventoryScript.instance.EquipmentDamage) + ") (" + numberThrow + ")";
             }
             else {
                 Ability2Text = "";
@@ -194,15 +194,15 @@ public class AbilityChooser : MonoBehaviour {
         }
         if (a == 1) {
             selectedAbility = 1;
-            Ability1Text = "<color=red>" + UsableAbilities[0].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[0].Title + "</color> <color=red>(Damage: " + (weapon[0].Damage + PersistentInventoryScript.instance.EquipmentDamage / 4) + ")</color>";
+            Ability1Text = "<color=red>" + UsableAbilities[0].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[0].Title + "</color> <color=red>(Damage: " + (weapon[0].Damage + PersistentInventoryScript.instance.EquipmentDamage) + ")</color>";
         }
         if (a == 2) {
             if ((secType == "ranged" || secType == "projectile") && (numberAmmo != -1 || numberThrow != -1)) {
                 if (secType == "ranged") {
-                    Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + (weapon[1].Damage + PersistentInventoryScript.instance.EquipmentDamage / 4) + ") (" + numberAmmo + ")</color>";
+                    Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + (weapon[1].Damage + PersistentInventoryScript.instance.EquipmentDamage) + ") (" + numberAmmo + ")</color>";
                 }
                 else if (secType == "projectile") {
-                    Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + (weapon[1].Damage + PersistentInventoryScript.instance.EquipmentDamage / 4) + ") (" + numberThrow + ")</color>";
+                    Ability2Text = "<color=red>" + UsableAbilities[1].Title + "</color> <color=#ff7777>using your</color> <color=#ff8888>" + weapon[1].Title + "</color> <color=red>(Damage: " + (weapon[1].Damage + PersistentInventoryScript.instance.EquipmentDamage) + ") (" + numberThrow + ")</color>";
                 }
                 selectedAbility = 2;
             }
@@ -345,7 +345,7 @@ public class AbilityChooser : MonoBehaviour {
             }
         }
         if (selectedAbility != 3) {
-            return weapon[selectedAbility - 1].Damage + PersistentInventoryScript.instance.EquipmentDamage / 4;
+            return weapon[selectedAbility - 1].Damage + PersistentInventoryScript.instance.EquipmentDamage;
         }
         else {
             float maxHealth = healthManager.GetMaxHealth();

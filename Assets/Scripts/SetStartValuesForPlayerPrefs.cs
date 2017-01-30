@@ -36,10 +36,11 @@ public class SetStartValuesForPlayerPrefs : MonoBehaviour
         PlayerPrefsManager.SetStartPositions("Inventory", -10.0f, -10.0f, -10.0f);
         PlayerPrefsManager.SetStartPositions("Combat", -10.0f, -10.0f, -10.0f);
 
-        // Set the health, XP and level for the player
+        // Set the health, XP, level and currency for the player
         PlayerPrefsManager.SetPlayerHealth(playerHealth);
         PlayerPrefsManager.SetPlayerXP(0);
         PlayerPrefsManager.SetPlayerLevel(1);
+        PersistentInventoryScript.instance.Currency = 100;
 
         // Set the starting values for the dungeons
         PlayerPrefsManager.SetFirstTimeFaceBeerDungeon(1);

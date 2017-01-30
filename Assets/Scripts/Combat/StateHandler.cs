@@ -25,6 +25,7 @@ public class StateHandler : MonoBehaviour {
     private float timeL = -1;
     private int attNum = 0;
     private int actionValue;
+    private int lostmoney;
 
     private States state;
     private Color enterKeyColor;
@@ -360,7 +361,7 @@ public class StateHandler : MonoBehaviour {
     }
 
     private int moneylost() {
-        float moneylost_ = PersistentInventoryScript.instance.Currency - PersistentInventoryScript.instance.Currency * 0.15f;
+        float moneylost_ = PersistentInventoryScript.instance.Currency * 0.15f;
         return (int)moneylost_;
     }
 
@@ -386,18 +387,25 @@ public class StateHandler : MonoBehaviour {
         }
     }
 
-    private void Lose() {
-        if (!LRanOnce) {
-            timeL = Time.time;
-            PersistentInventoryScript.instance.Currency -= moneylost();
-            LRanOnce = true;
-        }
-        if (Time.time - timeL >= 1f && timeL != -1) {
-            EndText.text = "You were defeated by <i><color=#ffff66>" + e.Title + "</color></i> and dropped <i><color=#ffff66>" + moneylost() + " currency</color></i>." + "You didn't gain any <i><color=#ffff66>experience.</color></i>" + "\nCurrent Level: <i><color=#ffff66>" + XPManager.xpmanager.playerlvl_() + "</color></i>\nExperience till level-up: <i><color=#ffff66>" + XPManager.xpmanager.xptonext_() + "XP</color></i>";
+    private void Lose()
+    {
+        if (Time.time - timeL >= 1f && timeL != -1)
+        {
+            EndText.text = "You were defeated by <i><color=#ffff66>" + e.Title + "</color></i> and dropped <i><color=#ffff66>" + lostmoney + " currency</color></i>." + "You didn't gain any <i><color=#ffff66>experience.</color></i>" + "\nCurrent Level: <i><color=#ffff66>" + XPManager.xpmanager.playerlvl_() + "</color></i>\nExperience till level-up: <i><color=#ffff66>" + XPManager.xpmanager.xptonext_() + "XP</color></i>";
             showEnterKey = true;
-            if (Input.GetKeyDown(KeyCode.Return)) {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
                 LoadLastScene();
             }
         }
+        if (!LRanOnce)
+        {
+            lostmoney = moneylost();
+            timeL = Time.time;
+            PersistentInventoryScript.instance.Currency -= lostmoney;
+            
+            LRanOnce = true;
+        }
+
     }
 }

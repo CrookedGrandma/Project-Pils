@@ -53,6 +53,7 @@ public class PauseScene : MonoBehaviour
         PlayerPrefsManager.SetSavedScene(PlayerPrefsManager.GetCurrentScene());
         PlayerPrefsManager.SetSavedPosition(PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player));
         PlayerPrefsManager.SetSavedPlayerXP(XPManager.xpmanager.playerxp);
+        PlayerPrefsManager.SetSavedCurrency(PersistentInventoryScript.instance.Currency);
         SaveInventoryItems();
     }
 
@@ -61,6 +62,7 @@ public class PauseScene : MonoBehaviour
         SceneManager.LoadScene(PlayerPrefsManager.GetSavedScene());
         player.transform.position = PlayerPrefsManager.GetSavedPosition();
         XPManager.xpmanager.playerxp = PlayerPrefsManager.GetSavedPlayerXP();
+        PersistentInventoryScript.instance.Currency = PlayerPrefsManager.GetSavedCurrency();
         LoadInventoryItems();
     }
 
@@ -121,6 +123,18 @@ public class PauseScene : MonoBehaviour
             int slot = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_slot");
             int id = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_id");
             int number = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_number");
+
+            if (slot == 1)
+            {
+                // Ranged weapon
+                number += 4;
+            }
+            if (slot == 0)
+            {
+                // Melee weapon
+                number += 5;
+            }
+
             inventory.addEquipment(id, number, slot);
         }
 

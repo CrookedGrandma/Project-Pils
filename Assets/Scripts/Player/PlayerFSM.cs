@@ -175,35 +175,30 @@ public class PlayerFSM : Entity
             moveAction.ableToJump = true;
             moveAction.ableToMoveBackward = moveAction.ableToMoveForward = moveAction.ableToMoveLeft = moveAction.ableToMoveRight = true;
         }
-        /*if (normal.y < 0)
-        {
-            //Hit Roof
-            // Maybe needed in houses or dungeons
-        }
-        else if (normal.x > 0)
+        if (normal.x > 0)
         {
             Debug.Log("Object you hit is to your left");
             //Hit Left
             moveAction.ableToMoveLeft = false;
         }
-        else if (normal.x < 0)
+        if (normal.x < 0)
         {
             Debug.Log("Object you hit is to your right");
             //Hit Right
             moveAction.ableToMoveRight = false;
         }
-        else if (normal.z < 0)
+        if (normal.z < 0)
         {
             Debug.Log("Object you hit is in front of you");
             //Hit Front
             moveAction.ableToMoveForward = false;
         }
-        else if (normal.z > 0)
+        if (normal.z > 0)
         {
             Debug.Log("Object you hit is behind you");
             //Hit Back
             moveAction.ableToMoveBackward = false;
-        }*/
+        }
     }
 
     private void OnCollisionExit(Collision collision)

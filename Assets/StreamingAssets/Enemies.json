@@ -63,5 +63,44 @@
 		"attack2title": "Ask for a rating",
 		"attack2damage": 15,
 		"attack2scaling": 0.5
+	},
+	{
+		"id": 5,
+		"title": "Noni",
+		"type": "2attack",
+    "hp": 60,
+    "strength": 50,
+		"attack1title": "Be drunk",
+		"attack1damage": 2,
+		"attack1scaling": 0.1,
+		"attack2title": "Be drunk and try to hit you",
+		"attack2damage": 4,
+		"attack2scaling": 0.25
+	},
+	{
+		"id": 6,
+		"title": "Meemstar",
+		"type": "2attack",
+    "hp": 110,
+    "strength": 50,
+		"attack1title": "Get roooiiight into the booze",
+		"attack1damage": 12,
+		"attack1scaling": 0.4,
+		"attack2title": "Eat popcorn and D-Fuel",
+		"attack2damage": 16,
+		"attack2scaling": 0.5
+	},
+	{
+		"id": 7,
+		"title": "FaceBeer™ Main Server",
+		"type": "server",
+    "hp": 200,
+    "strength": 50,
+		"attack1title": "Do a meme",
+		"attack1damage": 15,
+		"attack1scaling": 0.4,
+		"attack2title": "Hack firewall",
+		"attack2damage": 18,
+		"attack2scaling": 0.5
 	}
 ]

@@ -108,6 +108,11 @@ public class PlayerFSM : Entity
             Enemy = 4;
             Envi = 1;
         }
+        if (Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            Enemy = 7;
+            Envi = 1;
+        }
         if (Input.GetKeyDown(KeyCode.P))
         {
             PlayerPrefsManager.SetCurrentScene(SceneManager.GetActiveScene().name);

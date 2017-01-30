@@ -349,16 +349,8 @@ public class AbilityChooser : MonoBehaviour {
         }
         else {
             float maxHealth = healthManager.GetMaxHealth();
-            switch (selectedHealer) {
-                case (1): PersistentInventoryScript.instance.removeItemFromEnd(100); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(100).Heal / 100f)) * -1;
-                case (2): PersistentInventoryScript.instance.removeItemFromEnd(101); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(101).Heal / 100f)) * -1;
-                case (3): PersistentInventoryScript.instance.removeItemFromEnd(102); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(102).Heal / 100f)) * -1;
-                case (4): PersistentInventoryScript.instance.removeItemFromEnd(103); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(103).Heal / 100f)) * -1;
-                case (5): PersistentInventoryScript.instance.removeItemFromEnd(104); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(104).Heal / 100f)) * -1;
-                case (6): PersistentInventoryScript.instance.removeItemFromEnd(105); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(105).Heal / 100f)) * -1;
-                case (7): PersistentInventoryScript.instance.removeItemFromEnd(106); return Mathf.CeilToInt(maxHealth * (database.FetchItemById(106).Heal / 100f)) * -1;
-                default: return 0;
-            }
+            PersistentInventoryScript.instance.removeItemFromEnd(99 + selectedHealer);
+            return Mathf.CeilToInt(maxHealth * (database.FetchItemById(99 + selectedHealer).Heal / 100f)) * -1;
         }
     }
 

@@ -337,6 +337,7 @@ public class StateHandler : MonoBehaviour {
     private void Win() {
         if (!WRanOnce) {
             timeW = Time.time;
+            PersistentInventoryScript.instance.Currency += moneygain();
             XPManager.xpmanager.addxp(xpgain());
             PlayerPrefsManager.SetPlayerHealth((int)healthManager.GetHealth());
             WRanOnce = true;

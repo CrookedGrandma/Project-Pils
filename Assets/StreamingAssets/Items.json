@@ -300,7 +300,7 @@
     "set": "gentleman",
     "damage": 55,
     "description": "Duel like a gentleman",
-    "stackable": true,
+    "stackable": false,
     "quest-related": false,
     "sellable": true,
     "slug": "sword_cane"

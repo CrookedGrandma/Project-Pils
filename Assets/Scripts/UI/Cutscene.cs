@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using System.Linq;
 
 public class Cutscene : MonoBehaviour {
 
@@ -32,8 +34,15 @@ public class Cutscene : MonoBehaviour {
 
         Invoke("FadeInText", 0.30f);
 
-        if(!manualFade)
-            Invoke("FadeOutPanel", 2.5f);
+
+
+        if (!manualFade)
+        {
+
+            int count = cutsceneText.text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Count();
+            float secondsToDisplay = count / 5.5f;
+            Invoke("FadeOutPanel", 1 + secondsToDisplay);
+        }
     }
 
     public void FadeOutPanel()

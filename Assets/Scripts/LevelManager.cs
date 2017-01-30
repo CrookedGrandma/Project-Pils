@@ -53,6 +53,18 @@ public class LevelManager : MonoBehaviour
             int slot = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_slot");
             int id = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_id");
             int number = PlayerPrefs.GetInt("save_inventory_equipment_" + i + "_number");
+
+            if (slot == 1)
+            {
+                // Ranged weapon
+                number += 4;
+            }
+            if (slot == 0)
+            {
+                // Melee weapon
+                number += 5;
+            }
+
             inventory.addEquipment(id, number, slot);
         }
 

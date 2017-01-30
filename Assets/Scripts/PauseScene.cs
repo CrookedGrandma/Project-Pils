@@ -54,6 +54,7 @@ public class PauseScene : MonoBehaviour
         PlayerPrefsManager.SetSavedPosition(PlayerPrefsManager.GetPositionInLevel(PlayerPrefsManager.GetCurrentScene(), player));
         PlayerPrefsManager.SetSavedPlayerXP(XPManager.xpmanager.playerxp);
         PlayerPrefsManager.SetSavedCurrency(PersistentInventoryScript.instance.Currency);
+        PlayerPrefsManager.SetSavedCurrentHealth((int)PlayerPrefsManager.GetPlayerHealth());
         SaveInventoryItems();
     }
 
@@ -63,6 +64,7 @@ public class PauseScene : MonoBehaviour
         player.transform.position = PlayerPrefsManager.GetSavedPosition();
         XPManager.xpmanager.playerxp = PlayerPrefsManager.GetSavedPlayerXP();
         PersistentInventoryScript.instance.Currency = PlayerPrefsManager.GetSavedCurrency();
+        PlayerPrefsManager.SetPlayerHealth(PlayerPrefsManager.GetSavedCurrentHealth());
         LoadInventoryItems();
     }
 
